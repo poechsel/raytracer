@@ -6,6 +6,9 @@ Triangle::Triangle(uint v1, uint v2, uint v3, Vector3f n, Scene *sc)
     this->v1 = v1;
     this->v2 = v2;
     this->v3 = v3;
+    this->e1 = _scene->vertices[this->v2] - _scene->vertices[this->v1];
+    this->e2 = _scene->vertices[this->v3] - _scene->vertices[this->v1];
+    this->e3 = _scene->vertices[this->v3] - _scene->vertices[this->v2];
     this->normal = n.normalize();
 }
 Triangle::Triangle(uint v1, uint v2, uint v3, Scene *sc)
@@ -14,17 +17,17 @@ Triangle::Triangle(uint v1, uint v2, uint v3, Scene *sc)
     this->v1 = v1;
     this->v2 = v2;
     this->v3 = v3;
-    //std::cout<<"->"<<v1<<" "<<v2<<" "<<v3<<" "<<parent<<"\n";
-    Vector3f V = _scene->vertices[v2] - _scene->vertices[v1];
-    Vector3f W = _scene->vertices[v3] - _scene->vertices[v1];
-    this->normal = cross(V, W).normalize();
-    //std::cout<<parent->vertices[v1]<<" | "<<vset.vertices[v2]<<" | "<<vset.vertices[v3]<<"("<<v1<<" "<<v2<<" "<<v3<<")\n";
+    this->e1 = _scene->vertices[this->v2] - _scene->vertices[this->v1];
+    this->e2 = _scene->vertices[this->v3] - _scene->vertices[this->v1];
+    this->e3 = _scene->vertices[this->v3] - _scene->vertices[this->v2];
+    this->normal = cross(this->e1, this->e2).normalize();
 }
 
 void Triangle::recalculate() {
-    Vector3f V = _scene->vertices[v2] - _scene->vertices[v1];
-    Vector3f W = _scene->vertices[v3] - _scene->vertices[v1];
-    this->normal = cross(V, W).normalize();
+    this->e1 = _scene->vertices[this->v2] - _scene->vertices[this->v1];
+    this->e2 = _scene->vertices[this->v3] - _scene->vertices[this->v1];
+    this->e3 = _scene->vertices[this->v3] - _scene->vertices[this->v2];
+    this->normal = cross(this->e1, this->e2).normalize();
 }
 
 Real Triangle::intersect(const Ray &ray) {/*

@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1462869343 source:d:\tipe\source\tipe\tipe\main.cpp
+1462883795 source:d:\tipe\source\tipe\tipe\main.cpp
 	<iostream>
 	<glm/glm.hpp>
 	"glm/gtc/matrix_transform.hpp"
@@ -15,6 +15,8 @@
 	"utilities/sfmlimage.h"
 	"utilities/camera.h"
 	"python/pythonsceneloader.h"
+	"intersections/intersections.h"
+	"intersections/intersectionnaivemoller.h"
 
 1430337908 source:d:\tipe\source\tipe\tipe\maths\mattransformations.cpp
 	"matTransformations.h"
@@ -62,7 +64,7 @@
 	"../materials/material.h"
 	"../utilities/Ray.h"
 
-1462869702 d:\tipe\source\tipe\tipe\geometry\triangle.h
+1462881756 d:\tipe\source\tipe\tipe\geometry\triangle.h
 	"../includes.h"
 	"../utilities/Ray.h"
 	"../materials/material.h"
@@ -84,7 +86,7 @@
 	"../includes.h"
 	"../utilities/Ray.h"
 
-1462869790 source:d:\tipe\source\tipe\tipe\geometry\triangle.cpp
+1462881756 source:d:\tipe\source\tipe\tipe\geometry\triangle.cpp
 	"Triangle.h"
 
 1436644314 source:d:\tipe\source\tipe\tipe\materials\material.cpp
@@ -376,10 +378,10 @@
 1436378037 source:d:\tipe\source\tipe\tipe\python\pythonmodule.cpp
 	"pythonmodule.h"
 
-1462833503 source:d:\tipe\source\tipe\tipe\python\pythonsceneloader.cpp
+1462870311 source:d:\tipe\source\tipe\tipe\python\pythonsceneloader.cpp
 	"pythonsceneloader.h"
 
-1462833503 d:\tipe\source\tipe\tipe\python\pythonsceneloader.h
+1462869919 d:\tipe\source\tipe\tipe\python\pythonsceneloader.h
 	"../includes.h"
 	"pythonfunction.h"
 	"../utilities/camera.h"
@@ -783,4 +785,26 @@
 
 1462833379 source:d:\tipe\source\tipe\tipe\scene.cpp
 	"scene.h"
+
+1462882193 source:d:\tipe\source\tipe\tipe\intersections\intersections.cpp
+	"intersections.h"
+
+1462882186 d:\tipe\source\tipe\tipe\intersections\intersections.h
+	"../includes.h"
+	"../geometry/Triangle.h"
+	<cfloat>
+
+1462883333 source:d:\tipe\source\tipe\tipe\intersections\intersectionmethod.cpp
+	"intersectionmethod.h"
+
+1462883596 d:\tipe\source\tipe\tipe\intersections\intersectionmethod.h
+	"../utilities/Ray.h"
+	"../geometry/Triangle.h"
+	"intersections.h"
+
+1462883837 source:d:\tipe\source\tipe\tipe\intersections\intersectionnaivemoller.cpp
+	"intersectionnaivemoller.h"
+
+1462883837 d:\tipe\source\tipe\tipe\intersections\intersectionnaivemoller.h
+	"intersectionmethod.h"
 

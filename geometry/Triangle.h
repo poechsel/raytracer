@@ -23,6 +23,9 @@ class Triangle
         uint v2;
         uint v3;
         Vector3f normal;
+        Vector3f e1;
+        Vector3f e2;
+        Vector3f e3;
     protected:
     private:
 };
