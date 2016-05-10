@@ -1,0 +1,47 @@
+#include "PythonContext.h"
+
+
+PyObject*   convertToPy(std::vector<long> vec) {
+    PyObject* out = PyList_New(vec.size());
+    for (unsigned int i = 0; i < vec.size(); ++i) {
+        PyList_SetItem(out, i, PyLong_FromLong(vec[i]));
+    }
+    return out;
+}
+
+void decrefListPy(PyObject  *list){
+    unsigned int size = PyList_Size(list);
+    for (unsigned int i = 0; i < size; ++i) {
+        Py_DECREF(PyList_GetItem(list, i));
+    }
+    Py_DECREF(list);
+}
+std::vector<long> convertFromPy(PyObject *py){
+    std::vector<long> out(PyList_Size(py));
+    unsigned int size = PyList_Size(py);
+    for (unsigned int i = 0; i < size; ++i) {
+        out[i] = PyLong_AsLong(PyList_GetItem(py, i));
+        std::cout<<"    "<<PyLong_AsLong(PyList_GetItem(py, i))<<"\n";
+    }
+    return out;
+}
+
+//-----------------------------
+
+
+PythonContext::PythonContext()
+{
+    Py_Initialize();
+}
+
+void PythonContext::setCWD(std::string path) {
+    PyObject* sys_path = PySys_GetObject((char*)"path");
+    PyObject* program_name = convertToPy(path);
+    PyList_Append(sys_path, program_name);
+    Py_DECREF(program_name);
+}
+
+PythonContext::~PythonContext()
+{
+    Py_Finalize();
+}

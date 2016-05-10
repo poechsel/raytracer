@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="tipe" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/tipe" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-std=c++11" />
+					<Add option="-g" />
+					<Add directory="C:/SFML-2.2/include" />
+					<Add directory="C:/Program Files (x86)/python/include" />
+				</Compiler>
+				<Linker>
+					<Add library="sfml-graphics" />
+					<Add library="sfml-window" />
+					<Add library="sfml-system" />
+					<Add library="libpython34" />
+					<Add directory="C:/Program Files (x86)/python/libs" />
+					<Add directory="C:/SFML-2.2/lib" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/tipe" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+		</Compiler>
+		<Unit filename="geometry/Mesh.cpp" />
+		<Unit filename="geometry/Mesh.h" />
+		<Unit filename="geometry/Sphere.cpp" />
+		<Unit filename="geometry/Sphere.h" />
+		<Unit filename="geometry/Triangle.cpp" />
+		<Unit filename="geometry/Triangle.h" />
+		<Unit filename="includes.h" />
+		<Unit filename="main.cpp" />
+		<Unit filename="materials/material.cpp" />
+		<Unit filename="materials/material.h" />
+		<Unit filename="maths/matTransformations.cpp" />
+		<Unit filename="maths/matTransformations.h" />
+		<Unit filename="maths/matrix4.h" />
+		<Unit filename="maths/vector2.cpp" />
+		<Unit filename="maths/vector2.h" />
+		<Unit filename="maths/vector3.h" />
+		<Unit filename="python/PythonContext.cpp" />
+		<Unit filename="python/PythonContext.h" />
+		<Unit filename="python/python3dloader.cpp" />
+		<Unit filename="python/python3dloader.h" />
+		<Unit filename="python/pythonfunction.cpp" />
+		<Unit filename="python/pythonfunction.h" />
+		<Unit filename="python/pythonmodule.cpp" />
+		<Unit filename="python/pythonmodule.h" />
+		<Unit filename="python/pythonsceneloader.cpp" />
+		<Unit filename="python/pythonsceneloader.h" />
+		<Unit filename="scene.cpp" />
+		<Unit filename="scene.h" />
+		<Unit filename="utilities/OBJLoader.cpp" />
+		<Unit filename="utilities/OBJLoader.h" />
+		<Unit filename="utilities/Ray.cpp" />
+		<Unit filename="utilities/Ray.h" />
+		<Unit filename="utilities/camera.cpp" />
+		<Unit filename="utilities/camera.h" />
+		<Unit filename="utilities/color.cpp" />
+		<Unit filename="utilities/color.h" />
+		<Unit filename="utilities/image.cpp" />
+		<Unit filename="utilities/image.h" />
+		<Unit filename="utilities/loadertempstructure.cpp" />
+		<Unit filename="utilities/loadertempstructure.h" />
+		<Unit filename="utilities/manager3dloader.cpp" />
+		<Unit filename="utilities/manager3dloader.h" />
+		<Unit filename="utilities/meshmanagers.cpp" />
+		<Unit filename="utilities/meshmanagers.h" />
+		<Unit filename="utilities/sfmlimage.cpp" />
+		<Unit filename="utilities/sfmlimage.h" />
+		<Unit filename="utilities/stringutilities.cpp" />
+		<Unit filename="utilities/stringutilities.h" />
+		<Unit filename="verticesset.cpp" />
+		<Unit filename="verticesset.h" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
