@@ -72,7 +72,7 @@ void IntersectionKdTree::build() {
     _tree.build(*this, bb, 0, T);
 }
 
-Real IntersectionKdTree::intersect(Ray const &ray, uint *t_inter) {
+Real IntersectionKdTree::intersect2(Ray const &ray, uint *t_inter) {
     Real t_min, t_max;
     if (!intersectionBoxRay(_bb_root.getCenter(), _bb_root.getHalfSize(), ray, &t_min, &t_max)) {
         return -1;
@@ -88,9 +88,9 @@ Real IntersectionKdTree::intersect(Ray const &ray, uint *t_inter) {
             Real t = (cnode->plane.pos - ray.origin[a]) / ray.direction[a];
             KdBaseNode *near = (ray.direction[a] > 0)? ((KdTree*)(cnode))->left : ((KdTree*)(cnode))->right;
             KdBaseNode *far = (ray.direction[a] > 0)? ((KdTree*)(cnode))->right : ((KdTree*)(cnode))->left;
-            if (t >= current.t_max) {
+            if (t > current.t_max) {
                 cnode = near;
-            } else if (t <= current.t_min) {
+            } else if (t < current.t_min) {
                 cnode = far;
             } else {
                 stack.push({far, t, t_max});
@@ -104,7 +104,7 @@ Real IntersectionKdTree::intersect(Ray const &ray, uint *t_inter) {
     }
     return -1;
 }
-Real IntersectionKdTree::intersect2(Ray const &ray, uint *t_inter) {
+Real IntersectionKdTree::intersect(Ray const &ray, uint *t_inter) {
     Real t_min, t_max;
     if (intersectionBoxRay(_bb_root.getCenter(), _bb_root.getHalfSize(), ray, &t_min, &t_max)) {
         return this->_tree.intersection(ray, t_inter, t_min, t_max);
@@ -125,7 +125,7 @@ bool IntersectionKdTree::isFlat(SplitPlane plane, uint tri) {
 }
 
 bool IntersectionKdTree::automaticEnding(BoundingBox &bb, std::vector<uint> T, uint depth) {
-    return depth > 16 || T.size() <=  5;
+    return depth > 16 || T.size() <=  5 || bb.getVolume() == 0;
 }
 
 
@@ -197,33 +197,63 @@ void KdTree::build(IntersectionKdTree &ikd, BoundingBox &bb, uint depth, std::ve
     BoundingBox bbd;
     bb.split(this->plane, &bbg, &bbd);
     //if (depth <= 3)
-    //std::cout<<plane.axis<<" "<<plane.pos<<"=> "<<bb.m<<", "<<bb.M<<" | "<<bbg.m<<", "<<bbg.M<<" | "<<bbd.m<<", "<<bbd.M<<"\n";
-    int nr = 0, ng = 0, nb = 0;
+    //std::cout<<"ehoh    "<<plane.axis<<" "<<plane.pos<<"\n";
+    //std::cout<<bb.m<<" , "<<bb.M<<"\n";
+    //std::cout<<bbg.m<<" , "<<bbg.M<< " | "<<bbd.m<< " , "<<bbd.M<<"\n";
+    int nd = 0, ng = 0, np = 0;
     for (uint i = 0; i < T.size(); ++i) {
-        Side side_tri = ikd.getSideTri(bb, T[i], this->plane);
-        if (side_tri == LEFT) {
-            tg.push_back(T[i]);
-            ng ++;
-        } else if (side_tri == RIGHT) {
-            td.push_back(T[i]);
-            nr++;
-        } else {
-            /*if (ikd.isFlat(this->plane, i)) {
-                if (this->plane.side == LEFT) {
-                    tg.push_back(i);
-                } else if (this->plane.side == RIGHT) {
-                    td.push_back(i);
-                } else {
-                    tg.push_back(i);
-                    td.push_back(i);
-                }
-            } else {//*/
+        BoundingBox bb (_scene, &_scene->triangles[T[i]]);
+        if (bb.m[plane.axis] == plane.pos && bb.M[plane.axis] == plane.pos) {
+            if (plane.side == LEFT) {
                 tg.push_back(T[i]);
+                ng++;
+            } else if (plane.side == RIGHT) {
                 td.push_back(T[i]);
-                nb++;
-            //}
+                nd++;
+            } else {
+                tg.push_back(T[i]);
+                ng++;
+                td.push_back(T[i]);
+                nd++;
+            }
+        } else {
+            if (bb.m[plane.axis] < plane.pos){
+                tg.push_back(T[i]);
+                ng++;
+            }
+            if (bb.M[plane.axis] > plane.pos) {
+                nd++;
+                td.push_back(T[i]);
+            }
         }
     }
+
+    //for (uint i = 0; i < T.size(); ++i) {
+    //    Side side_tri = ikd.getSideTri(bb, T[i], this->plane);
+    //    if (side_tri == LEFT) {
+    //        tg.push_back(T[i]);
+    //        ng ++;
+    //    } else if (side_tri == RIGHT) {
+    //        td.push_back(T[i]);
+    //        nd++;
+     //   } else {
+            /*if (ikd.isFlat(this->plane, T[i])) {
+                if (this->plane.side == LEFT) {
+                    tg.push_back(T[i]);
+                } else if (this->plane.side == RIGHT) {
+                    td.push_back(T[i]);
+                } else {
+                    tg.push_back(T[i]);
+                    td.push_back(T[i]);
+                }
+            } else {//*/
+    //            tg.push_back(T[i]);
+    //            td.push_back(T[i]);
+    //            np++;
+            //}
+    //    }
+    //}
+    //std::cout<<depth<<": "<<ng<<" "<<np<<" "<<nd<<"\n";
     /*
     for (int i = 0; i < tg.size(); ++i)
         std::cout<<tg[i]<<" ";

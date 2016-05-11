@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1462977265 source:d:\tipe\source\tipe\tipe\main.cpp
+1463003495 source:d:\tipe\source\tipe\tipe\main.cpp
 	<iostream>
 	<glm/glm.hpp>
 	"glm/gtc/matrix_transform.hpp"
@@ -20,6 +20,7 @@
 	"intersections/intersectiongrid.h"
 	"intersections/intersectionkdtreespacemedian.h"
 	"intersections/intersectionkdtreegeometrymedian.h"
+	"intersections/intersectionkdtreesah.h"
 
 1430337908 source:d:\tipe\source\tipe\tipe\maths\mattransformations.cpp
 	"matTransformations.h"
@@ -818,10 +819,10 @@
 1462884070 d:\tipe\source\tipe\tipe\intersections\intersectionnaivenaive.h
 	"intersectionmethod.h"
 
-1462954732 source:d:\tipe\source\tipe\tipe\geometry\boundingbox.cpp
+1462998686 source:d:\tipe\source\tipe\tipe\geometry\boundingbox.cpp
 	"boundingbox.h"
 
-1462953753 d:\tipe\source\tipe\tipe\geometry\boundingbox.h
+1462998686 d:\tipe\source\tipe\tipe\geometry\boundingbox.h
 	"../includes.h"
 	"Triangle.h"
 
@@ -840,22 +841,29 @@
 1462919366 source:d:\tipe\source\tipe\tipe\utilities\benchmark.cpp
 	"benchmark.h"
 
-1462978660 d:\tipe\source\tipe\tipe\intersections\intersectionkdtree.h
+1462992596 d:\tipe\source\tipe\tipe\intersections\intersectionkdtree.h
 	"intersectionmethod.h"
 	<stack>
 
-1462977172 source:d:\tipe\source\tipe\tipe\intersections\intersectionkdtree.cpp
+1463004209 source:d:\tipe\source\tipe\tipe\intersections\intersectionkdtree.cpp
 	"intersectionkdtree.h"
 
-1462953999 source:d:\tipe\source\tipe\tipe\intersections\intersectionkdtreespacemedian.cpp
+1462992467 source:d:\tipe\source\tipe\tipe\intersections\intersectionkdtreespacemedian.cpp
 	"intersectionkdtreespacemedian.h"
 
-1462953907 d:\tipe\source\tipe\tipe\intersections\intersectionkdtreespacemedian.h
+1462992516 d:\tipe\source\tipe\tipe\intersections\intersectionkdtreespacemedian.h
 	"intersectionkdtree.h"
 
-1462977058 source:d:\tipe\source\tipe\tipe\intersections\intersectionkdtreegeometrymedian.cpp
+1462992484 source:d:\tipe\source\tipe\tipe\intersections\intersectionkdtreegeometrymedian.cpp
 	"intersectionkdtreegeometrymedian.h"
 
-1462977006 d:\tipe\source\tipe\tipe\intersections\intersectionkdtreegeometrymedian.h
+1462992513 d:\tipe\source\tipe\tipe\intersections\intersectionkdtreegeometrymedian.h
 	"intersectionkdtree.h"
+
+1463004209 source:d:\tipe\source\tipe\tipe\intersections\intersectionkdtreesah.cpp
+	"intersectionkdtreesah.h"
+
+1463004154 d:\tipe\source\tipe\tipe\intersections\intersectionkdtreesah.h
+	"intersectionkdtree.h"
+	"../geometry/boundingbox.h"
 

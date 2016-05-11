@@ -16,6 +16,9 @@
 					<Add option="-g" />
 					<Add directory="C:/SFML-2.2/include" />
 					<Add directory="C:/Program Files (x86)/python/include" />
+					<Add directory="intersections" />
+					<Add directory="geometry" />
+					<Add directory="utilities" />
 				</Compiler>
 				<Linker>
 					<Add library="sfml-graphics" />
@@ -33,6 +36,9 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add directory="intersections" />
+					<Add directory="geometry" />
+					<Add directory="utilities" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -49,7 +55,27 @@
 		<Unit filename="geometry/Sphere.h" />
 		<Unit filename="geometry/Triangle.cpp" />
 		<Unit filename="geometry/Triangle.h" />
+		<Unit filename="geometry/boundingbox.cpp" />
+		<Unit filename="geometry/boundingbox.h" />
 		<Unit filename="includes.h" />
+		<Unit filename="intersections/intersectiongrid.cpp" />
+		<Unit filename="intersections/intersectiongrid.h" />
+		<Unit filename="intersections/intersectionkdtree.cpp" />
+		<Unit filename="intersections/intersectionkdtree.h" />
+		<Unit filename="intersections/intersectionkdtreegeometrymedian.cpp" />
+		<Unit filename="intersections/intersectionkdtreegeometrymedian.h" />
+		<Unit filename="intersections/intersectionkdtreesah.cpp" />
+		<Unit filename="intersections/intersectionkdtreesah.h" />
+		<Unit filename="intersections/intersectionkdtreespacemedian.cpp" />
+		<Unit filename="intersections/intersectionkdtreespacemedian.h" />
+		<Unit filename="intersections/intersectionmethod.cpp" />
+		<Unit filename="intersections/intersectionmethod.h" />
+		<Unit filename="intersections/intersectionnaivemoller.cpp" />
+		<Unit filename="intersections/intersectionnaivemoller.h" />
+		<Unit filename="intersections/intersectionnaivenaive.cpp" />
+		<Unit filename="intersections/intersectionnaivenaive.h" />
+		<Unit filename="intersections/intersections.cpp" />
+		<Unit filename="intersections/intersections.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="materials/material.cpp" />
 		<Unit filename="materials/material.h" />
@@ -75,6 +101,8 @@
 		<Unit filename="utilities/OBJLoader.h" />
 		<Unit filename="utilities/Ray.cpp" />
 		<Unit filename="utilities/Ray.h" />
+		<Unit filename="utilities/benchmark.cpp" />
+		<Unit filename="utilities/benchmark.h" />
 		<Unit filename="utilities/camera.cpp" />
 		<Unit filename="utilities/camera.h" />
 		<Unit filename="utilities/color.cpp" />
@@ -91,8 +119,6 @@
 		<Unit filename="utilities/sfmlimage.h" />
 		<Unit filename="utilities/stringutilities.cpp" />
 		<Unit filename="utilities/stringutilities.h" />
-		<Unit filename="verticesset.cpp" />
-		<Unit filename="verticesset.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

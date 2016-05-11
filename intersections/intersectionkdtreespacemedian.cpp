@@ -7,7 +7,7 @@ IntersectionKdTreeSpaceMedian::IntersectionKdTreeSpaceMedian(Scene *scene):
 }
 
 
-SplitPlane IntersectionKdTreeSpaceMedian::heuristic(BoundingBox &bb, std::vector<uint> T, uint depth) {
+SplitPlane IntersectionKdTreeSpaceMedian::heuristic(BoundingBox &bb, std::vector<uint> &T, uint depth) {
     SplitPlane plane;
     if (depth%3 == 0) {
         plane.axis = X;

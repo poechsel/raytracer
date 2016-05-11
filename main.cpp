@@ -19,6 +19,7 @@
 #include "intersections/intersectiongrid.h"
 #include "intersections/intersectionkdtreespacemedian.h"
 #include "intersections/intersectionkdtreegeometrymedian.h"
+#include "intersections/intersectionkdtreesah.h"
 using namespace std;
 Real sigmoid(Real x) {
     //return 1.0/(1+std::exp(-(x-0.5)*12.0));
@@ -50,14 +51,15 @@ int main()
     int completion_percent = 0;
 
     Camera cameratemp;
-    PythonSceneLoader loader_scenes("scenes/suzanne.json");
+    PythonSceneLoader loader_scenes("scenes/suzanne_hp.json");
     std::cout<<"loading========================\n";
     loader_scenes.load(&cameratemp, &scene);
     std::cout<<"end loading========================\n";
 
     //IntersectionMethod *inter_method = new IntersectionNaiveMoller(&scene);
     //IntersectionMethod *inter_method = new IntersectionGrid(&scene, 0.5);
-    IntersectionMethod *inter_method = new IntersectionKdTreeSpaceMedian(&scene);
+    //IntersectionMethod *inter_method = new IntersectionKdTreeSpaceMedian(&scene);
+    IntersectionMethod *inter_method = new IntersectionKdTreeSAH(&scene, 15, 20, NLOG2N);
     inter_method->build();
     ULARGE_INTEGER time = getTime();
     int nb = 0;

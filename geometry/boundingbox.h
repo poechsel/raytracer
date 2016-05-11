@@ -16,10 +16,12 @@ class BoundingBox
         void expand(const Scene *scene, const Triangle *other);
         void expand(Vector3f point);
         void split(SplitPlane &plane, BoundingBox *left, BoundingBox *right);
+        void clip(const BoundingBox &other);
         virtual ~BoundingBox();
 
         Vector3f getCenter() const;
         Vector3f getHalfSize() const;
+        Real getVolume();
 
         Vector3f m;
         Vector3f M;

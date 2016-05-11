@@ -8,7 +8,7 @@ class IntersectionKdTreeGeometryMedian: public IntersectionKdTree
     public:
         IntersectionKdTreeGeometryMedian(Scene *scene);
         virtual ~IntersectionKdTreeGeometryMedian();
-        SplitPlane  heuristic(BoundingBox &bb, std::vector<uint> triangles, uint depth);
+        SplitPlane  heuristic(BoundingBox &bb, std::vector<uint> &triangles, uint depth);
     protected:
     private:
 };

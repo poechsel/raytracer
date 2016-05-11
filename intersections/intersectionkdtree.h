@@ -86,7 +86,7 @@ class IntersectionKdTree: public IntersectionMethod{
         //t_inter est l'index du triangle qui s'intersecte
         virtual Real intersect(Ray const &ray, uint *t_inter);
         Real intersect2(Ray const &ray, uint *t_inter);
-        virtual SplitPlane  heuristic(BoundingBox &bb, std::vector<uint> triangles, uint depth) = 0;
+        virtual SplitPlane  heuristic(BoundingBox &bb, std::vector<uint> &triangles, uint depth) = 0;
         bool        automaticEnding(BoundingBox &bb, std::vector<uint> triangles, uint depth);
         Side        getSideTri(BoundingBox &bb, uint tri, SplitPlane plane);
         bool isFlat(SplitPlane plane, uint tri);
