@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1462974409 source:d:\tipe\source\tipe\tipe\main.cpp
+1462977117 source:d:\tipe\source\tipe\tipe\main.cpp
 	<iostream>
 	<glm/glm.hpp>
 	"glm/gtc/matrix_transform.hpp"
@@ -19,6 +19,7 @@
 	"intersections/intersectionnaivemoller.h"
 	"intersections/intersectiongrid.h"
 	"intersections/intersectionkdtreespacemedian.h"
+	"intersections/intersectionkdtreegeometrymedian.h"
 
 1430337908 source:d:\tipe\source\tipe\tipe\maths\mattransformations.cpp
 	"matTransformations.h"
@@ -842,12 +843,18 @@
 1462956438 d:\tipe\source\tipe\tipe\intersections\intersectionkdtree.h
 	"intersectionmethod.h"
 
-1462974396 source:d:\tipe\source\tipe\tipe\intersections\intersectionkdtree.cpp
+1462977172 source:d:\tipe\source\tipe\tipe\intersections\intersectionkdtree.cpp
 	"intersectionkdtree.h"
 
 1462953999 source:d:\tipe\source\tipe\tipe\intersections\intersectionkdtreespacemedian.cpp
 	"intersectionkdtreespacemedian.h"
 
 1462953907 d:\tipe\source\tipe\tipe\intersections\intersectionkdtreespacemedian.h
+	"intersectionkdtree.h"
+
+1462977058 source:d:\tipe\source\tipe\tipe\intersections\intersectionkdtreegeometrymedian.cpp
+	"intersectionkdtreegeometrymedian.h"
+
+1462977006 d:\tipe\source\tipe\tipe\intersections\intersectionkdtreegeometrymedian.h
 	"intersectionkdtree.h"
 

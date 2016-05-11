@@ -18,6 +18,7 @@
 #include "intersections/intersectionnaivemoller.h"
 #include "intersections/intersectiongrid.h"
 #include "intersections/intersectionkdtreespacemedian.h"
+#include "intersections/intersectionkdtreegeometrymedian.h"
 using namespace std;
 Real sigmoid(Real x) {
     //return 1.0/(1+std::exp(-(x-0.5)*12.0));

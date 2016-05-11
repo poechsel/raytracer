@@ -240,7 +240,8 @@ Real KdLeaf::intersection(const Ray &ray, uint *t_inter, Real t_min, Real t_max)
     for (uint i = 0; i < this->_triangles.size(); ++i){
             //std::cout<<i<<"\n";
         Real t_temp = intersectionMoller(_scene, this->_scene->triangles[this->_triangles[i]], ray);
-        if (t_temp >= std::min((Real)0, t_min) && t_temp <= t_max) {
+        //we look for point on the interval t_min; t_max only, other can be too far away
+        if (t_temp >= 0 && t_temp <= t_max) {
             if (t < 0 || t_temp < t) {
                 t = t_temp;
                 *t_inter = this->_triangles[i];
