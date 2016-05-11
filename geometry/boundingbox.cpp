@@ -12,8 +12,13 @@ BoundingBox::BoundingBox(const BoundingBox &other){
     this->m = other.m;
     this->M = other.M;
 }
-BoundingBox::BoundingBox(const Scene *scene, const Triangle *other): BoundingBox() {
-    this->expand(scene, other);
+BoundingBox::BoundingBox(const Scene *scene, const Triangle *other) {
+    Vector3f v1 = scene->vertices[other->v1];
+    Vector3f v2 = scene->vertices[other->v2];
+    Vector3f v3 = scene->vertices[other->v3];
+
+    this->m = Vector3f (std::min(std::min(v1.x, v2.x), v3.x), std::min(std::min(v1.y, v2.y), v3.y), std::min(std::min(v1.z, v2.z), v3.z));
+    this->M =Vector3f (std::max(std::max(v1.x, v2.x), v3.x), std::max(std::max(v1.y, v2.y), v3.y), std::max(std::max(v1.z, v2.z), v3.z));
 }
 void BoundingBox::expand(BoundingBox &other) {
     this->expand(other.m);

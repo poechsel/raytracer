@@ -3,6 +3,7 @@
 
 #include "../includes.h"
 #include "Triangle.h"
+struct SplitPlane;
 
 class BoundingBox
 {
@@ -14,6 +15,7 @@ class BoundingBox
         void expand(BoundingBox &other);
         void expand(const Scene *scene, const Triangle *other);
         void expand(Vector3f point);
+        void split(SplitPlane &plane, BoundingBox *left, BoundingBox *right);
         virtual ~BoundingBox();
 
         Vector3f getCenter() const;
