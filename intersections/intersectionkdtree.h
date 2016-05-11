@@ -4,8 +4,10 @@
 
 //#include "../geometry/boundingbox.h"
 #include "intersectionmethod.h"
+#include <stack>
 class BoundingBox;
 class IntersectionMethod;
+class KdBaseNode;
 
 enum Side {
     LEFT,
@@ -19,21 +21,34 @@ enum Axe{
     Z
 };
 
+struct TempDataTraversal {
+    KdBaseNode *node;
+    Real t_min;
+    Real t_max;
+};
+
 struct SplitPlane {
     Real pos;
     Axe axis;
     Side side;
 };
+
+enum KdTreeNodeType {
+    LEAF,
+    NODE
+};
+
 class IntersectionKdTree;
 
 class KdBaseNode {
     public:
         KdBaseNode(Scene *scene);
+        virtual KdTreeNodeType getType() = 0;
         virtual void build(IntersectionKdTree &ikd, BoundingBox &aabb, uint depth, std::vector<uint> T) = 0;
         virtual Real intersection(const Ray &ray, uint *t_inter, Real t_min, Real t_max) = 0;
+        SplitPlane  plane;
     protected:
         Scene *_scene;
-        SplitPlane  _plane;
 
 };
 
@@ -41,16 +56,18 @@ class KdTree: public KdBaseNode {
     public:
         KdTree(Scene *scene);
         ~KdTree();
+        KdTreeNodeType getType() {return NODE;}
         void build(IntersectionKdTree &ikd, BoundingBox &aabb, uint depth, std::vector<uint> T);
         Real intersection(const Ray &ray, uint *t_inter, Real t_min, Real t_max);
+        KdBaseNode      *left;
+        KdBaseNode      *right;
     protected:
-        KdBaseNode      *_left;
-        KdBaseNode      *_right;
 };
 
 class KdLeaf: public KdBaseNode {
     public:
         KdLeaf(Scene *scene);
+        KdTreeNodeType getType() {return LEAF;}
         void build(IntersectionKdTree &ikd, BoundingBox &aabb, uint depth, std::vector<uint> T);
         Real intersection(const Ray &ray, uint *t_inter, Real t_min, Real t_max);
     protected:
@@ -68,6 +85,7 @@ class IntersectionKdTree: public IntersectionMethod{
 
         //t_inter est l'index du triangle qui s'intersecte
         virtual Real intersect(Ray const &ray, uint *t_inter);
+        Real intersect2(Ray const &ray, uint *t_inter);
         virtual SplitPlane  heuristic(BoundingBox &bb, std::vector<uint> triangles, uint depth) = 0;
         bool        automaticEnding(BoundingBox &bb, std::vector<uint> triangles, uint depth);
         Side        getSideTri(BoundingBox &bb, uint tri, SplitPlane plane);

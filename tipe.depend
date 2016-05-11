@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1462977117 source:d:\tipe\source\tipe\tipe\main.cpp
+1462977265 source:d:\tipe\source\tipe\tipe\main.cpp
 	<iostream>
 	<glm/glm.hpp>
 	"glm/gtc/matrix_transform.hpp"
@@ -840,8 +840,9 @@
 1462919366 source:d:\tipe\source\tipe\tipe\utilities\benchmark.cpp
 	"benchmark.h"
 
-1462956438 d:\tipe\source\tipe\tipe\intersections\intersectionkdtree.h
+1462978660 d:\tipe\source\tipe\tipe\intersections\intersectionkdtree.h
 	"intersectionmethod.h"
+	<stack>
 
 1462977172 source:d:\tipe\source\tipe\tipe\intersections\intersectionkdtree.cpp
 	"intersectionkdtree.h"

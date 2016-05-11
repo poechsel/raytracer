@@ -74,6 +74,38 @@ void IntersectionKdTree::build() {
 
 Real IntersectionKdTree::intersect(Ray const &ray, uint *t_inter) {
     Real t_min, t_max;
+    if (!intersectionBoxRay(_bb_root.getCenter(), _bb_root.getHalfSize(), ray, &t_min, &t_max)) {
+        return -1;
+    }
+    std::stack<TempDataTraversal> stack;
+    stack.push({&_tree, t_min, t_max});
+    while (stack.size()) {
+        TempDataTraversal current = stack.top();
+        KdBaseNode *cnode = current.node;
+        stack.pop();
+        while (cnode->getType() != LEAF) {
+            Axe a = cnode->plane.axis;
+            Real t = (cnode->plane.pos - ray.origin[a]) / ray.direction[a];
+            KdBaseNode *near = (ray.direction[a] > 0)? ((KdTree*)(cnode))->left : ((KdTree*)(cnode))->right;
+            KdBaseNode *far = (ray.direction[a] > 0)? ((KdTree*)(cnode))->right : ((KdTree*)(cnode))->left;
+            if (t >= current.t_max) {
+                cnode = near;
+            } else if (t <= current.t_min) {
+                cnode = far;
+            } else {
+                stack.push({far, t, t_max});
+                cnode = near;
+                current.t_max = t;
+            }
+        }
+        Real t = cnode->intersection(ray, t_inter, current.t_min, current.t_max);
+        if (t >= 0)
+            return t;
+    }
+    return -1;
+}
+Real IntersectionKdTree::intersect2(Ray const &ray, uint *t_inter) {
+    Real t_min, t_max;
     if (intersectionBoxRay(_bb_root.getCenter(), _bb_root.getHalfSize(), ray, &t_min, &t_max)) {
         return this->_tree.intersection(ray, t_inter, t_min, t_max);
     }
@@ -114,61 +146,61 @@ KdTree::KdTree(Scene *scene):
 
 }
 KdTree::~KdTree() {
-    delete _right;
-    delete _left;
+    delete right;
+    delete left;
 }
 
 Real KdTree::intersection(const Ray &ray, uint* t_inter, Real t_min, Real t_max) {
-    if ( ray.direction[this->_plane.axis] == 0) {
-        if (ray.origin[this->_plane.axis] < this->_plane.pos) {
-            return this->_left->intersection(ray, t_inter, t_min, t_max);
+    if ( ray.direction[this->plane.axis] == 0) {
+        if (ray.origin[this->plane.axis] < this->plane.pos) {
+            return this->left->intersection(ray, t_inter, t_min, t_max);
         }
-        return this->_right->intersection(ray, t_inter, t_min, t_max);
+        return this->right->intersection(ray, t_inter, t_min, t_max);
     }
-    Real t = (this->_plane.pos - ray.origin[this->_plane.axis]) / ray.direction[this->_plane.axis];
+    Real t = (this->plane.pos - ray.origin[this->plane.axis]) / ray.direction[this->plane.axis];
 //std::cout<<t_min<<" "<<t_max<<" = "<<t<<"\n";
 //u peut être mettre t_min, t_far
     if (t_max < t) {
-        if (ray.direction[this->_plane.axis] > 0) {
-            return this->_left->intersection(ray, t_inter, t_min, t_max);
+        if (ray.direction[this->plane.axis] > 0) {
+            return this->left->intersection(ray, t_inter, t_min, t_max);
         } else {
-            return this->_right->intersection(ray, t_inter, t_min, t_max);
+            return this->right->intersection(ray, t_inter, t_min, t_max);
         }
     }
     if (t < t_min) {
-        if (ray.direction[this->_plane.axis] > 0) {
-            return this->_right->intersection(ray, t_inter, t_min, t_max);
+        if (ray.direction[this->plane.axis] > 0) {
+            return this->right->intersection(ray, t_inter, t_min, t_max);
         } else {
-            return this->_left->intersection(ray, t_inter, t_min, t_max);
+            return this->left->intersection(ray, t_inter, t_min, t_max);
         }
     }
 
-    if (ray.direction[this->_plane.axis] > 0) {
-        Real temp_t = this->_left->intersection(ray, t_inter, t_min, t);
+    if (ray.direction[this->plane.axis] > 0) {
+        Real temp_t = this->left->intersection(ray, t_inter, t_min, t);
         if (temp_t >= 0)
             return temp_t;
-        return this->_right->intersection(ray, t_inter, t, t_max);
+        return this->right->intersection(ray, t_inter, t, t_max);
     } else {
-        Real temp_t = this->_right->intersection(ray, t_inter, t_min, t);
+        Real temp_t = this->right->intersection(ray, t_inter, t_min, t);
         if (temp_t >= 0)
             return temp_t;
-        return this->_left->intersection(ray, t_inter, t, t_max);
+        return this->left->intersection(ray, t_inter, t, t_max);
     }
     return -1;
 }
 
 void KdTree::build(IntersectionKdTree &ikd, BoundingBox &bb, uint depth, std::vector<uint> T) {
-    this->_plane = ikd.heuristic(bb, T, depth);
+    this->plane = ikd.heuristic(bb, T, depth);
     std::vector<uint> td;
     std::vector<uint> tg;
     BoundingBox bbg;
     BoundingBox bbd;
-    bb.split(this->_plane, &bbg, &bbd);
+    bb.split(this->plane, &bbg, &bbd);
     //if (depth <= 3)
-    //std::cout<<_plane.axis<<" "<<_plane.pos<<"=> "<<bb.m<<", "<<bb.M<<" | "<<bbg.m<<", "<<bbg.M<<" | "<<bbd.m<<", "<<bbd.M<<"\n";
+    //std::cout<<plane.axis<<" "<<plane.pos<<"=> "<<bb.m<<", "<<bb.M<<" | "<<bbg.m<<", "<<bbg.M<<" | "<<bbd.m<<", "<<bbd.M<<"\n";
     int nr = 0, ng = 0, nb = 0;
     for (uint i = 0; i < T.size(); ++i) {
-        Side side_tri = ikd.getSideTri(bb, T[i], this->_plane);
+        Side side_tri = ikd.getSideTri(bb, T[i], this->plane);
         if (side_tri == LEFT) {
             tg.push_back(T[i]);
             ng ++;
@@ -176,10 +208,10 @@ void KdTree::build(IntersectionKdTree &ikd, BoundingBox &bb, uint depth, std::ve
             td.push_back(T[i]);
             nr++;
         } else {
-            /*if (ikd.isFlat(this->_plane, i)) {
-                if (this->_plane.side == LEFT) {
+            /*if (ikd.isFlat(this->plane, i)) {
+                if (this->plane.side == LEFT) {
                     tg.push_back(i);
-                } else if (this->_plane.side == RIGHT) {
+                } else if (this->plane.side == RIGHT) {
                     td.push_back(i);
                 } else {
                     tg.push_back(i);
@@ -202,19 +234,19 @@ void KdTree::build(IntersectionKdTree &ikd, BoundingBox &bb, uint depth, std::ve
     //*/
     //std::cout<<tg.size()<<" "<<td.size()<<"\n";
     if (ikd.automaticEnding(bbg, tg, depth + 1)) {
-        this->_left = new KdLeaf(this->_scene);
+        this->left = new KdLeaf(this->_scene);
     } else {
-        this->_left = new KdTree(this->_scene);
+        this->left = new KdTree(this->_scene);
     }
     if (ikd.automaticEnding(bbd, td, depth + 1)) {
-        this->_right = new KdLeaf(this->_scene);
+        this->right = new KdLeaf(this->_scene);
     } else {
-        this->_right = new KdTree(this->_scene);
+        this->right = new KdTree(this->_scene);
     }
     //if (depth > 0)
     //    return;
-    this->_left->build(ikd, bbg, depth + 1, tg);
-    this->_right->build(ikd, bbd, depth + 1, td);
+    this->left->build(ikd, bbg, depth + 1, tg);
+    this->right->build(ikd, bbd, depth + 1, td);
 
 }
 
