@@ -16,6 +16,7 @@
 #include "python/pythonsceneloader.h"
 #include "intersections/intersections.h"
 #include "intersections/intersectionnaivemoller.h"
+#include "intersections/intersectiongrid.h"
 using namespace std;
 Real sigmoid(Real x) {
     //return 1.0/(1+std::exp(-(x-0.5)*12.0));
@@ -47,13 +48,16 @@ int main()
     int completion_percent = 0;
 
     Camera cameratemp;
-    PythonSceneLoader loader_scenes("scenes/suzanne.json");
+    PythonSceneLoader loader_scenes("scenes/suzanne_hp.json");
     std::cout<<"loading========================\n";
     loader_scenes.load(&cameratemp, &scene);
     std::cout<<"end loading========================\n";
 
-    IntersectionMethod *inter_method = new IntersectionNaiveMoller(&scene);
+    //IntersectionMethod *inter_method = new IntersectionNaiveMoller(&scene);
+    IntersectionMethod *inter_method = new IntersectionGrid(&scene, 0.05);
     inter_method->build();
+    ULARGE_INTEGER time = getTime();
+    int nb = 0;
     for (uint y = 0; y < 480; ++y) {
         for (uint x = 0; x < 640; ++x) {
             Ray ray = cameratemp.shoot(x, y);
@@ -61,9 +65,10 @@ int main()
             Real t = inter_method->intersect(ray, &tri);
             Color color(0.65, 1, 1);
             if (t >= 0) {
+                    nb += 1;
                 Real gradient = std::abs(dot(ray.direction, scene.triangles[tri].normal));
                 color = Color(gradient, gradient, gradient);
-            }
+            }//*/
             image.putPixelFloat(x, y, sigmoid(color.r), sigmoid(color.g), sigmoid(color.b));
         }
         if (completion_percent < (int)(((Real)y / 480.0)*100)) {
@@ -71,6 +76,8 @@ int main()
             std::cout<<completion_percent<<"%\n";
         }
     }
+    std::cout<<"detected "<<nb<<" triangles\n";
+    std::cout<<"task done in "<<getTimeElapsed(time)<<"\n";
     std::cout<<"end\n";
     image.saveTo("test.png");
     delete inter_method;

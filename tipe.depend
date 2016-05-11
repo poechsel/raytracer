@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1462883795 source:d:\tipe\source\tipe\tipe\main.cpp
+1462919240 source:d:\tipe\source\tipe\tipe\main.cpp
 	<iostream>
 	<glm/glm.hpp>
 	"glm/gtc/matrix_transform.hpp"
@@ -17,6 +17,7 @@
 	"python/pythonsceneloader.h"
 	"intersections/intersections.h"
 	"intersections/intersectionnaivemoller.h"
+	"intersections/intersectiongrid.h"
 
 1430337908 source:d:\tipe\source\tipe\tipe\maths\mattransformations.cpp
 	"matTransformations.h"
@@ -786,18 +787,19 @@
 1462833379 source:d:\tipe\source\tipe\tipe\scene.cpp
 	"scene.h"
 
-1462882193 source:d:\tipe\source\tipe\tipe\intersections\intersections.cpp
+1462910630 source:d:\tipe\source\tipe\tipe\intersections\intersections.cpp
 	"intersections.h"
 
-1462882186 d:\tipe\source\tipe\tipe\intersections\intersections.h
+1462910630 d:\tipe\source\tipe\tipe\intersections\intersections.h
 	"../includes.h"
 	"../geometry/Triangle.h"
 	<cfloat>
+	"../geometry/boundingbox.h"
 
 1462883333 source:d:\tipe\source\tipe\tipe\intersections\intersectionmethod.cpp
 	"intersectionmethod.h"
 
-1462883596 d:\tipe\source\tipe\tipe\intersections\intersectionmethod.h
+1462897298 d:\tipe\source\tipe\tipe\intersections\intersectionmethod.h
 	"../utilities/Ray.h"
 	"../geometry/Triangle.h"
 	"intersections.h"
@@ -807,4 +809,32 @@
 
 1462883837 d:\tipe\source\tipe\tipe\intersections\intersectionnaivemoller.h
 	"intersectionmethod.h"
+
+1462884070 source:d:\tipe\source\tipe\tipe\intersections\intersectionnaivenaive.cpp
+	"intersectionnaivenaive.h"
+
+1462884070 d:\tipe\source\tipe\tipe\intersections\intersectionnaivenaive.h
+	"intersectionmethod.h"
+
+1462895221 source:d:\tipe\source\tipe\tipe\geometry\boundingbox.cpp
+	"boundingbox.h"
+
+1462895221 d:\tipe\source\tipe\tipe\geometry\boundingbox.h
+	"../includes.h"
+	"Triangle.h"
+
+1462918933 source:d:\tipe\source\tipe\tipe\intersections\intersectiongrid.cpp
+	"intersectiongrid.h"
+
+1462918920 d:\tipe\source\tipe\tipe\intersections\intersectiongrid.h
+	"intersectionmethod.h"
+	<stack>
+	"intersections.h"
+	"../utilities/benchmark.h"
+
+1462918691 d:\tipe\source\tipe\tipe\utilities\benchmark.h
+	"windows.h"
+
+1462919366 source:d:\tipe\source\tipe\tipe\utilities\benchmark.cpp
+	"benchmark.h"
 

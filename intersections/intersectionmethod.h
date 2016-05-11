@@ -9,6 +9,8 @@ class IntersectionMethod
         IntersectionMethod(Scene *scene);
         virtual ~IntersectionMethod();
         virtual void build() = 0;
+
+        //t_inter est l'index du triangle qui s'intersecte
         virtual Real intersect(Ray const &ray, uint *t_inter) = 0;
 
     protected:
