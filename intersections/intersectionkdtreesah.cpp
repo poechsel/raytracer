@@ -25,10 +25,38 @@ SplitPlane IntersectionKdTreeSAH::heuristic(BoundingBox &bb, std::vector<uint> &
 SplitPlane  IntersectionKdTreeSAH::heuristicNlog2n(BoundingBox &bb, std::vector<uint> &triangles, uint depth) {
     SplitPlane minimal = {0.0, X, BOTH};
     Real         min_cost = -1;
+    //auto splits =  getPerfectSplits(bb, triangles);
+    std::vector<std::vector<Event> > events;
+    events.resize(3);
+    for (uint i = 0; i < triangles.size(); ++i) {
+        //BoundingBox clip = getClippedAABB(_scene, triangles[i], bb);
+        BoundingBox clip (_scene, &(_scene->triangles[triangles[i]]));
+        clip.clip(bb);
+        if (clip.m[X] == clip.M[X]) {
+            events[X].push_back({clip.m[X], PLANAR});
+        } else {
+            events[X].push_back({clip.m[X], BEGIN});
+            events[X].push_back({clip.M[X], END});
+        }
+
+        if (clip.m[Y] == clip.M[Y]) {
+            events[Y].push_back({clip.m[Y], PLANAR});
+        } else {
+            events[Y].push_back({clip.m[Y], BEGIN});
+            events[Y].push_back({clip.M[Y], END});
+        }
+
+        if (clip.m[Z] == clip.M[Z]) {
+            events[Z].push_back({clip.m[Z], PLANAR});
+        } else {
+            events[Z].push_back({clip.m[Z], BEGIN});
+            events[Z].push_back({clip.M[Z], END});
+        }
+    }
     for (uint axis = 0; axis < 3; axis++) {
            // std::cout<<axis<<"\n";
-        std::vector<Event> events;
-        for (uint i = 0; i < triangles.size(); ++i) {
+        //std::vector<Event> events;
+        /*for (uint i = 0; i < triangles.size(); ++i) {
             BoundingBox clip = getClippedAABB(_scene, triangles[i], bb);
             if (clip.m[axis] == clip.M[axis]) {
                 events.push_back({clip.m[axis], PLANAR});
@@ -36,28 +64,36 @@ SplitPlane  IntersectionKdTreeSAH::heuristicNlog2n(BoundingBox &bb, std::vector<
                 events.push_back({clip.m[axis], BEGIN});
                 events.push_back({clip.M[axis], END});
             }
-        }
-        std::sort(events.begin(), events.end());
+        }*/
+        /*for (uint i = 0; i < triangles.size(); ++i) {
+            if (splits[axis][2*i].pos == splits[axis][2*i+1].pos) {
+                events.push_back({splits[axis][2*i].pos, PLANAR});
+            } else {
+                events.push_back({splits[axis][2*i].pos, BEGIN});
+                events.push_back({splits[axis][2*i+1].pos, END});
+            }
+        }*/
+        std::sort(events[axis].begin(), events[axis].end());
         int Ng = 0, Nd = triangles.size(), Np = 0;
         uint i = 0;
         Axe axe = X;
         if (axis == 1) axe = Y;
         if (axis == 2) axe = Z;
-        for (uint i = 0; i < events.size(); ++i) {
+        for (uint i = 0; i < events[axis].size(); ++i) {
             int plying = 0, pending = 0, pstarting = 0;
-            Real p = events[i].pos;
+            Real p = events[axis][i].pos;
             //std::cout<<i<<" "<<events.size()<<" 1\n";
-            while (i < events.size() && p == events[i].pos && events[i].type == END) {
+            while (i < events[axis].size() && p == events[axis][i].pos && events[axis][i].type == END) {
                 ++pending;
                 i++;
             }
             //std::cout<<i<<" "<<events.size()<<" 2\n";
-            while (i < events.size() && p == events[i].pos && events[i].type == PLANAR) {
+            while (i < events[axis].size() && p == events[axis][i].pos && events[axis][i].type == PLANAR) {
                 ++plying;
                 i++;
             }
             //std::cout<<i<<" "<<events.size()<<" 3\n";
-            while (i < events.size() && p == events[i].pos && events[i].type == BEGIN) {
+            while (i < events[axis].size() && p == events[axis][i].pos && events[axis][i].type == BEGIN) {
                 ++pstarting;
                 i++;
             }
@@ -209,7 +245,6 @@ SplitPlane  IntersectionKdTreeSAH::heuristicN2(BoundingBox &bb, std::vector<uint
                 //std::cout<<"best "<<min_cost<<" "<<minimal.pos<<" "<<minimal.axis<<" "<<tNg<<" "<<tNp<<" "<<tNd<<"\n";
     return minimal;
 }
-
 
 Real IntersectionKdTreeSAH::C(Real Pg, Real Pd, int Ng, int Nd) {
     return (_Kt + _Ki * (Pg * (Real)Ng + Pd * (Real)Nd));
