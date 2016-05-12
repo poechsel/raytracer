@@ -31,6 +31,7 @@ struct SplitPlane {
     Real pos;
     Axe axis;
     Side side;
+    Real cost;
 };
 
 enum KdTreeNodeType {
@@ -91,7 +92,7 @@ class IntersectionKdTree: public IntersectionMethod{
         Real intersectSeq(Ray const &ray, uint *t_inter);
         Real intersectRec(Ray const &ray, uint *t_inter);
         virtual SplitPlane  heuristic(BoundingBox &bb, std::vector<uint> &triangles, uint depth) = 0;
-        bool        automaticEnding(BoundingBox &bb, std::vector<uint> &triangles, uint depth);
+        virtual bool        automaticEnding(SplitPlane &plan, BoundingBox &bb, std::vector<uint> &triangles, uint depth);
         Side        getSideTri(BoundingBox &bb, uint tri, SplitPlane plane);
         bool isFlat(SplitPlane plane, uint tri);
     protected:
@@ -100,7 +101,8 @@ class IntersectionKdTree: public IntersectionMethod{
         bool _use_rec;
 
 
-        KdBaseNode *_build_tree(BoundingBox &bb, std::vector<uint> &triangles, uint depth);
+        virtual KdBaseNode *_build_tree(BoundingBox &bb, std::vector<uint> &triangles, uint depth);
+        void _splitTrianglesPlane(SplitPlane &plane, std::vector<uint> &T, std::vector<uint> &tg, std::vector<uint> &td);
     private:
 };
 

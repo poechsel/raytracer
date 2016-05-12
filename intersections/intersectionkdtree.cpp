@@ -57,18 +57,7 @@ Side IntersectionKdTree::getSideTri(BoundingBox &bb, uint tri, SplitPlane plane)
 //*/
 }
 
-
-KdBaseNode* IntersectionKdTree::_build_tree(BoundingBox &bb, std::vector<uint> &T, uint depth) {
-    SplitPlane plane = this->heuristic(bb, T, depth);
-    if (this->automaticEnding(bb, T, depth)) {
-        return new KdLeaf(this->_scene, plane, T);
-    }
-    std::vector<uint> td;
-    std::vector<uint> tg;
-    BoundingBox bbg;
-    BoundingBox bbd;
-    bb.split(plane, &bbg, &bbd);
-
+void IntersectionKdTree::_splitTrianglesPlane(SplitPlane &plane, std::vector<uint> &T, std::vector<uint> &tg, std::vector<uint> &td) {
     int nd = 0, ng = 0, np = 0;
     for (uint i = 0; i < T.size(); ++i) {
         BoundingBox bb (_scene, &_scene->triangles[T[i]]);
@@ -96,6 +85,21 @@ KdBaseNode* IntersectionKdTree::_build_tree(BoundingBox &bb, std::vector<uint> &
             }
         }
     }
+}
+
+KdBaseNode* IntersectionKdTree::_build_tree(BoundingBox &bb, std::vector<uint> &T, uint depth) {
+    SplitPlane plane = this->heuristic(bb, T, depth);
+    //std::cout<<plane.cost<<"\n";
+    if (this->automaticEnding(plane, bb, T, depth) || !T.size()) {
+        return new KdLeaf(this->_scene, plane, T);
+    }
+    //std::cout<<plane.cost<<"\n";
+    std::vector<uint> td;
+    std::vector<uint> tg;
+    BoundingBox bbg;
+    BoundingBox bbd;
+    bb.split(plane, &bbg, &bbd);
+    this->_splitTrianglesPlane(plane, T, tg, td);
     return new KdTree(_scene, plane, this->_build_tree(bbg, tg, depth+1), this->_build_tree(bbd, td, depth+1));
 
 }
@@ -171,7 +175,7 @@ bool IntersectionKdTree::isFlat(SplitPlane plane, uint tri) {
     return false;
 }
 
-bool IntersectionKdTree::automaticEnding(BoundingBox &bb, std::vector<uint> &T, uint depth) {
+bool IntersectionKdTree::automaticEnding(SplitPlane &plan, BoundingBox &bb, std::vector<uint> &T, uint depth) {
     return depth > 16 || T.size() <=  5 || bb.getVolume() == 0;
 }
 
@@ -236,79 +240,12 @@ Real KdTree::intersection(const Ray &ray, uint* t_inter, Real t_min, Real t_max)
     }
     return -1;
 }
-/*
-void KdTree::build(IntersectionKdTree &ikd, BoundingBox &bb, uint depth, std::vector<uint> T) {
-    this->plane = ikd.heuristic(bb, T, depth);
-    std::vector<uint> td;
-    std::vector<uint> tg;
-    BoundingBox bbg;
-    BoundingBox bbd;
-    bb.split(this->plane, &bbg, &bbd);
-    //if (depth <= 3)
-    //std::cout<<"ehoh    "<<plane.axis<<" "<<plane.pos<<"\n";
-    //std::cout<<bb.m<<" , "<<bb.M<<"\n";
-    //std::cout<<bbg.m<<" , "<<bbg.M<< " | "<<bbd.m<< " , "<<bbd.M<<"\n";
-    int nd = 0, ng = 0, np = 0;
-    for (uint i = 0; i < T.size(); ++i) {
-        BoundingBox bb (_scene, &_scene->triangles[T[i]]);
-        if (bb.m[plane.axis] == plane.pos && bb.M[plane.axis] == plane.pos) {
-            if (plane.side == LEFT) {
-                tg.push_back(T[i]);
-                ng++;
-            } else if (plane.side == RIGHT) {
-                td.push_back(T[i]);
-                nd++;
-            } else {
-                tg.push_back(T[i]);
-                ng++;
-                td.push_back(T[i]);
-                nd++;
-            }
-        } else {
-            if (bb.m[plane.axis] < plane.pos){
-                tg.push_back(T[i]);
-                ng++;
-            }
-            if (bb.M[plane.axis] > plane.pos) {
-                nd++;
-                td.push_back(T[i]);
-            }
-        }
-    }
-
-    if (ikd.automaticEnding(bbg, tg, depth + 1)) {
-        this->left = new KdLeaf(this->_scene);
-    } else {
-        this->left = new KdTree(this->_scene);
-    }
-    if (ikd.automaticEnding(bbd, td, depth + 1)) {
-        this->right = new KdLeaf(this->_scene);
-    } else {
-        this->right = new KdTree(this->_scene);
-    }
-    //if (depth > 0)
-    //    return;
-    this->left->build(ikd, bbg, depth + 1, tg);
-    this->right->build(ikd, bbd, depth + 1, td);
-
-}
-*/
-
 
 KdLeaf::KdLeaf(Scene *scene, SplitPlane p, std::vector<uint> &T):
     KdBaseNode(scene, p), _triangles(T)
 {
 
 }
-/*
-
-void KdLeaf::build(IntersectionKdTree &ikd, BoundingBox &bb, uint depth, std::vector<uint> T) {
-    //std::cout<<depth<<" "<<T.size()<<"\n";
-    for (uint i = 0; i < T.size(); ++i) {
-        this->_triangles.push_back(T[i]);
-    }
-}
-*/
 Real KdLeaf::intersection(const Ray &ray, uint *t_inter, Real t_min, Real t_max) {
     Real t = -1;
     if (this->_triangles.size())

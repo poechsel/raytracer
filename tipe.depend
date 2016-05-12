@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1463039277 source:d:\tipe\source\tipe\tipe\main.cpp
+1463064108 source:d:\tipe\source\tipe\tipe\main.cpp
 	<iostream>
 	<glm/glm.hpp>
 	"glm/gtc/matrix_transform.hpp"
@@ -21,6 +21,7 @@
 	"intersections/intersectionkdtreespacemedian.h"
 	"intersections/intersectionkdtreegeometrymedian.h"
 	"intersections/intersectionkdtreesah.h"
+	"intersections/intersectionkdtreesahnlogn.h"
 
 1430337908 source:d:\tipe\source\tipe\tipe\maths\mattransformations.cpp
 	"matTransformations.h"
@@ -841,11 +842,11 @@
 1462919366 source:d:\tipe\source\tipe\tipe\utilities\benchmark.cpp
 	"benchmark.h"
 
-1463039249 d:\tipe\source\tipe\tipe\intersections\intersectionkdtree.h
+1463059287 d:\tipe\source\tipe\tipe\intersections\intersectionkdtree.h
 	"intersectionmethod.h"
 	<stack>
 
-1463039236 source:d:\tipe\source\tipe\tipe\intersections\intersectionkdtree.cpp
+1463043935 source:d:\tipe\source\tipe\tipe\intersections\intersectionkdtree.cpp
 	"intersectionkdtree.h"
 
 1463039342 source:d:\tipe\source\tipe\tipe\intersections\intersectionkdtreespacemedian.cpp
@@ -860,10 +861,16 @@
 1463039336 d:\tipe\source\tipe\tipe\intersections\intersectionkdtreegeometrymedian.h
 	"intersectionkdtree.h"
 
-1463038032 source:d:\tipe\source\tipe\tipe\intersections\intersectionkdtreesah.cpp
+1463064974 source:d:\tipe\source\tipe\tipe\intersections\intersectionkdtreesah.cpp
 	"intersectionkdtreesah.h"
 
-1463038032 d:\tipe\source\tipe\tipe\intersections\intersectionkdtreesah.h
+1463059287 d:\tipe\source\tipe\tipe\intersections\intersectionkdtreesah.h
 	"intersectionkdtree.h"
 	"../geometry/boundingbox.h"
+
+1463064974 source:d:\tipe\source\tipe\tipe\intersections\intersectionkdtreesahnlogn.cpp
+	"intersectionkdtreesahnlogn.h"
+
+1463060625 d:\tipe\source\tipe\tipe\intersections\intersectionkdtreesahnlogn.h
+	"intersectionkdtreesah.h"
 

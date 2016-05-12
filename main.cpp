@@ -20,6 +20,7 @@
 #include "intersections/intersectionkdtreespacemedian.h"
 #include "intersections/intersectionkdtreegeometrymedian.h"
 #include "intersections/intersectionkdtreesah.h"
+#include "intersections/intersectionkdtreesahnlogn.h"
 using namespace std;
 Real sigmoid(Real x) {
     //return 1.0/(1+std::exp(-(x-0.5)*12.0));
@@ -57,10 +58,14 @@ int main()
     std::cout<<"end loading========================\n";
 
     //IntersectionMethod *inter_method = new IntersectionNaiveMoller(&scene);
-    //IntersectionMethod *inter_method = new IntersectionGrid(&scene, 0.5);
-    IntersectionMethod *inter_method = new IntersectionKdTreeSpaceMedian(&scene, true);
+    IntersectionMethod *inter_method = new IntersectionGrid(&scene, 0.05);
+    //IntersectionMethod *inter_method = new IntersectionKdTreeSpaceMedian(&scene, true);
     //IntersectionMethod *inter_method = new IntersectionKdTreeSAH(&scene, 15, 20, NLOG2N);
+    //IntersectionMethod *inter_method = new IntersectionKdTreeSAHnlogn(&scene, 15, 20);
+    //IntersectionMethod *inter_method2 = new IntersectionKdTreeSAH(&scene, 15, 20, NLOG2N);
     ULARGE_INTEGER time = getTime();
+    //inter_method2->build();
+    std::cout<<"change method\n";
     inter_method->build();
     std::cout<<"build done in "<<getTimeElapsed(time)<<"\n";
     time = getTime();
@@ -80,7 +85,7 @@ int main()
         }
         if (completion_percent < (int)(((Real)y / 480.0)*100)) {
             completion_percent = ((Real)y / 480.0)*100;
-            std::cout<<completion_percent<<"%\n";
+            //std::cout<<completion_percent<<"%\n";
         }
     }
     std::cout<<"detected "<<nb<<" triangles\n";

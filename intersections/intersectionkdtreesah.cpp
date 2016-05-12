@@ -1,5 +1,5 @@
 #include "intersectionkdtreesah.h"
-/*
+
 bool eventComparison(Event e1, Event e2) {
     if (e1.pos < e2.pos)
         return true;
@@ -22,39 +22,45 @@ SplitPlane IntersectionKdTreeSAH::heuristic(BoundingBox &bb, std::vector<uint> &
     std::cout<<"ok\n";
 }
 
-SplitPlane  IntersectionKdTreeSAH::heuristicNlog2n(BoundingBox &bb, std::vector<uint> &triangles, uint depth) {
-    SplitPlane minimal = {0.0, X, BOTH};
-    Real         min_cost = -1;
-    //auto splits =  getPerfectSplits(bb, triangles);
-    std::vector<std::vector<Event> > events;
+void IntersectionKdTreeSAH::_initEvents(std::vector<std::vector<Event> > &events, std::vector<uint> &triangles, BoundingBox &bb){
     events.resize(3);
     for (uint i = 0; i < triangles.size(); ++i) {
         //BoundingBox clip = getClippedAABB(_scene, triangles[i], bb);
         BoundingBox clip (_scene, &(_scene->triangles[triangles[i]]));
         clip.clip(bb);
         if (clip.m[X] == clip.M[X]) {
-            events[X].push_back({clip.m[X], PLANAR});
+            events[X].push_back({clip.m[X], PLANAR, triangles[i]});
         } else {
-            events[X].push_back({clip.m[X], BEGIN});
-            events[X].push_back({clip.M[X], END});
+            events[X].push_back({clip.m[X], BEGIN, triangles[i]});
+            events[X].push_back({clip.M[X], END, triangles[i]});
         }
 
         if (clip.m[Y] == clip.M[Y]) {
-            events[Y].push_back({clip.m[Y], PLANAR});
+            events[Y].push_back({clip.m[Y], PLANAR, triangles[i]});
         } else {
-            events[Y].push_back({clip.m[Y], BEGIN});
-            events[Y].push_back({clip.M[Y], END});
+            events[Y].push_back({clip.m[Y], BEGIN, triangles[i]});
+            events[Y].push_back({clip.M[Y], END, triangles[i]});
         }
 
         if (clip.m[Z] == clip.M[Z]) {
-            events[Z].push_back({clip.m[Z], PLANAR});
+            events[Z].push_back({clip.m[Z], PLANAR, triangles[i]});
         } else {
-            events[Z].push_back({clip.m[Z], BEGIN});
-            events[Z].push_back({clip.M[Z], END});
+            events[Z].push_back({clip.m[Z], BEGIN, triangles[i]});
+            events[Z].push_back({clip.M[Z], END, triangles[i]});
         }
     }
-    for (uint axis = 0; axis < 3; axis++) {
+    for (uint axis = 0; axis < 3; axis++)
         std::sort(events[axis].begin(), events[axis].end());
+}
+
+SplitPlane  IntersectionKdTreeSAH::heuristicNlog2n(BoundingBox &bb, std::vector<uint> &triangles, uint depth) {
+    SplitPlane minimal = {0.0, X, BOTH};
+    Real         min_cost = -1;
+    //auto splits =  getPerfectSplits(bb, triangles);
+    std::vector<std::vector<Event> > events;
+    this->_initEvents(events, triangles, bb);
+    //std::cout<<depth<<" : "<<events[0].size()<<" "<<events[1].size()<<" "<<events[2].size()<<"\n";
+    for (uint axis = 0; axis < 3; axis++) {
         int Ng = 0, Nd = triangles.size(), Np = 0;
         uint i = 0;
         Axe axe = X;
@@ -63,32 +69,27 @@ SplitPlane  IntersectionKdTreeSAH::heuristicNlog2n(BoundingBox &bb, std::vector<
         for (uint i = 0; i < events[axis].size(); ++i) {
             int plying = 0, pending = 0, pstarting = 0;
             Real p = events[axis][i].pos;
-            //std::cout<<i<<" "<<events.size()<<" 1\n";
             while (i < events[axis].size() && p == events[axis][i].pos && events[axis][i].type == END) {
                 ++pending;
                 i++;
             }
-            //std::cout<<i<<" "<<events.size()<<" 2\n";
             while (i < events[axis].size() && p == events[axis][i].pos && events[axis][i].type == PLANAR) {
                 ++plying;
                 i++;
             }
-            //std::cout<<i<<" "<<events.size()<<" 3\n";
             while (i < events[axis].size() && p == events[axis][i].pos && events[axis][i].type == BEGIN) {
                 ++pstarting;
                 i++;
             }
-            //std::cout<<i<<" "<<events.size()<<" 4\n";
             Np = plying;
             Nd += -(plying + pending);
             SplitPlane plan = {p, axe, BOTH};
-            TempSAH temp_sah = this->SAH(plan, bb, Ng, Nd, Np);
-            if (temp_sah.cost < min_cost || min_cost < 0) {
-                min_cost = temp_sah.cost;
-                minimal = {p, axe, temp_sah.side};
+            TempSAH tsah = this->SAH(plan, bb, Ng, Nd, Np);
+            if (0 <= tsah.cost && (tsah.cost < min_cost || min_cost < 0)) {
+                min_cost = tsah.cost;
+                minimal = {p, axe, tsah.side, tsah.cost};
             }
             Ng += pstarting + plying;
-            //std::cout<<i<<" "<<events.size()<<" too mucj\n";
         }
         //std::cout<<"vol = "<<i<<" "<<events.size()<<"\n";
         //std::cout<<bb.m<<" "<<bb.M<<"\n";
@@ -96,6 +97,9 @@ SplitPlane  IntersectionKdTreeSAH::heuristicNlog2n(BoundingBox &bb, std::vector<
         //std::cout<<bb.getVolume()<<"\n";
     }
     //std::cout<<"min "<<minimal.pos<<" "<<min_cost<<"\n";
+    //std::cout<<"=> "<<min_cost<<" "<<triangles.size()<<"\n";
+    //std::cout<<min_cost<<"\n";
+    minimal.cost = min_cost;
     return minimal;
 }
 
@@ -120,10 +124,10 @@ std::vector<std::vector<SplitPlane> > IntersectionKdTreeSAH::getPerfectSplits(Bo
 SplitPlane  IntersectionKdTreeSAH::heuristicN2(BoundingBox &bb, std::vector<uint> &triangles, uint depth) {
     std::vector<SplitPlane> planes;
     for (uint i = 0; i < triangles.size(); ++i) {
-        BoundingBox temp = getClippedAABB(_scene, triangles[i], bb);
-        //BoundingBox temp (_scene, &(_scene->triangles[triangles[i]]));
+        //BoundingBox temp = getClippedAABB(_scene, triangles[i], bb);
+        BoundingBox temp (_scene, &(_scene->triangles[triangles[i]]));
        // std::cout<<temp.m<<" | "<<temp.M<<" && "<<temp2.m<<" | "<<temp2.M<<"\n";
-        //temp.clip(bb);
+        temp.clip(bb);
         planes.push_back({temp.m.x, X, BOTH});
         planes.push_back({temp.m.y, Y, BOTH});
         planes.push_back({temp.m.z, Z, BOTH});
@@ -152,17 +156,17 @@ SplitPlane  IntersectionKdTreeSAH::heuristicN2(BoundingBox &bb, std::vector<uint
             }
         }
         TempSAH tsah = this->SAH(plan, bb, Ng, Nd, Np);
-            if (tsah.cost < min_cost || min_cost < 0) {
+            if (0 <= tsah.cost && (tsah.cost < min_cost || min_cost < 0)) {
                    // std::cout<<Ng<<" "<<Np<<" "<<Nd<<"\n";
                 min_cost = tsah.cost;
                 minimal = plan;
                 minimal.side = tsah.side;
+                minimal.cost = tsah.cost;
                 tNg = Ng;
                 tNp = Np;
                 tNd = Nd;
             }
     }
-
                 //std::cout<<"best "<<min_cost<<" "<<minimal.pos<<" "<<minimal.axis<<" "<<tNg<<" "<<tNp<<" "<<tNd<<"\n";
     return minimal;
 }
@@ -175,6 +179,9 @@ TempSAH IntersectionKdTreeSAH::SAH(SplitPlane &plan, BoundingBox &bb, int Ng, in
     BoundingBox Vg;
     BoundingBox Vd;
     bb.split(plan, &Vg, &Vd);
+    if (bb.getVolume() == 0) {
+        return {(Real)-1, BOTH};
+    }
     Real Pg = Vg.getVolume() / bb.getVolume();
     Real Pd = Vd.getVolume() / bb.getVolume();
     Real cg = this->C(Pg, Pd, Ng + Np, Nd);
@@ -184,8 +191,6 @@ TempSAH IntersectionKdTreeSAH::SAH(SplitPlane &plan, BoundingBox &bb, int Ng, in
     if (cg < cd)
         return {cg, LEFT};
     return {cd, RIGHT};
-    //return {this->C(Pg, Pd, Ng+Nd, Nd+Np), BOTH};
-    return {std::min(cg, cd), BOTH};
 }
 
 
@@ -193,7 +198,11 @@ IntersectionKdTreeSAH::~IntersectionKdTreeSAH()
 {
     //dtor
 }
-
+//the automatic criterion isn't working
+bool IntersectionKdTreeSAH::automaticEnding(SplitPlane &plane, BoundingBox &bb, std::vector<uint> &triangles, uint depth){
+    //std::cout<< plane.cost <<" "<< _Ki * triangles.size()<<"\n";
+    return (plane.cost == -1 || 5> triangles.size() || depth > 16 );
+}//*/
 //https://github.com/tomka/mitsuba-renderer/blob/master/src/libcore/triangle.cpp
 int sutherlandHodgman(std::vector<Vector3f> &input, int inCount, std::vector<Vector3f> &output, int axis,
 		double splitPos, bool isMinimum) {
@@ -255,4 +264,4 @@ BoundingBox getClippedAABB(const Scene *scene, const uint tri, const BoundingBox
 	result.clip(bb);
 	return result;
 }
-*/
+//*/
