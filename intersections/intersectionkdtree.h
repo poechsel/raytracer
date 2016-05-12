@@ -42,9 +42,10 @@ class IntersectionKdTree;
 
 class KdBaseNode {
     public:
-        KdBaseNode(Scene *scene);
+        KdBaseNode(Scene *scene, SplitPlane p);
+        ~KdBaseNode(){};
         virtual KdTreeNodeType getType() = 0;
-        virtual void build(IntersectionKdTree &ikd, BoundingBox &aabb, uint depth, std::vector<uint> T) = 0;
+        //virtual void build(IntersectionKdTree &ikd, BoundingBox &aabb, uint depth, std::vector<uint> T) = 0;
         virtual Real intersection(const Ray &ray, uint *t_inter, Real t_min, Real t_max) = 0;
         SplitPlane  plane;
     protected:
@@ -54,10 +55,10 @@ class KdBaseNode {
 
 class KdTree: public KdBaseNode {
     public:
-        KdTree(Scene *scene);
+        KdTree(Scene *scene, SplitPlane p, KdBaseNode* l, KdBaseNode* g);
         ~KdTree();
         KdTreeNodeType getType() {return NODE;}
-        void build(IntersectionKdTree &ikd, BoundingBox &aabb, uint depth, std::vector<uint> T);
+        //void build(IntersectionKdTree &ikd, BoundingBox &aabb, uint depth, std::vector<uint> T);
         Real intersection(const Ray &ray, uint *t_inter, Real t_min, Real t_max);
         KdBaseNode      *left;
         KdBaseNode      *right;
@@ -66,10 +67,12 @@ class KdTree: public KdBaseNode {
 
 class KdLeaf: public KdBaseNode {
     public:
-        KdLeaf(Scene *scene);
+        KdLeaf(Scene *scene, SplitPlane p, std::vector<uint> &T);
         KdTreeNodeType getType() {return LEAF;}
-        void build(IntersectionKdTree &ikd, BoundingBox &aabb, uint depth, std::vector<uint> T);
+        //void build(IntersectionKdTree &ikd, BoundingBox &aabb, uint depth, std::vector<uint> T);
         Real intersection(const Ray &ray, uint *t_inter, Real t_min, Real t_max);
+        Real intersectionSeq(const Ray &ray, uint *t_inter, Real t_min, Real t_max);
+        Real intersectionRec(const Ray &ray, uint *t_inter, Real t_min, Real t_max);
     protected:
         std::vector<uint> _triangles;
 
@@ -78,21 +81,26 @@ class KdLeaf: public KdBaseNode {
 
 class IntersectionKdTree: public IntersectionMethod{
     public:
-        IntersectionKdTree(Scene *scene);
+        IntersectionKdTree(Scene *scene, bool ud = true);
         virtual ~IntersectionKdTree();
 
         virtual void build();
 
         //t_inter est l'index du triangle qui s'intersecte
         virtual Real intersect(Ray const &ray, uint *t_inter);
-        Real intersect2(Ray const &ray, uint *t_inter);
+        Real intersectSeq(Ray const &ray, uint *t_inter);
+        Real intersectRec(Ray const &ray, uint *t_inter);
         virtual SplitPlane  heuristic(BoundingBox &bb, std::vector<uint> &triangles, uint depth) = 0;
-        bool        automaticEnding(BoundingBox &bb, std::vector<uint> triangles, uint depth);
+        bool        automaticEnding(BoundingBox &bb, std::vector<uint> &triangles, uint depth);
         Side        getSideTri(BoundingBox &bb, uint tri, SplitPlane plane);
         bool isFlat(SplitPlane plane, uint tri);
     protected:
-        KdTree      _tree;
+        KdBaseNode*      _tree;
         BoundingBox _bb_root;
+        bool _use_rec;
+
+
+        KdBaseNode *_build_tree(BoundingBox &bb, std::vector<uint> &triangles, uint depth);
     private:
 };
 

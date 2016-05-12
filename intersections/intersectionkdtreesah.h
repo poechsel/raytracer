@@ -4,6 +4,7 @@
 #include "intersectionkdtree.h"
 #include "../geometry/boundingbox.h"
 
+/*
 int sutherlandHodgman(std::vector<Vector3f> &input, int inCount, std::vector<Vector3f> &output, int axis,
 		double splitPos, bool isMinimum);
 BoundingBox getClippedAABB(const Scene *scene, const uint tri, const BoundingBox &bb);
@@ -55,5 +56,5 @@ class IntersectionKdTreeSAH: public IntersectionKdTree
         TempSAH SAH(SplitPlane &plan, BoundingBox &bb, int Ng, int Nd, int Np);
     private:
 };
-
+*/
 #endif // INTERSECTIONKDTREESAH_H

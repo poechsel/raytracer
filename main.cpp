@@ -58,7 +58,7 @@ int main()
 
     //IntersectionMethod *inter_method = new IntersectionNaiveMoller(&scene);
     //IntersectionMethod *inter_method = new IntersectionGrid(&scene, 0.5);
-    IntersectionMethod *inter_method = new IntersectionKdTreeSpaceMedian(&scene);
+    IntersectionMethod *inter_method = new IntersectionKdTreeSpaceMedian(&scene, true);
     //IntersectionMethod *inter_method = new IntersectionKdTreeSAH(&scene, 15, 20, NLOG2N);
     ULARGE_INTEGER time = getTime();
     inter_method->build();

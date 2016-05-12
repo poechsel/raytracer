@@ -1,8 +1,8 @@
 #include "intersectionkdtreegeometrymedian.h"
 
 
-IntersectionKdTreeGeometryMedian::IntersectionKdTreeGeometryMedian(Scene *scene):
-    IntersectionKdTree(scene)
+IntersectionKdTreeGeometryMedian::IntersectionKdTreeGeometryMedian(Scene *scene, bool a):
+    IntersectionKdTree(scene, a)
 {
     //ctor
 }

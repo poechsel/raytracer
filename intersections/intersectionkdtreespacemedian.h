@@ -5,7 +5,7 @@
 class IntersectionKdTreeSpaceMedian: public IntersectionKdTree
 {
     public:
-        IntersectionKdTreeSpaceMedian(Scene *scene);
+        IntersectionKdTreeSpaceMedian(Scene *scene, bool a);
         virtual ~IntersectionKdTreeSpaceMedian();
         SplitPlane  heuristic(BoundingBox &bb, std::vector<uint> &triangles, uint depth);
     protected:

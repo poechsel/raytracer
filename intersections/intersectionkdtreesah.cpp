@@ -1,5 +1,5 @@
 #include "intersectionkdtreesah.h"
-
+/*
 bool eventComparison(Event e1, Event e2) {
     if (e1.pos < e2.pos)
         return true;
@@ -54,25 +54,6 @@ SplitPlane  IntersectionKdTreeSAH::heuristicNlog2n(BoundingBox &bb, std::vector<
         }
     }
     for (uint axis = 0; axis < 3; axis++) {
-           // std::cout<<axis<<"\n";
-        //std::vector<Event> events;
-        /*for (uint i = 0; i < triangles.size(); ++i) {
-            BoundingBox clip = getClippedAABB(_scene, triangles[i], bb);
-            if (clip.m[axis] == clip.M[axis]) {
-                events.push_back({clip.m[axis], PLANAR});
-            } else {
-                events.push_back({clip.m[axis], BEGIN});
-                events.push_back({clip.M[axis], END});
-            }
-        }*/
-        /*for (uint i = 0; i < triangles.size(); ++i) {
-            if (splits[axis][2*i].pos == splits[axis][2*i+1].pos) {
-                events.push_back({splits[axis][2*i].pos, PLANAR});
-            } else {
-                events.push_back({splits[axis][2*i].pos, BEGIN});
-                events.push_back({splits[axis][2*i+1].pos, END});
-            }
-        }*/
         std::sort(events[axis].begin(), events[axis].end());
         int Ng = 0, Nd = triangles.size(), Np = 0;
         uint i = 0;
@@ -150,69 +131,9 @@ SplitPlane  IntersectionKdTreeSAH::heuristicN2(BoundingBox &bb, std::vector<uint
         planes.push_back({temp.M.y, Y, BOTH});
         planes.push_back({temp.M.z, Z, BOTH});
     }
-    /*auto planes = this->getPerfectSplits(bb, triangles);
-    SplitPlane minimal = {0.0, X, BOTH};
-    Real min_cost = -1;
-    std::cout<<triangles.size()<<" "<<planes[0].size()<<" "<<planes[1].size()<<" "<<planes[2].size()<<"\n";
-    for (uint axe = 0; axe < 3; ++axe) {
-        for (auto &plan : planes[axe]) {
-                //std::cout<<"well "<<axe<<" "<<plan.axis<<"\n";
-            int Ng = 0;
-            int Nd = 0;
-            int Np = 0;
-            for (auto t : triangles) {
-                Side s = this->getSideTri(bb, t, plan);
-                if (s == LEFT) {
-                    Ng++;
-                } else if (s == RIGHT) {
-                    Nd++;
-                } else {
-                    Np++;
-                }
-            }
-
-            TempSAH tsah = this->SAH(plan, bb, Ng, Nd, Np);
-            if (tsah.cost < min_cost || min_cost < 0) {
-                   // std::cout<<Ng<<" "<<Np<<" "<<Nd<<"\n";
-                    //std::cout<<tsah.cost<<" "<<plan.pos<<"\n";
-                min_cost = tsah.cost;
-                minimal = plan;
-                minimal.side = tsah.side;
-            }
-        }
-    }*/
     SplitPlane minimal = {0.0, X, BOTH};
     Real min_cost = -1;
     int tNg, tNd, tNp;
-    /*
-        for (auto plan : planes) {
-                //std::cout<<"well "<<axe<<" "<<plan.axis<<"\n";
-            int Ng = 0;
-            int Nd = 0;
-            int Np = 0;
-            for (uint i = 0; i < triangles.size(); ++i) {
-                Side s = this->getSideTri(bb, triangles[i], plan);
-                if (s == LEFT) {
-                    Ng++;
-                } else if (s == RIGHT) {
-                    Nd++;
-                } else {
-                    Np++;
-                }
-            }
-
-            TempSAH tsah = this->SAH(plan, bb, Ng, Nd, Np);
-            if (tsah.cost < min_cost || min_cost < 0) {
-                   // std::cout<<Ng<<" "<<Np<<" "<<Nd<<"\n";
-                min_cost = tsah.cost;
-                minimal = plan;
-                minimal.side = tsah.side;
-                tNg = Ng;
-                tNp = Np;
-                tNd = Nd;
-            }
-        }
-    */
     for (auto plan : planes) {
             int Ng = 0;
             int Nd = 0;
@@ -262,9 +183,7 @@ TempSAH IntersectionKdTreeSAH::SAH(SplitPlane &plan, BoundingBox &bb, int Ng, in
 
     if (cg < cd)
         return {cg, LEFT};
-    return {cd, RIGHT};//*/
-    /*if (plan.pos == 0)
-    std::cout<<plan.pos<<" "<<this->C(Pg, Pd, Ng+Np, Nd+Np)<<" "<<bb.getVolume()<<" "<<Vg.getVolume()<<"\n";//*/
+    return {cd, RIGHT};
     //return {this->C(Pg, Pd, Ng+Nd, Nd+Np), BOTH};
     return {std::min(cg, cd), BOTH};
 }
@@ -296,24 +215,20 @@ int sutherlandHodgman(std::vector<Vector3f> &input, int inCount, std::vector<Vec
 		bool nextIsInside = (distance >= 0);
 
 		if (curIsInside && nextIsInside) {
-			/* Both this and the next vertex are inside, add to the list */
 			output.push_back(next);
 			output[outCount++] = next;
 		} else if (curIsInside && !nextIsInside) {
-			/* Going outside -- add the intersection */
 			double t = (splitPos - cur[axis]) / (next[axis] - cur[axis]);
 			Vector3f p = cur + (next - cur) * t;
 			p[axis] = splitPos; // Avoid roundoff errors
 			output.push_back(p);
 		} else if (!curIsInside && nextIsInside) {
-			/* Coming back inside -- add the intersection + next vertex */
 			double t = (splitPos - cur[axis]) / (next[axis] - cur[axis]);
 			Vector3f p = cur + (next - cur) * t;
 			p[axis] = splitPos; // Avoid roundoff errors
 			output.push_back(p);
 			output.push_back(next);
 		} else {
-			/* Entirely outside - do not add anything */
 		}
 		cur = next;
 		curIsInside = nextIsInside;
@@ -340,3 +255,4 @@ BoundingBox getClippedAABB(const Scene *scene, const uint tri, const BoundingBox
 	result.clip(bb);
 	return result;
 }
+*/
