@@ -48,20 +48,19 @@ int main()
     PythonContext context;
     Scene scene;
     context.setCWD("python");
-    SFMLImage image (640, 480);
     int completion_percent = 0;
 
     Camera cameratemp;
-    PythonSceneLoader loader_scenes("scenes/suzanne_hp.json");
+    PythonSceneLoader loader_scenes("scenes/church.json");
     std::cout<<"loading========================\n";
     loader_scenes.load(&cameratemp, &scene);
     std::cout<<"end loading========================\n";
 
     //IntersectionMethod *inter_method = new IntersectionNaiveMoller(&scene);
-    IntersectionMethod *inter_method = new IntersectionGrid(&scene, 0.05);
+    //IntersectionMethod *inter_method = new IntersectionGrid(&scene, 0.5);
     //IntersectionMethod *inter_method = new IntersectionKdTreeSpaceMedian(&scene, true);
     //IntersectionMethod *inter_method = new IntersectionKdTreeSAH(&scene, 15, 20, NLOG2N);
-    //IntersectionMethod *inter_method = new IntersectionKdTreeSAHnlogn(&scene, 15, 20);
+    IntersectionMethod *inter_method = new IntersectionKdTreeSAHnlogn(&scene, 15, 20);
     //IntersectionMethod *inter_method2 = new IntersectionKdTreeSAH(&scene, 15, 20, NLOG2N);
     ULARGE_INTEGER time = getTime();
     //inter_method2->build();
@@ -70,8 +69,9 @@ int main()
     std::cout<<"build done in "<<getTimeElapsed(time)<<"\n";
     time = getTime();
     int nb = 0;
-    for (uint y = 0; y < 480; ++y) {
-        for (uint x = 0; x < 640; ++x) {
+    SFMLImage image (cameratemp.width, cameratemp.height);
+    for (uint y = 0; y < cameratemp.height; ++y) {
+        for (uint x = 0; x < cameratemp.width; ++x) {
             Ray ray = cameratemp.shoot(x, y);
             uint tri = 0;
             Real t = inter_method->intersect(ray, &tri);

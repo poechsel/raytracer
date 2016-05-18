@@ -31,7 +31,7 @@ bool PythonSceneLoader::load(Camera *camera, Scene *scene){
             PyObject *temp = PyDict_GetItem(value, key_presets);
             loadScene(camera, temp);
         } else {
-            std::cout<<"No Camera in the scene descriptions\n";
+            std::cout<<"No presets in the scene descriptions\n";
             state = false;
         }
         if (PyDict_Contains(value, key_camera)){
@@ -45,7 +45,7 @@ bool PythonSceneLoader::load(Camera *camera, Scene *scene){
             PyObject *temp = PyDict_GetItem(value, key_objects);
             loadObjects(temp, scene);
         } else {
-            std::cout<<"No Camera in the scene descriptions\n";
+            std::cout<<"No objects in the scene descriptions\n";
             state = false;
         }
         Py_DECREF(key_presets);
