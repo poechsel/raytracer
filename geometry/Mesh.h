@@ -19,13 +19,10 @@ class Mesh
         void addFace (uint v1, uint v2, uint v3, Vector3f n);
         void addFace (uint v1, uint v2, uint v3);
         void applyTransform();
-        Real intersect (const Ray &ray);
         Matrix4f transform;
         Matrix4f inverse_transform;
         Matrix4f transpose;
         void setTransform(Matrix4f t);
-        Vector3f normal;
-        uint   hitten_triangle;
         Scene *_scene;
     protected:
         bool is_transformed;

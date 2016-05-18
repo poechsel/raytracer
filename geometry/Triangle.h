@@ -14,9 +14,7 @@ class Triangle
         Triangle(uint v1, uint v2, uint v3, Vector3f n, Scene *sc);
         Triangle(uint v1, uint v2, uint v3, Scene *sc);
         virtual ~Triangle();
-        Real intersect (const Ray &ray);
         void recalculate();
-        Vector3f getCenter();
 
         Scene *_scene;
         uint v1;

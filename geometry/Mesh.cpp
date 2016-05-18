@@ -52,30 +52,6 @@ void Mesh::applyTransform(){
     }
 }
 
-Real Mesh::intersect(const Ray &ray) {
-    Ray new_ray = ray;
-    if (!is_transformed)
-        new_ray.transform(inverse_transform);
-    Real t = -1;
-    for (auto triangle : triangles) {
-        Real temp = _scene->triangles[triangle].intersect(new_ray);
-        if (temp > 0 && (t < 0 || temp < t)) {
-            t = temp;
-            normal = _scene->triangles[triangle].normal;
-            hitten_triangle = triangle;
-        }
-    }
-    normal.w = 0;
-    if (!is_transformed) {
-        normal = transpose * normal;
-        normal.normalizeMe();
-    }
-    if (t > 0) {
-        return t;
-    }
-    return -1;
-}
-
 Mesh::~Mesh()
 {
     //dtor

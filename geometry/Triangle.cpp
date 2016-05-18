@@ -30,32 +30,6 @@ void Triangle::recalculate() {
     this->normal = cross(this->e1, this->e2).normalize();
 }
 
-Real Triangle::intersect(const Ray &ray) {/*
-    std::cout<<vset.vertices[v1]<<"\n";
-    std::cout<<vset.vertices[v2]<<"\n";
-    std::cout<<vset.vertices[v3]<<"\n";*/
-    Vector3f e1 = _scene->vertices[v2] - _scene->vertices[v1];
-    Vector3f e2 = _scene->vertices[v3] - _scene->vertices[v1];
-
-    Vector3f pvec = cross(ray.direction, e2);
-    Real det = dot(e1, pvec);
-    if (det == 0) return -1;
-    Real invDet = 1.0 / det;
-    Vector3f tvec = ray.origin - _scene->vertices[v1];
-    Real u = dot(tvec, pvec) * invDet;
-    if (u < 0 || u > 1) return -1;
-    Vector3f qvec = cross(tvec, e1);
-    Real v = dot(ray.direction, qvec) * invDet;
-    if (v < 0 || u + v > 1) return -1;
-    Real t = dot(e2, qvec) * invDet;
-    if (t < 0) return -1;
-    return t;
-}
-
-Vector3f Triangle::getCenter() {
-    return (_scene->vertices[v1] + _scene->vertices[v2] + _scene->vertices[v3]) / (Real)3;
-}
-
 Triangle::~Triangle()
 {
     //dtor

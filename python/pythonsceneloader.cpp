@@ -4,15 +4,13 @@ PythonSceneLoader::PythonSceneLoader(std::string path):
     _function(&_module), _path(path)
 {
     if(!_module.loadModule("loaderOfScene")){
-        std::cout<<" ____________________________________________________________\n";
+        std::cout<<" _______________________________________________________\n";
         std::cout<<"|  Il n'existe pas de plugins pour charger la scene \n";
-        std::cout<<"|____________________________________________________________\n";
-    } else {
-        if(!_function.loadFunction("load")) {
-            std::cout<<" ____________________________________________________________\n";
-            std::cout<<"|  Le loader doit comprendre une fonction nommée load \n";
-            std::cout<<"|____________________________________________________________\n";
-        }
+        std::cout<<"|_______________________________________________________\n";
+    } else if(!_function.loadFunction("load")) {
+        std::cout<<" _______________________________________________________\n";
+        std::cout<<"|  Le loader doit comprendre une fonction nommée load \n";
+        std::cout<<"|_______________________________________________________\n";
     }
 }
 
@@ -27,6 +25,8 @@ bool PythonSceneLoader::load(Camera *camera, Scene *scene){
         PyObject *key_presets = PyUnicode_FromString("SCENE_PRESETS");
         PyObject *key_camera = PyUnicode_FromString("CAMERA");
         PyObject *key_objects = PyUnicode_FromString("OBJECTS");
+        //le fichier de configuration doit indiquer les paramétres essentiels au
+        //moteur, comme la taille de l'image
         if (PyDict_Contains(value, key_presets)){
             PyObject *temp = PyDict_GetItem(value, key_presets);
             loadScene(camera, temp);
@@ -34,6 +34,7 @@ bool PythonSceneLoader::load(Camera *camera, Scene *scene){
             std::cout<<"No presets in the scene descriptions\n";
             state = false;
         }
+        //il doit également contenir des informations concernant la caméra
         if (PyDict_Contains(value, key_camera)){
             PyObject *temp = PyDict_GetItem(value, key_camera);
             loadCamera(camera, temp);
@@ -41,6 +42,7 @@ bool PythonSceneLoader::load(Camera *camera, Scene *scene){
             std::cout<<"No Camera in the scene descriptions\n";
             state = false;
         }
+        //enfin il doit y avoir au moins un objects 3D à charger
         if (PyDict_Contains(value, key_objects)){
             PyObject *temp = PyDict_GetItem(value, key_objects);
             loadObjects(temp, scene);
@@ -65,11 +67,12 @@ bool PythonSceneLoader::loadObjects(PyObject *value, Scene *scene){
         PyObject*   pyStr = PyUnicode_AsEncodedString(valuet, "utf-8", "Error ~");
 
         Manager3dLoader loader;
-        std::map<std::string, Mesh*> meshes = loader.load(PyBytes_AS_STRING(pyStr), scene);
+        std::map<std::string, Mesh*> meshes = loader.load(PyBytes_AS_STRING(pyStr)
+                                                          , scene);
         for (auto it =meshes.begin(); it !=meshes.end(); ++it) {
             std::cout<<"->Mesh: "<<it->first<<" -> "<<&(it->second)<<"\n";
-            std::cout<<"    Faces: "<<it->second->triangles.size()<<" Vertices: "<<it->second->vertices.size()<<"\n";
-            //std::cout<<"    uvs: "<<it->second->tex_coords.size()<<" normals: "<<it->second->normals_vertex.size()<<"\n";
+            std::cout<<"    Faces: "<<it->second->triangles.size()
+                     <<" Vertices: "<<it->second->vertices.size()<<"\n";
         }
         scene->appendMeshes(meshes);
         std::cout<<"loading files from: "<<PyBytes_AS_STRING(pyStr)<<"\n";
@@ -96,6 +99,7 @@ bool PythonSceneLoader::loadScene(Camera *camera, PyObject *value){
     return true;
 }
 
+//une caméra est défini par sa matrice de transformation, son fov et son ratio
 bool PythonSceneLoader::loadCamera(Camera *camera, PyObject *value){
     Real ratio = 0, fov = 0;
     PyObject *keyratio = PyUnicode_FromString("ratio");
@@ -117,17 +121,14 @@ bool PythonSceneLoader::loadCamera(Camera *camera, PyObject *value){
             PyObject* temp = PyList_GetItem(matrixpy, i);
             uint sizew = PyList_Size(temp);
             for (uint j = 0; j < sizew; ++j) {
-                camera->setMatrixCoord(PyFloat_AsDouble(PyList_GetItem(temp, j)), i, j);
-                std::cout<<PyFloat_AsDouble(PyList_GetItem(temp, j))<<" ";
+                camera->setMatrixCoord(PyFloat_AsDouble(PyList_GetItem(temp, j))
+                                       , i, j);
             }
-            std::cout<<"\n";
         }
     }
     Py_XDECREF(keymatrix);
     camera->fov = fov;
     camera->ratio = ratio;
-
-    std::cout<<"camero will be of fov "<<fov<<" ratio "<<ratio<<"\n";
     return true;
 }
 

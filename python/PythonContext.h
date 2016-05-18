@@ -6,6 +6,9 @@
 #include <vector>
 #include <iostream>
 
+/* Une suite de fonctions permettant de convertir une variable en la variable
+*  python correspondante
+*/
 inline PyObject* convertToPy(std::string str) {
     return PyUnicode_FromString(str.c_str());
 }
@@ -19,6 +22,9 @@ PyObject*   convertToPy(std::vector<long> vec);
 std::vector<long> convertFromPy(PyObject *py);
 void decrefListPy(PyObject  *list);
 
+/* Classe à appeler pour pouvoir gérer les fichiers pythons. Elle modifie
+*  entre-autre le path
+*/
 class PythonContext
 {
     public:

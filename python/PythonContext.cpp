@@ -10,23 +10,19 @@ PyObject*   convertToPy(std::vector<long> vec) {
 }
 
 void decrefListPy(PyObject  *list){
-    unsigned int size = PyList_Size(list);
-    for (unsigned int i = 0; i < size; ++i) {
+    for (unsigned int i = 0; i <  PyList_Size(list); ++i) {
         Py_DECREF(PyList_GetItem(list, i));
     }
     Py_DECREF(list);
 }
 std::vector<long> convertFromPy(PyObject *py){
     std::vector<long> out(PyList_Size(py));
-    unsigned int size = PyList_Size(py);
-    for (unsigned int i = 0; i < size; ++i) {
+    for (unsigned int i = 0; i < PyList_Size(py); ++i) {
         out[i] = PyLong_AsLong(PyList_GetItem(py, i));
-        std::cout<<"    "<<PyLong_AsLong(PyList_GetItem(py, i))<<"\n";
     }
     return out;
 }
 
-//-----------------------------
 
 
 PythonContext::PythonContext()
