@@ -6,61 +6,27 @@ IntersectionKdTree::IntersectionKdTree(Scene *scene, bool use_r):
 
 }
 
+
+
+
 IntersectionKdTree::~IntersectionKdTree()
 {
     delete _tree;
 }
 
 
-Side IntersectionKdTree::getSideTri(BoundingBox &bb, uint tri, SplitPlane plane) {
-    //normally, clip the tri bb to bounding box bb
-    BoundingBox clip_bb (_scene, &(_scene->triangles[tri]));
 
-    if (plane.axis == X) {
-        //if (clip_bb.M.x < -2)
-        //std::cout<<plane.pos<<" et "<<clip_bb.m.x<<" , "<<clip_bb.M.x<<"\n";
-        if (clip_bb.M.x < plane.pos){
-            return LEFT;
-        }
-        if (clip_bb.m.x > plane.pos) {
-            return RIGHT;
-        }
-        return BOTH;
-    } else if (plane.axis == Y) {
-        if (clip_bb.M.y < plane.pos){
-            return LEFT;
-        }
-        if (clip_bb.m.y > plane.pos) {
-            return RIGHT;
-        }
-        return BOTH;
-    } else {
-        if (clip_bb.M.z < plane.pos){
-            return LEFT;
-        }
-        if (clip_bb.m.z > plane.pos) {
-            return RIGHT;
-        }
-        return BOTH;
-    }//*/
-/*
-    BoundingBox bbg;
-    BoundingBox bbd;
-    bb.split(plane, &bbg, &bbd);
-    bool col_g = intersectionBoxTri(_scene, bbg.getCenter(), bbg.getHalfSize(), _scene->triangles[tri]);
-    bool col_d = intersectionBoxTri(_scene, bbd.getCenter(), bbd.getHalfSize(), _scene->triangles[tri]);
-    if (col_g && col_d)
-        return BOTH;
-    if (col_g)
-        return LEFT;
-    return RIGHT;
-//*/
-}
 
-void IntersectionKdTree::_splitTrianglesPlane(SplitPlane &plane, std::vector<uint> &T, std::vector<uint> &tg, std::vector<uint> &td) {
+void IntersectionKdTree::splitTrianglesPlane(SplitPlane &plane,
+                                              std::vector<uint> &T,
+                                              std::vector<uint> &tg,
+                                              std::vector<uint> &td)
+{
     int nd = 0, ng = 0, np = 0;
     for (uint i = 0; i < T.size(); ++i) {
         BoundingBox bb (_scene, &_scene->triangles[T[i]]);
+        // si le triangle repose sur le plan séparateur on l'ajoute du côté
+        // défini par le plan séparateur
         if (bb.m[plane.axis] == plane.pos && bb.M[plane.axis] == plane.pos) {
             if (plane.side == LEFT) {
                 tg.push_back(T[i]);
@@ -74,7 +40,7 @@ void IntersectionKdTree::_splitTrianglesPlane(SplitPlane &plane, std::vector<uin
                 td.push_back(T[i]);
                 nd++;
             }
-        } else {
+        } else {    //sinon on l'ajoute à droite ou à gauche
             if (bb.m[plane.axis] < plane.pos){
                 tg.push_back(T[i]);
                 ng++;
@@ -87,23 +53,36 @@ void IntersectionKdTree::_splitTrianglesPlane(SplitPlane &plane, std::vector<uin
     }
 }
 
-KdBaseNode* IntersectionKdTree::_build_tree(BoundingBox &bb, std::vector<uint> &T, uint depth) {
+
+
+KdBaseNode* IntersectionKdTree::buildTree(BoundingBox &bb,
+                                            std::vector<uint> &T,
+                                            uint depth)
+{
+    // on récupére le plan séparateur
     SplitPlane plane = this->heuristic(bb, T, depth);
-    //std::cout<<plane.cost<<"\n";
+    //on arréte la construction si nécessaire
     if (this->automaticEnding(plane, bb, T, depth) || !T.size()) {
         return new KdLeaf(this->_scene, plane, T);
     }
-    //std::cout<<plane.cost<<"\n";
     std::vector<uint> td;
     std::vector<uint> tg;
     BoundingBox bbg;
     BoundingBox bbd;
     bb.split(plane, &bbg, &bbd);
-    this->_splitTrianglesPlane(plane, T, tg, td);
-    return new KdTree(_scene, plane, this->_build_tree(bbg, tg, depth+1), this->_build_tree(bbd, td, depth+1));
+    //on construit les fils récursivement
+    this->splitTrianglesPlane(plane, T, tg, td);
+    return new KdTree(_scene, plane,
+                      this->buildTree(bbg, tg, depth+1),
+                      this->buildTree(bbd, td, depth+1));
 
 }
-void IntersectionKdTree::build() {
+
+
+
+
+void IntersectionKdTree::build()
+{
     BoundingBox bb;
     for (auto &triangle : this->_scene->triangles) {
         bb.expand(this->_scene, &triangle);
@@ -113,12 +92,19 @@ void IntersectionKdTree::build() {
     for (int i = 0; i < this->_scene->triangles.size(); ++i) {
         T.push_back(i);
     }
-    _tree = this->_build_tree(bb, T, 0);
+    _tree = this->buildTree(bb, T, 0);
 }
 
-Real IntersectionKdTree::intersectSeq(Ray const &ray, uint *t_inter) {
+
+
+
+Real IntersectionKdTree::intersectSeq(Ray const &ray, uint *t_inter)
+{
     Real t_min, t_max;
-    if (!intersectionBoxRay(_bb_root.getCenter(), _bb_root.getHalfSize(), ray, &t_min, &t_max)) {
+    // si on ne touche pas la racine du KdTree il n'y à pas d'intersection
+    if (!intersectionBoxRay(_bb_root.getCenter(), _bb_root.getHalfSize(),
+                            ray, &t_min, &t_max))
+    {
         return -1;
     }
     std::stack<TempDataTraversal> stack;
@@ -127,16 +113,20 @@ Real IntersectionKdTree::intersectSeq(Ray const &ray, uint *t_inter) {
         TempDataTraversal current = stack.top();
         KdBaseNode *cnode = current.node;
         stack.pop();
+        //Tant qu'on peut aller à 'gauche' dans le parcours de l'arbre
         while (cnode->getType() != LEAF) {
             Axe a = cnode->plane.axis;
             Real t = (cnode->plane.pos - ray.origin[a]) / ray.direction[a];
-            KdBaseNode *near = (ray.direction[a] > 0)? ((KdTree*)(cnode))->left : ((KdTree*)(cnode))->right;
-            KdBaseNode *far = (ray.direction[a] > 0)? ((KdTree*)(cnode))->right : ((KdTree*)(cnode))->left;
+            KdBaseNode *near = (ray.direction[a] > 0)? ((KdTree*)(cnode))->left
+                                                    : ((KdTree*)(cnode))->right;
+            KdBaseNode *far = (ray.direction[a] > 0)? ((KdTree*)(cnode))->right
+                                                    : ((KdTree*)(cnode))->left;
             if (t > current.t_max) {
                 cnode = near;
             } else if (t < current.t_min) {
                 cnode = far;
             } else {
+                // on pousse le fils 'droit' dans le stack
                 stack.push({far, t, t_max});
                 cnode = near;
                 current.t_max = t;
@@ -148,22 +138,40 @@ Real IntersectionKdTree::intersectSeq(Ray const &ray, uint *t_inter) {
     }
     return -1;
 }
-Real IntersectionKdTree::intersect(Ray const &ray, uint *t_inter) {
+
+
+
+
+Real IntersectionKdTree::intersect(Ray const &ray, uint *t_inter)
+{
     if (this->_use_rec) {
         return this->intersectRec(ray, t_inter);
     } else {
         return this->intersectSeq(ray, t_inter);
     }
 }
-Real IntersectionKdTree::intersectRec(Ray const &ray, uint *t_inter) {
+
+
+
+
+
+Real IntersectionKdTree::intersectRec(Ray const &ray, uint *t_inter)
+{
     Real t_min, t_max;
-    if (intersectionBoxRay(_bb_root.getCenter(), _bb_root.getHalfSize(), ray, &t_min, &t_max)) {
+    if (intersectionBoxRay(_bb_root.getCenter(), _bb_root.getHalfSize(),
+                           ray, &t_min, &t_max))
+    {
         return this->_tree->intersection(ray, t_inter, t_min, t_max);
     }
     return -1;
 }
 
-bool IntersectionKdTree::isFlat(SplitPlane plane, uint tri) {
+
+
+
+
+bool IntersectionKdTree::isFlat(SplitPlane plane, uint tri)
+{
     BoundingBox clip_bb (_scene, &(_scene->triangles[tri]));
     if (plane.axis == X && clip_bb.M.x == clip_bb.m.x) {
         return true;
@@ -175,12 +183,20 @@ bool IntersectionKdTree::isFlat(SplitPlane plane, uint tri) {
     return false;
 }
 
-bool IntersectionKdTree::automaticEnding(SplitPlane &plan, BoundingBox &bb, std::vector<uint> &T, uint depth) {
+
+
+
+bool IntersectionKdTree::automaticEnding(SplitPlane &plan, BoundingBox &bb,
+                                         std::vector<uint> &T, uint depth)
+{
     return depth > 16 || T.size() <=  5 || bb.getVolume() == 0;
 }
 
 
 
+/******************************************************************************\
+*                   Fonctions pour les KdTrees en eux mêmes                    *
+\******************************************************************************/
 
 
 
@@ -191,43 +207,56 @@ KdBaseNode::KdBaseNode(Scene *scene, SplitPlane p):
 }
 
 
+
+
 KdTree::KdTree(Scene *scene, SplitPlane p, KdBaseNode* l, KdBaseNode* r):
     KdBaseNode(scene, p)
 {
     this->left = l;
     this->right = r;
 }
+
+
+
+
 KdTree::~KdTree() {
     delete right;
     delete left;
 }
 
-Real KdTree::intersection(const Ray &ray, uint* t_inter, Real t_min, Real t_max) {
-    if ( ray.direction[this->plane.axis] == 0) {
+
+
+
+Real KdTree::intersection(const Ray &ray, uint* t_inter,
+                          Real t_min, Real t_max)
+{
+    Real d = ray.direction[this->plane.axis];
+    if ( d == 0) {
         if (ray.origin[this->plane.axis] < this->plane.pos) {
             return this->left->intersection(ray, t_inter, t_min, t_max);
         }
         return this->right->intersection(ray, t_inter, t_min, t_max);
     }
-    Real t = (this->plane.pos - ray.origin[this->plane.axis]) / ray.direction[this->plane.axis];
-//std::cout<<t_min<<" "<<t_max<<" = "<<t<<"\n";
-//u peut être mettre t_min, t_far
+
+    Real t = (this->plane.pos - ray.origin[this->plane.axis]) / d;
+
     if (t_max < t) {
-        if (ray.direction[this->plane.axis] > 0) {
+        if (d > 0) {
             return this->left->intersection(ray, t_inter, t_min, t_max);
         } else {
             return this->right->intersection(ray, t_inter, t_min, t_max);
         }
     }
+
     if (t < t_min) {
-        if (ray.direction[this->plane.axis] > 0) {
+        if (d > 0) {
             return this->right->intersection(ray, t_inter, t_min, t_max);
         } else {
             return this->left->intersection(ray, t_inter, t_min, t_max);
         }
     }
 
-    if (ray.direction[this->plane.axis] > 0) {
+    if (d > 0) {
         Real temp_t = this->left->intersection(ray, t_inter, t_min, t);
         if (temp_t >= 0)
             return temp_t;
@@ -238,22 +267,31 @@ Real KdTree::intersection(const Ray &ray, uint* t_inter, Real t_min, Real t_max)
             return temp_t;
         return this->left->intersection(ray, t_inter, t, t_max);
     }
+
     return -1;
 }
+
+
+
 
 KdLeaf::KdLeaf(Scene *scene, SplitPlane p, std::vector<uint> &T):
     KdBaseNode(scene, p), _triangles(T)
 {
-
 }
-Real KdLeaf::intersection(const Ray &ray, uint *t_inter, Real t_min, Real t_max) {
+
+
+
+
+
+Real KdLeaf::intersection(const Ray &ray, uint *t_inter, Real t_min, Real t_max)
+{
     Real t = -1;
     if (this->_triangles.size())
-    //std::cout<<this->_triangles.size()<<"\n";
     for (uint i = 0; i < this->_triangles.size(); ++i){
-            //std::cout<<i<<"\n";
-        Real t_temp = intersectionMoller(_scene, this->_scene->triangles[this->_triangles[i]], ray);
-        //we look for point on the interval t_min; t_max only, other can be too far away
+        Triangle &tri = this->_scene->triangles[this->_triangles[i]];
+        Real t_temp = intersectionMoller(_scene, tri, ray);
+        // un triangle n'est touché que s'il est dans cette feuille
+        // ainsi t doit être inférieur à t_max
         if (t_temp >= 0 && t_temp <= t_max) {
             if (t < 0 || t_temp < t) {
                 t = t_temp;
@@ -266,7 +304,10 @@ Real KdLeaf::intersection(const Ray &ray, uint *t_inter, Real t_min, Real t_max)
 
 
 
-void BoundingBox::split(SplitPlane &plane, BoundingBox *left, BoundingBox *right) {
+
+void BoundingBox::split(SplitPlane &plane,
+                        BoundingBox *left, BoundingBox *right)
+{
     if (plane.axis == X) {
         left->m = this->m;
         right->M = this->M;

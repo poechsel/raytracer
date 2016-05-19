@@ -2,21 +2,37 @@
 #define INTERSECTIONKDTREESAHNLOGN_H
 
 #include "intersectionkdtreesah.h"
-void merge(std::vector<Event> &a, std::vector<Event> &b, std::vector<Event> &output);
+void merge(std::vector<Event> &a,
+           std::vector<Event> &b,
+           std::vector<Event> &output);
+
+/* Comme le SAH en n log(n) requiert des modifications à la construction du
+*  KdTree, on le mets dans une classe séparée
+*/
 class IntersectionKdTreeSAHnlogn: public IntersectionKdTreeSAH
 {
     public:
         IntersectionKdTreeSAHnlogn(Scene *scene, Real Kt, Real Ki);
         virtual ~IntersectionKdTreeSAHnlogn();
-        void build();
-        SplitPlane  heuristicNlogn(std::vector<std::vector<Event> > &events, BoundingBox &bb, std::vector<uint> &triangles, uint depth);
+        /*on modifie la fonction de construction pour passer la liste
+        * d'évenements d'un noeud à ses fils
+        */
+        void                build();
+
     protected:
-
-
-        std::vector<Event> _getEvents(SplitPlane &plane, BoundingBox &bb, Triangle &tri);
-        KdBaseNode* _build_tree(std::vector<std::vector<Event> > &events, BoundingBox &bb, std::vector<uint> &T, uint depth);
-        void _nextEvents(SplitPlane &plane, BoundingBox &bb, std::vector<uint> &T, std::vector<std::vector<Event> > &events, std::vector<std::vector<Event> > &g, std::vector<std::vector<Event> > &d);
-        std::vector<std::vector<Event> > _getEvents(BoundingBox &clip, uint i);
+        KdBaseNode*         buildTree(EventsList &events,
+                                        BoundingBox &bb,
+                                        std::vector<uint> &T,
+                                        uint depth);
+        /* à partir d'un plan séparateur et d'une liste d'évenements, retourne
+        *  les listes d'évenements de ses fils
+        */
+        void                nextEvents(SplitPlane &plane,
+                                        BoundingBox &bb,
+                                        std::vector<uint> &T,
+                                        EventsList &events,
+                                        EventsList &g,
+                                        EventsList &d);
         std::vector<Side> H;
 };
 
