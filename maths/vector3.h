@@ -2,6 +2,7 @@
 #define VECTOR3_H_INCLUDED
 
 #include "../includes.h"
+/*represente un vecteur*/
 
 template <typename T>
 class Vector3 {
@@ -32,7 +33,6 @@ class Vector3 {
         }
         Vector3<T> normalize() {
             T l = this->length();
-            //false because why normalizing a point?
             return Vector3<T> (x / l, y / l, z / l, false);
         }
         inline T length() {

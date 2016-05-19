@@ -1,6 +1,8 @@
 #include "matTransformations.h"
 
-Matrix4f perspective(Real width, Real height, Real near, Real far, Real fov){
+Matrix4f perspective(Real width, Real height,
+                     Real near, Real far,
+                     Real fov){
     Real ratio = width / height;
     Real range = far - near;
     Real tanHalfFOV = std::tan(fov/2.0);
@@ -13,7 +15,9 @@ Matrix4f perspective(Real width, Real height, Real near, Real far, Real fov){
     return temp;
 }
 
-Matrix4f orthographic(Real left, Real right, Real bottom, Real top, Real near, Real far) {
+Matrix4f orthographic(Real left, Real right,
+                      Real bottom, Real top,
+                      Real near, Real far) {
     Matrix4f temp;
     temp.data[0] = 2.0/(right - left);
     temp.data[5] = 2.0/(top - bottom);

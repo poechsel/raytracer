@@ -2,6 +2,11 @@
 #define MATERIAL_H
 
 #include "../utilities/color.h"
+
+
+/*représente un matériel, provient surtout d'une vieille architecture du
+* programme
+*/
 class Material
 {
     public:

@@ -170,7 +170,8 @@ public:
                   data[8] * data[1] * data[6] -
                   data[8] * data[2] * data[5];
 
-        det = data[0] * temp.data[0] + data[1] * temp.data[4] + data[2] * temp.data[8] + data[3] * temp.data[12];
+        det = data[0] * temp.data[0] + data[1] * temp.data[4]
+                + data[2] * temp.data[8] + data[3] * temp.data[12];
 
         if (det == 0)
             return temp;
@@ -249,7 +250,6 @@ Matrix4<T> operator*(Matrix4<T> a, Matrix4<T> b) {
         for (unsigned int j = 0; j < 4; ++j){
             for (unsigned int k = 0; k < 4; ++k){
                 temp.data[i*4+j] += a.data [i*4+k] * b.data [k*4+j];
-                //std::cout<<temp.data[i*4+j]<<"\n";
             }
         }
     }
@@ -296,11 +296,11 @@ Matrix4<T> rotationMatrix (T angle, T x, T y, T z) {
 }
 
 template <typename T>
-std::ostream& operator<<(std::ostream& os, const Matrix4<T>& obj) {
-    os<<'|'<<obj.data[0]<<'\t'<<obj.data[1]<<'\t'<<obj.data[2]<<'\t'<<obj.data[3]<<"|\n"
-    <<'|'<<obj.data[4]<<'\t'<<obj.data[5]<<'\t'<<obj.data[6]<<'\t'<<obj.data[7]<<"|\n"
-    <<'|'<<obj.data[8]<<'\t'<<obj.data[9]<<'\t'<<obj.data[10]<<'\t'<<obj.data[11]<<"|\n"
-    <<'|'<<obj.data[12]<<'\t'<<obj.data[13]<<'\t'<<obj.data[14]<<'\t'<<obj.data[15]<<"|\n";
+std::ostream& operator<<(std::ostream& os, const Matrix4<T>& m) {
+    os<<'|'<<m.data[0]<<'\t'<<m.data[1]<<'\t'<<m.data[2]<<'\t'<<m.data[3]<<"|\n"
+    <<'|'<<m.data[4]<<'\t'<<m.data[5]<<'\t'<<m.data[6]<<'\t'<<m.data[7]<<"|\n"
+    <<'|'<<m.data[8]<<'\t'<<m.data[9]<<'\t'<<m.data[10]<<'\t'<<m.data[11]<<"|\n"
+    <<'|'<<m.data[12]<<'\t'<<m.data[13]<<'\t'<<m.data[14]<<'\t'<<m.data[15]<<"|\n";
   return os;
 }
 
