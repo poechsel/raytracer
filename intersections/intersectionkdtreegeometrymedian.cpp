@@ -1,14 +1,18 @@
 #include "intersectionkdtreegeometrymedian.h"
 
 
-IntersectionKdTreeGeometryMedian::IntersectionKdTreeGeometryMedian(Scene *scene, bool a):
+IntersectionKdTreeGeometryMedian::IntersectionKdTreeGeometryMedian(Scene *scene,
+                                                                   bool a):
     IntersectionKdTree(scene, a)
 {
     //ctor
 }
 
 
-SplitPlane IntersectionKdTreeGeometryMedian::heuristic(BoundingBox &bb, std::vector<uint> &T, uint depth) {
+SplitPlane IntersectionKdTreeGeometryMedian::heuristic(BoundingBox &bb,
+                                                       std::vector<uint> &T,
+                                                       uint depth)
+{
     SplitPlane plane;
     if (depth%3 == 0) {
         plane.axis = X;
@@ -22,7 +26,11 @@ SplitPlane IntersectionKdTreeGeometryMedian::heuristic(BoundingBox &bb, std::vec
     }
     Vector3f temp;
     for (uint t: T) {
-        temp = temp + (Real)1/3 * (_scene->vertices[_scene->triangles[t].v1] + _scene->vertices[_scene->triangles[t].v2] + _scene->vertices[_scene->triangles[t].v3]);
+        Triangle &tri = _scene->triangles[t];
+        Vector3f center =   _scene->vertices[tri.v1]
+                            + _scene->vertices[tri.v2]
+                            + _scene->vertices[tri.v3];
+        temp = temp + (Real)1/3 * center;
     }
     plane.pos = temp[plane.axis] / T.size();
     plane.side = BOTH;

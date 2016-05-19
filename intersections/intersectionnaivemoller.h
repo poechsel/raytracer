@@ -2,6 +2,11 @@
 #define INTERSECTIONNAIVEMOLLER_H
 
 #include "intersectionmethod.h"
+/* Test d'intersection utilisant la version naive de notre algorithme:
+*    tous les triangles sont testés pour chaque rayon
+*  On utilise la méthode de Moller pour le calcul d'intersection entre un rayon
+*  et des triangles
+*/
 class IntersectionNaiveMoller: public IntersectionMethod
 {
     public:

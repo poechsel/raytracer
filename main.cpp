@@ -50,7 +50,7 @@ int main()
     int completion_percent = 0;
 
     Camera cameratemp;
-    PythonSceneLoader loader_scenes("scenes/boudha.json");
+    PythonSceneLoader loader_scenes("scenes/suzanne.json");
     std::cout<<"loading========================\n";
     loader_scenes.load(&cameratemp, &scene);
     for (auto it = scene.meshes.begin(); it != scene.meshes.end(); ++it) {
@@ -62,9 +62,9 @@ int main()
 
     //IntersectionMethod *inter_method = new IntersectionNaiveMoller(&scene);
     //IntersectionMethod *inter_method = new IntersectionGrid(&scene, 0.5);
-    //IntersectionMethod *inter_method = new IntersectionKdTreeSpaceMedian(&scene, true);
+    IntersectionMethod *inter_method = new IntersectionKdTreeGeometryMedian(&scene, true);
     //IntersectionMethod *inter_method = new IntersectionKdTreeSAH(&scene, 15, 20, NLOG2N);
-    IntersectionMethod *inter_method = new IntersectionKdTreeSAHnlogn(&scene, 15, 20);
+    //IntersectionMethod *inter_method = new IntersectionKdTreeSAHnlogn(&scene, 15, 20);
     //IntersectionMethod *inter_method2 = new IntersectionKdTreeSAH(&scene, 15, 20, NLOG2N);
     ULARGE_INTEGER time = getTime();
     //inter_method2->build();

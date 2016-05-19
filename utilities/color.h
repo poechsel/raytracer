@@ -62,7 +62,7 @@ inline Color  operator/(float k, Color a) {
     return Color (a.r/k, a.g/k, a.b/k, a.a/k);
 }
 inline bool operator==(Color  a, Color  b) {
-    return a.r = b.r && a.g == b.g && a.b == b.b && a.a == b.a;
+    return a.r == b.r && a.g == b.g && a.b == b.b && a.a == b.a;
 }
 inline bool operator!=(Color  a, Color  b) {
     return !(a==b);

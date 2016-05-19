@@ -3,6 +3,11 @@
 
 #include "intersectionmethod.h"
 
+/* Test d'intersection utilisant la version naive de notre algorithme:
+*    tous les triangles sont testés pour chaque rayon
+*  On utilise la méthode Naive pour le calcul d'intersection entre un rayon
+*  et des triangles
+*/
 class IntersectionNaiveNaive: public IntersectionMethod
 {
     public:

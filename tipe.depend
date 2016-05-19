@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1463665677 source:d:\tipe\source\tipe\tipe\main.cpp
+1463670710 source:d:\tipe\source\tipe\tipe\main.cpp
 	<iostream>
 	<glm/glm.hpp>
 	"glm/gtc/matrix_transform.hpp"
@@ -22,10 +22,10 @@
 	"intersections/intersectionkdtreesah.h"
 	"intersections/intersectionkdtreesahnlogn.h"
 
-1430337908 source:d:\tipe\source\tipe\tipe\maths\mattransformations.cpp
+1463666422 source:d:\tipe\source\tipe\tipe\maths\mattransformations.cpp
 	"matTransformations.h"
 
-1430337604 d:\tipe\source\tipe\tipe\maths\mattransformations.h
+1463666453 d:\tipe\source\tipe\tipe\maths\mattransformations.h
 	"../includes.h"
 
 1462805769 d:\tipe\source\tipe\tipe\includes.h
@@ -43,13 +43,13 @@
 	"maths/matTransformations.h"
 	"utilities/stringutilities.h"
 
-1462805769 d:\tipe\source\tipe\tipe\maths\vector3.h
+1463666290 d:\tipe\source\tipe\tipe\maths\vector3.h
 	"../includes.h"
 
 1462805611 d:\tipe\source\tipe\tipe\maths\vector2.h
 	"../includes.h"
 
-1440017953 d:\tipe\source\tipe\tipe\maths\matrix4.h
+1463666408 d:\tipe\source\tipe\tipe\maths\matrix4.h
 	"../includes.h"
 
 1463662240 d:\tipe\source\tipe\tipe\utilities\stringutilities.h
@@ -77,10 +77,10 @@
 1463662936 d:\tipe\source\tipe\tipe\utilities\ray.h
 	"../includes.h"
 
-1436644299 d:\tipe\source\tipe\tipe\materials\material.h
+1463666494 d:\tipe\source\tipe\tipe\materials\material.h
 	"../utilities/color.h"
 
-1463665842 d:\tipe\source\tipe\tipe\utilities\color.h
+1463667616 d:\tipe\source\tipe\tipe\utilities\color.h
 	"../includes.h"
 
 1430424146 source:d:\tipe\source\tipe\tipe\geometry\sphere.cpp
@@ -400,7 +400,7 @@
 1463665550 d:\tipe\source\tipe\tipe\utilities\manager3dloader.h
 	"../python/python3dloader.h"
 
-1440100799 source:d:\tipe\source\tipe\tipe\utilities\camera.cpp
+1463666054 source:d:\tipe\source\tipe\tipe\utilities\camera.cpp
 	"camera.h"
 
 1462805680 source:d:\tipe\source\tipe\tipe\utilities\color.cpp
@@ -789,10 +789,10 @@
 1462833379 source:d:\tipe\source\tipe\tipe\scene.cpp
 	"scene.h"
 
-1462910630 source:d:\tipe\source\tipe\tipe\intersections\intersections.cpp
+1463670428 source:d:\tipe\source\tipe\tipe\intersections\intersections.cpp
 	"intersections.h"
 
-1462910630 d:\tipe\source\tipe\tipe\intersections\intersections.h
+1463670360 d:\tipe\source\tipe\tipe\intersections\intersections.h
 	"../includes.h"
 	"../geometry/Triangle.h"
 	<cfloat>
@@ -801,7 +801,7 @@
 1462883333 source:d:\tipe\source\tipe\tipe\intersections\intersectionmethod.cpp
 	"intersectionmethod.h"
 
-1462953581 d:\tipe\source\tipe\tipe\intersections\intersectionmethod.h
+1463670081 d:\tipe\source\tipe\tipe\intersections\intersectionmethod.h
 	"../utilities/Ray.h"
 	"../geometry/Triangle.h"
 	"intersections.h"
@@ -809,13 +809,13 @@
 1462883837 source:d:\tipe\source\tipe\tipe\intersections\intersectionnaivemoller.cpp
 	"intersectionnaivemoller.h"
 
-1462883837 d:\tipe\source\tipe\tipe\intersections\intersectionnaivemoller.h
+1463670027 d:\tipe\source\tipe\tipe\intersections\intersectionnaivemoller.h
 	"intersectionmethod.h"
 
 1462884070 source:d:\tipe\source\tipe\tipe\intersections\intersectionnaivenaive.cpp
 	"intersectionnaivenaive.h"
 
-1462884070 d:\tipe\source\tipe\tipe\intersections\intersectionnaivenaive.h
+1463670049 d:\tipe\source\tipe\tipe\intersections\intersectionnaivenaive.h
 	"intersectionmethod.h"
 
 1462998686 source:d:\tipe\source\tipe\tipe\geometry\boundingbox.cpp
@@ -825,10 +825,10 @@
 	"../includes.h"
 	"Triangle.h"
 
-1462918933 source:d:\tipe\source\tipe\tipe\intersections\intersectiongrid.cpp
+1463669748 source:d:\tipe\source\tipe\tipe\intersections\intersectiongrid.cpp
 	"intersectiongrid.h"
 
-1462918920 d:\tipe\source\tipe\tipe\intersections\intersectiongrid.h
+1463669926 d:\tipe\source\tipe\tipe\intersections\intersectiongrid.h
 	"intersectionmethod.h"
 	<stack>
 	"intersections.h"
@@ -847,16 +847,16 @@
 1463043935 source:d:\tipe\source\tipe\tipe\intersections\intersectionkdtree.cpp
 	"intersectionkdtree.h"
 
-1463039342 source:d:\tipe\source\tipe\tipe\intersections\intersectionkdtreespacemedian.cpp
+1463670617 source:d:\tipe\source\tipe\tipe\intersections\intersectionkdtreespacemedian.cpp
 	"intersectionkdtreespacemedian.h"
 
-1463039336 d:\tipe\source\tipe\tipe\intersections\intersectionkdtreespacemedian.h
+1463670750 d:\tipe\source\tipe\tipe\intersections\intersectionkdtreespacemedian.h
 	"intersectionkdtree.h"
 
-1463039313 source:d:\tipe\source\tipe\tipe\intersections\intersectionkdtreegeometrymedian.cpp
+1463670670 source:d:\tipe\source\tipe\tipe\intersections\intersectionkdtreegeometrymedian.cpp
 	"intersectionkdtreegeometrymedian.h"
 
-1463039336 d:\tipe\source\tipe\tipe\intersections\intersectionkdtreegeometrymedian.h
+1463670754 d:\tipe\source\tipe\tipe\intersections\intersectionkdtreegeometrymedian.h
 	"intersectionkdtree.h"
 
 1463064974 source:d:\tipe\source\tipe\tipe\intersections\intersectionkdtreesah.cpp

@@ -6,7 +6,9 @@ inline Real sign(Real a){
 }
 
 
-Real intersectionMoller(Scene *scene, Triangle &triangle, const Ray &ray) {
+Real intersectionMoller(Scene *scene,
+                        Triangle &triangle,
+                        const Ray &ray) {
     Vector3f P = cross(ray.direction, triangle.e2);
 
     Real det = dot(triangle.e1, P);
@@ -32,25 +34,27 @@ Real intersectionMoller(Scene *scene, Triangle &triangle, const Ray &ray) {
     return t;
 }
 
-Real intersectionNaive(Scene *scene, Triangle &triangle, const Ray &ray){
-    Real dn = dot(triangle.normal, ray.direction);
+Real intersectionNaive(Scene *scene,
+                       Triangle &tri,
+                       const Ray &ray){
+    Real dn = dot(tri.normal, ray.direction);
     if (-FLT_EPSILON < dn && dn < FLT_EPSILON) {
         return -1;
     }
-    Real t = - dot(triangle.normal, ray.origin - scene->vertices[triangle.v1]) / dn;
+    Real t = - dot(tri.normal, ray.origin - scene->vertices[tri.v1]) / dn;
     if (t < 0){
         return -1;
     }
     Vector3f P = ray.origin + t * ray.direction;
-    Vector3f temp = P - scene->vertices[triangle.v1];
-    Vector3f AP0P1P2 = cross(triangle.e1, triangle.e2);
+    Vector3f temp = P - scene->vertices[tri.v1];
+    Vector3f AP0P1P2 = cross(tri.e1, tri.e2);
     Real invAP0P1P2 = 1.f / AP0P1P2.length();
-    Vector3f triU = cross(P - scene->vertices[triangle.v3], temp);
+    Vector3f triU = cross(P - scene->vertices[tri.v3], temp);
     Real u = triU.length() * invAP0P1P2 * sign(dot(AP0P1P2, triU));
     if (u < 0 || u > 1) {
         return -1;
     }
-    Vector3f triV = cross(temp, P - scene->vertices[triangle.v2]);
+    Vector3f triV = cross(temp, P - scene->vertices[tri.v2]);
     Real v = triV.length() * invAP0P1P2  * sign(dot(AP0P1P2, triV));
     if (v < 0 || u + v > 1) {
         return -1;
@@ -58,7 +62,9 @@ Real intersectionNaive(Scene *scene, Triangle &triangle, const Ray &ray){
     return t;
 }
 
-bool intersectionBoxRay(Vector3f center, Vector3f half_size, const Ray &ray, Real *t_min, Real *t_max){
+bool intersectionBoxRay(Vector3f center, Vector3f half_size,
+                        const Ray &ray,
+                        Real *t_min, Real *t_max){
     Real t1 = (center.x - half_size.x - ray.origin.x ) / ray.direction.x;
     Real t2 = (center.x + half_size.x - ray.origin.x ) / ray.direction.x;
     Real tmin = std::min(t1, t2);
@@ -82,13 +88,19 @@ bool intersectionBoxRay(Vector3f center, Vector3f half_size, const Ray &ray, Rea
 }
 
 
-bool intersectionBoxTri(const Scene *scene, Vector3f center, Vector3f half_size, const Triangle &triangle) {
+bool intersectionBoxTri(const Scene *scene,
+                        Vector3f center, Vector3f half_size,
+                        const Triangle &triangle) {
     Vector3f v1 = scene->vertices[triangle.v1] - center;
     Vector3f v2 = scene->vertices[triangle.v2] - center;
     Vector3f v3 = scene->vertices[triangle.v3] - center;
 
-    Vector3f m (std::min(std::min(v1.x, v2.x), v3.x), std::min(std::min(v1.y, v2.y), v3.y), std::min(std::min(v1.z, v2.z), v3.z));
-    Vector3f M (std::max(std::max(v1.x, v2.x), v3.x), std::max(std::max(v1.y, v2.y), v3.y), std::max(std::max(v1.z, v2.z), v3.z));
+    Vector3f m (std::min(std::min(v1.x, v2.x), v3.x),
+                std::min(std::min(v1.y, v2.y), v3.y),
+                std::min(std::min(v1.z, v2.z), v3.z));
+    Vector3f M (std::max(std::max(v1.x, v2.x), v3.x),
+                std::max(std::max(v1.y, v2.y), v3.y),
+                std::max(std::max(v1.z, v2.z), v3.z));
 
     if (M.x < - half_size.x || half_size.x < m.x)
         return false;
@@ -104,7 +116,9 @@ bool intersectionBoxTri(const Scene *scene, Vector3f center, Vector3f half_size,
 
     // cube on tri normal
     Real proj = dot(normal, v1);
-    Real proj_max = std::abs(normal.x) * half_size.x + std::abs(normal.y) * half_size.y + std::abs(normal.z) * half_size.z;
+    Real proj_max = std::abs(normal.x) * half_size.x
+                    + std::abs(normal.y) * half_size.y
+                    + std::abs(normal.z) * half_size.z;
     if (proj < -proj_max || proj_max < proj)
         return false;
 
