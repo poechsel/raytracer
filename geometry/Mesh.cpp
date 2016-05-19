@@ -37,10 +37,6 @@ void Scene::appendMeshes(std::map<std::string, Mesh*> &others) {
             meshes[it->first]->material = &_default_mat;
         }
     }
-    for (auto it =meshes.begin(); it !=meshes.end(); ++it) {
-            std::cout<<"manager->Mesh: "<<it->first<<" -> "<<&(it->second)<<"\n";
-            std::cout<<"    Faces: "<<it->second->triangles.size()<<" Vertices: "<<it->second->vertices.size()<<"\n";
-    }
 }
 
 void Mesh::applyTransform(){

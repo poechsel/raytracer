@@ -1,7 +1,8 @@
 #include "sfmlimage.h"
 
-SFMLImage::SFMLImage(int width, int height, int type): Image(width, height, type),
-_window(sf::VideoMode(this->width, this->height), "image")
+SFMLImage::SFMLImage(int width, int height, int type):
+    Image(width, height, type),
+    _window(sf::VideoMode(this->width, this->height), "image")
 {
     _texture.create(this->width, this->height);
     _sprite.setTexture(_texture);
@@ -31,7 +32,6 @@ void SFMLImage::load(std::string path) {
             this->putPixel(x, y, color.r, color.g, color.b, color.a);
         }
     }
-    //this->data = const_cast<uint8_t *>(image.getPixelsPtr());
 }
 
 void SFMLImage::writeHeader(){
@@ -42,7 +42,6 @@ void SFMLImage::writeFooter(){
 }
 
 void SFMLImage::saveTo(std::string target){
-    std::cout<<"update texture\n";
     sf::Event event;
         while (_window.pollEvent(event));
     _texture.update(this->data);

@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1463080031 source:d:\tipe\source\tipe\tipe\main.cpp
+1463665677 source:d:\tipe\source\tipe\tipe\main.cpp
 	<iostream>
 	<glm/glm.hpp>
 	"glm/gtc/matrix_transform.hpp"
@@ -10,7 +10,6 @@
 	<Python.h>
 	"python/pythonfunction.h"
 	"python/python3dloader.h"
-	"utilities/manager3dloader.h"
 	"utilities/meshmanagers.h"
 	"utilities/sfmlimage.h"
 	"utilities/camera.h"
@@ -53,7 +52,7 @@
 1440017953 d:\tipe\source\tipe\tipe\maths\matrix4.h
 	"../includes.h"
 
-1436378037 d:\tipe\source\tipe\tipe\utilities\stringutilities.h
+1463662240 d:\tipe\source\tipe\tipe\utilities\stringutilities.h
 	<sstream>
 	<vector>
 	<string>
@@ -61,7 +60,7 @@
 1436463304 source:d:\tipe\source\tipe\tipe\maths\vector2.cpp
 	"vector2.h"
 
-1463607403 source:d:\tipe\source\tipe\tipe\geometry\mesh.cpp
+1463665566 source:d:\tipe\source\tipe\tipe\geometry\mesh.cpp
 	"Mesh.h"
 
 1463607403 d:\tipe\source\tipe\tipe\geometry\mesh.h
@@ -75,13 +74,13 @@
 	"../materials/material.h"
 	"../scene.h"
 
-1440100461 d:\tipe\source\tipe\tipe\utilities\ray.h
+1463662936 d:\tipe\source\tipe\tipe\utilities\ray.h
 	"../includes.h"
 
 1436644299 d:\tipe\source\tipe\tipe\materials\material.h
 	"../utilities/color.h"
 
-1436636674 d:\tipe\source\tipe\tipe\utilities\color.h
+1463665842 d:\tipe\source\tipe\tipe\utilities\color.h
 	"../includes.h"
 
 1430424146 source:d:\tipe\source\tipe\tipe\geometry\sphere.cpp
@@ -100,10 +99,9 @@
 1463608837 source:d:\tipe\source\tipe\tipe\python\python3dloader.cpp
 	"python3dloader.h"
 
-1463608484 d:\tipe\source\tipe\tipe\python\python3dloader.h
+1463665761 d:\tipe\source\tipe\tipe\python\python3dloader.h
 	"../includes.h"
 	"pythonfunction.h"
-	"../utilities/loadertempstructure.h"
 	"../geometry/mesh.h"
 
 1463609463 d:\tipe\source\tipe\tipe\python\pythonfunction.h
@@ -383,7 +381,7 @@
 1436378037 source:d:\tipe\source\tipe\tipe\python\pythonmodule.cpp
 	"pythonmodule.h"
 
-1463609377 source:d:\tipe\source\tipe\tipe\python\pythonsceneloader.cpp
+1463664088 source:d:\tipe\source\tipe\tipe\python\pythonsceneloader.cpp
 	"pythonsceneloader.h"
 
 1463609380 d:\tipe\source\tipe\tipe\python\pythonsceneloader.h
@@ -392,14 +390,14 @@
 	"../utilities/camera.h"
 	"../utilities/meshmanagers.h"
 
-1462805649 d:\tipe\source\tipe\tipe\utilities\camera.h
+1463666054 d:\tipe\source\tipe\tipe\utilities\camera.h
 	"../includes.h"
 	"Ray.h"
 
-1440090451 d:\tipe\source\tipe\tipe\utilities\meshmanagers.h
+1463664672 d:\tipe\source\tipe\tipe\utilities\meshmanagers.h
 	"manager3dloader.h"
 
-1462833435 d:\tipe\source\tipe\tipe\utilities\manager3dloader.h
+1463665550 d:\tipe\source\tipe\tipe\utilities\manager3dloader.h
 	"../python/python3dloader.h"
 
 1440100799 source:d:\tipe\source\tipe\tipe\utilities\camera.cpp
@@ -408,10 +406,10 @@
 1462805680 source:d:\tipe\source\tipe\tipe\utilities\color.cpp
 	"color.h"
 
-1436549490 source:d:\tipe\source\tipe\tipe\utilities\image.cpp
+1463662319 source:d:\tipe\source\tipe\tipe\utilities\image.cpp
 	"image.h"
 
-1436526920 d:\tipe\source\tipe\tipe\utilities\image.h
+1463662447 d:\tipe\source\tipe\tipe\utilities\image.h
 	<iostream>
 	<string>
 	"../includes.h"
@@ -419,10 +417,10 @@
 1436378037 source:d:\tipe\source\tipe\tipe\utilities\loadertempstructure.cpp
 	"loadertempstructure.h"
 
-1462833435 source:d:\tipe\source\tipe\tipe\utilities\manager3dloader.cpp
+1463665003 source:d:\tipe\source\tipe\tipe\utilities\manager3dloader.cpp
 	"manager3dloader.h"
 
-1440090594 source:d:\tipe\source\tipe\tipe\utilities\meshmanagers.cpp
+1463664669 source:d:\tipe\source\tipe\tipe\utilities\meshmanagers.cpp
 	"meshmanagers.h"
 
 1462833589 source:d:\tipe\source\tipe\tipe\utilities\objloader.cpp
@@ -432,13 +430,13 @@
 	"../geometry/mesh.h"
 	"../includes.h"
 
-1430337340 source:d:\tipe\source\tipe\tipe\utilities\ray.cpp
+1463662848 source:d:\tipe\source\tipe\tipe\utilities\ray.cpp
 	"Ray.h"
 
-1436548639 source:d:\tipe\source\tipe\tipe\utilities\sfmlimage.cpp
+1463662520 source:d:\tipe\source\tipe\tipe\utilities\sfmlimage.cpp
 	"sfmlimage.h"
 
-1436526920 d:\tipe\source\tipe\tipe\utilities\sfmlimage.h
+1463662486 d:\tipe\source\tipe\tipe\utilities\sfmlimage.h
 	<SFML/Graphics.hpp>
 	"image.h"
 
@@ -836,7 +834,7 @@
 	"intersections.h"
 	"../utilities/benchmark.h"
 
-1462918691 d:\tipe\source\tipe\tipe\utilities\benchmark.h
+1463662051 d:\tipe\source\tipe\tipe\utilities\benchmark.h
 	"windows.h"
 
 1462919366 source:d:\tipe\source\tipe\tipe\utilities\benchmark.cpp

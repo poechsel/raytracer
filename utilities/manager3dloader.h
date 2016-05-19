@@ -3,6 +3,9 @@
 
 #include "../python/python3dloader.h"
 
+/*Cette classe est une interface de haut niveau pour les les plugins pythons de
+* chargement d'image. Elle évite de charger deux fois un même plugin
+*/
 class Manager3dLoader
 {
     public:

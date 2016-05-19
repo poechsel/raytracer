@@ -3,7 +3,6 @@
 
 #include "../includes.h"
 #include "pythonfunction.h"
-#include "../utilities/loadertempstructure.h"
 #include "../geometry/mesh.h"
 
 /* Une classe utilitaire permettant de charger un plugin python qui chargera par

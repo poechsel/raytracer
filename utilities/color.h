@@ -3,7 +3,9 @@
 
 #include "../includes.h"
 
-
+/* Classe presque identiques à celle de Vector3, elle implémente les couleurs de
+*  fàçon à pouvoir les manipuler aisément
+*/
 class Color {
     public:
         float r;

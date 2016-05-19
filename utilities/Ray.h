@@ -6,7 +6,8 @@
 class Ray
 {
     public:
-    Ray();
+    Ray(){}
+    ~Ray(){}
     Ray (const Ray &ray) {
         origin = ray.origin;
         direction = ray.direction;
@@ -19,8 +20,8 @@ class Ray
         direction.normalizeMe();
         inverse = (Real)1 / direction;
         inverse.normalizeMe();
-        //std::cout<<direction<<"\n";
     }
+    //transforme un rayon selon une matrice
     void transform(Matrix4f mat) {
         origin = mat * origin;
         direction = mat * direction;
@@ -30,12 +31,10 @@ class Ray
         direction.normalize();
         inverse = (Real)1 / direction;
         inverse.normalizeMe();
-        //std::cout<<mat<<"\n";
     }
     Vector3f origin;
     Vector3f direction;
     Vector3f inverse;
-    virtual ~Ray();
 };
 
 #endif // RAY_H

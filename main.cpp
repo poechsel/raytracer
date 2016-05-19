@@ -9,7 +9,6 @@
 #include <Python.h>
 #include "python/pythonfunction.h"
 #include "python/python3dloader.h"
-#include "utilities/manager3dloader.h"
 #include "utilities/meshmanagers.h"
 #include "utilities/sfmlimage.h"
 #include "utilities/camera.h"
@@ -51,9 +50,14 @@ int main()
     int completion_percent = 0;
 
     Camera cameratemp;
-    PythonSceneLoader loader_scenes("scenes/church.json");
+    PythonSceneLoader loader_scenes("scenes/boudha.json");
     std::cout<<"loading========================\n";
     loader_scenes.load(&cameratemp, &scene);
+    for (auto it = scene.meshes.begin(); it != scene.meshes.end(); ++it) {
+            std::cout<<"manager->Mesh: "<<it->first<<" -> "<<&(it->second)<<"\n";
+            std::cout<<"    Faces: "<<it->second->triangles.size()
+                     <<" Vertices: "<<it->second->vertices.size()<<"\n";
+    }
     std::cout<<"end loading========================\n";
 
     //IntersectionMethod *inter_method = new IntersectionNaiveMoller(&scene);

@@ -63,17 +63,11 @@ bool PythonSceneLoader::load(Camera *camera, Scene *scene){
 bool PythonSceneLoader::loadObjects(PyObject *value, Scene *scene){
     PyObject *key = PyUnicode_FromString("path");
     if (PyDict_Contains(value, key)){
-        PyObject *valuet = PyDict_GetItem(value, key);
-        PyObject*   pyStr = PyUnicode_AsEncodedString(valuet, "utf-8", "Error ~");
+        PyObject *value_t = PyDict_GetItem(value, key);
+        PyObject*   pyStr = PyUnicode_AsEncodedString(value_t, "utf-8", "Error ~");
 
         Manager3dLoader loader;
-        std::map<std::string, Mesh*> meshes = loader.load(PyBytes_AS_STRING(pyStr)
-                                                          , scene);
-        for (auto it =meshes.begin(); it !=meshes.end(); ++it) {
-            std::cout<<"->Mesh: "<<it->first<<" -> "<<&(it->second)<<"\n";
-            std::cout<<"    Faces: "<<it->second->triangles.size()
-                     <<" Vertices: "<<it->second->vertices.size()<<"\n";
-        }
+        auto meshes = loader.load(PyBytes_AS_STRING(pyStr), scene);
         scene->appendMeshes(meshes);
         std::cout<<"loading files from: "<<PyBytes_AS_STRING(pyStr)<<"\n";
     }
