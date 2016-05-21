@@ -52,7 +52,8 @@ typedef std::vector<std::vector<Event> > EventsList;
 class IntersectionKdTreeSAH: public IntersectionKdTree
 {
     public:
-        IntersectionKdTreeSAH(Scene *scene, Real Kt, Real Ki, Complexity c);
+        IntersectionKdTreeSAH(Scene *scene, Real Kt, Real Ki,
+                              bool use_r = true, Complexity c = NLOG2N);
         virtual ~IntersectionKdTreeSAH();
 
         SplitPlane          heuristic(BoundingBox &bb,

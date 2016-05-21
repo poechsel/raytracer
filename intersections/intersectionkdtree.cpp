@@ -11,7 +11,9 @@ IntersectionKdTree::IntersectionKdTree(Scene *scene, bool use_r):
 
 IntersectionKdTree::~IntersectionKdTree()
 {
-    delete _tree;
+    std::cout<<"===> "<<_tree<<"\n";
+    if (_tree)
+        delete _tree;
 }
 
 
@@ -220,8 +222,10 @@ KdTree::KdTree(Scene *scene, SplitPlane p, KdBaseNode* l, KdBaseNode* r):
 
 
 KdTree::~KdTree() {
-    delete right;
-    delete left;
+    if(right)
+        delete right;
+    if(left)
+        delete left;
 }
 
 

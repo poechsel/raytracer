@@ -5,7 +5,8 @@
 #include "../utilities/Ray.h"
 #include "../materials/material.h"
 #include "../scene.h"
-//class Scene;
+#include "../utilities/camera.h"
+
 class Mesh;
 class Scene;
 class Triangle
@@ -44,7 +45,8 @@ class Scene
         uint getTrianglesNumber() ;
 
         void appendMeshes(std::map<std::string, Mesh*> &others);
-        std::map<std::string, Mesh*> meshes;
+        std::map<std::string, Mesh*>    meshes;
+        Camera                          camera;
     protected:
         Material _default_mat;
 };

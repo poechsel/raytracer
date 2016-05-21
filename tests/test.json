@@ -1,0 +1,14 @@
+{
+    "D:/TIPE/source/tipe/tipe/scenes/suzanne_hp.json": {
+        "KdTree": {
+            "complexity": "nlogn",
+            "traversal": "rec",
+            "heuristic": "SAH"
+        }, 
+        "grid": {
+            "build": "dfs",
+            "size": "0.5"
+        }
+        
+    }
+}

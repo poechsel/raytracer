@@ -29,8 +29,9 @@ void merge(std::vector<Event> &a,
 
 
 IntersectionKdTreeSAHnlogn::IntersectionKdTreeSAHnlogn(Scene *scene,
-                                                       Real Kt, Real Ki):
-    IntersectionKdTreeSAH(scene, Kt, Ki, N2)
+                                                       Real Kt, Real Ki,
+                                                       bool use_r):
+    IntersectionKdTreeSAH(scene, Kt, Ki, use_r)
 {
     //ctor
 }

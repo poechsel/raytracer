@@ -1,5 +1,147 @@
 # depslib dependency file v1.0
-1463688075 source:d:\tipe\source\tipe\tipe\main.cpp
+1462998686 source:d:\tipe\source\tipe\tipe\geometry\boundingbox.cpp
+	"boundingbox.h"
+
+1462998686 d:\tipe\source\tipe\tipe\geometry\boundingbox.h
+	"../includes.h"
+	"Triangle.h"
+
+1463688702 d:\tipe\source\tipe\tipe\includes.h
+	<vector>
+	<cmath>
+	<string>
+	<map>
+	<fstream>
+	<iostream>
+	<algorithm>
+	<cstdlib>
+	"maths/vector3.h"
+	"maths/matrix4.h"
+	"maths/matTransformations.h"
+	"utilities/stringutilities.h"
+
+1463666290 d:\tipe\source\tipe\tipe\maths\vector3.h
+	"../includes.h"
+
+1463666408 d:\tipe\source\tipe\tipe\maths\matrix4.h
+	"../includes.h"
+
+1463666453 d:\tipe\source\tipe\tipe\maths\mattransformations.h
+	"../includes.h"
+
+1463662240 d:\tipe\source\tipe\tipe\utilities\stringutilities.h
+	<sstream>
+	<vector>
+	<string>
+
+1463849388 d:\tipe\source\tipe\tipe\geometry\triangle.h
+	"../includes.h"
+	"../utilities/Ray.h"
+	"../materials/material.h"
+	"../scene.h"
+	"../utilities/camera.h"
+
+1463662936 d:\tipe\source\tipe\tipe\utilities\ray.h
+	"../includes.h"
+
+1463666494 d:\tipe\source\tipe\tipe\materials\material.h
+	"../utilities/color.h"
+
+1463667616 d:\tipe\source\tipe\tipe\utilities\color.h
+	"../includes.h"
+
+1462833379 d:\tipe\source\tipe\tipe\scene.h
+	"includes.h"
+
+1463666054 d:\tipe\source\tipe\tipe\utilities\camera.h
+	"../includes.h"
+	"Ray.h"
+
+1463665566 source:d:\tipe\source\tipe\tipe\geometry\mesh.cpp
+	"Mesh.h"
+
+1463607403 d:\tipe\source\tipe\tipe\geometry\mesh.h
+	"Triangle.h"
+	"../materials/material.h"
+	"../utilities/Ray.h"
+
+1463607477 source:d:\tipe\source\tipe\tipe\geometry\triangle.cpp
+	"Triangle.h"
+
+1463669748 source:d:\tipe\source\tipe\tipe\intersections\intersectiongrid.cpp
+	"intersectiongrid.h"
+
+1463669926 d:\tipe\source\tipe\tipe\intersections\intersectiongrid.h
+	"intersectionmethod.h"
+	<stack>
+	"intersections.h"
+	"../utilities/benchmark.h"
+
+1463851482 d:\tipe\source\tipe\tipe\intersections\intersectionmethod.h
+	"../utilities/Ray.h"
+	"../geometry/Triangle.h"
+	"intersections.h"
+
+1463670360 d:\tipe\source\tipe\tipe\intersections\intersections.h
+	"../includes.h"
+	"../geometry/Triangle.h"
+	<cfloat>
+	"../geometry/boundingbox.h"
+
+1463662051 d:\tipe\source\tipe\tipe\utilities\benchmark.h
+	"windows.h"
+
+1463852865 source:d:\tipe\source\tipe\tipe\intersections\intersectionkdtree.cpp
+	"intersectionkdtree.h"
+
+1463675071 d:\tipe\source\tipe\tipe\intersections\intersectionkdtree.h
+	"intersectionmethod.h"
+	<stack>
+
+1463670927 source:d:\tipe\source\tipe\tipe\intersections\intersectionkdtreegeometrymedian.cpp
+	"intersectionkdtreegeometrymedian.h"
+
+1463670754 d:\tipe\source\tipe\tipe\intersections\intersectionkdtreegeometrymedian.h
+	"intersectionkdtree.h"
+
+1463871029 source:d:\tipe\source\tipe\tipe\intersections\intersectionkdtreesah.cpp
+	"intersectionkdtreesah.h"
+
+1463871169 d:\tipe\source\tipe\tipe\intersections\intersectionkdtreesah.h
+	"intersectionkdtree.h"
+	"../geometry/boundingbox.h"
+
+1463871084 source:d:\tipe\source\tipe\tipe\intersections\intersectionkdtreesahnlogn.cpp
+	"intersectionkdtreesahnlogn.h"
+
+1463871101 d:\tipe\source\tipe\tipe\intersections\intersectionkdtreesahnlogn.h
+	"intersectionkdtreesah.h"
+
+1463670617 source:d:\tipe\source\tipe\tipe\intersections\intersectionkdtreespacemedian.cpp
+	"intersectionkdtreespacemedian.h"
+
+1463670750 d:\tipe\source\tipe\tipe\intersections\intersectionkdtreespacemedian.h
+	"intersectionkdtree.h"
+
+1462883333 source:d:\tipe\source\tipe\tipe\intersections\intersectionmethod.cpp
+	"intersectionmethod.h"
+
+1462883837 source:d:\tipe\source\tipe\tipe\intersections\intersectionnaivemoller.cpp
+	"intersectionnaivemoller.h"
+
+1463670027 d:\tipe\source\tipe\tipe\intersections\intersectionnaivemoller.h
+	"intersectionmethod.h"
+
+1462884070 source:d:\tipe\source\tipe\tipe\intersections\intersectionnaivenaive.cpp
+	"intersectionnaivenaive.h"
+
+1463670049 d:\tipe\source\tipe\tipe\intersections\intersectionnaivenaive.h
+	"intersectionmethod.h"
+
+1463670428 source:d:\tipe\source\tipe\tipe\intersections\intersections.cpp
+	"intersections.h"
+
+1463871476 source:d:\tipe\source\tipe\tipe\main.cpp
 	<iostream>
 	<glm/glm.hpp>
 	"glm/gtc/matrix_transform.hpp"
@@ -16,105 +158,13 @@
 	"python/pythonsceneloader.h"
 	"intersections/intersections.h"
 	"intersections/intersectionnaivemoller.h"
+	"intersections/intersectionnaivenaive.h"
 	"intersections/intersectiongrid.h"
 	"intersections/intersectionkdtreespacemedian.h"
 	"intersections/intersectionkdtreegeometrymedian.h"
 	"intersections/intersectionkdtreesah.h"
 	"intersections/intersectionkdtreesahnlogn.h"
-
-1463666422 source:d:\tipe\source\tipe\tipe\maths\mattransformations.cpp
-	"matTransformations.h"
-
-1463666453 d:\tipe\source\tipe\tipe\maths\mattransformations.h
-	"../includes.h"
-
-1462805769 d:\tipe\source\tipe\tipe\includes.h
-	<vector>
-	<cmath>
-	<string>
-	<map>
-	<fstream>
-	<iostream>
-	<algorithm>
-	<cstdlib>
-	"maths/vector2.h"
-	"maths/vector3.h"
-	"maths/matrix4.h"
-	"maths/matTransformations.h"
-	"utilities/stringutilities.h"
-
-1463666290 d:\tipe\source\tipe\tipe\maths\vector3.h
-	"../includes.h"
-
-1462805611 d:\tipe\source\tipe\tipe\maths\vector2.h
-	"../includes.h"
-
-1463666408 d:\tipe\source\tipe\tipe\maths\matrix4.h
-	"../includes.h"
-
-1463662240 d:\tipe\source\tipe\tipe\utilities\stringutilities.h
-	<sstream>
-	<vector>
-	<string>
-
-1436463304 source:d:\tipe\source\tipe\tipe\maths\vector2.cpp
-	"vector2.h"
-
-1463665566 source:d:\tipe\source\tipe\tipe\geometry\mesh.cpp
-	"Mesh.h"
-
-1463607403 d:\tipe\source\tipe\tipe\geometry\mesh.h
-	"Triangle.h"
-	"../materials/material.h"
-	"../utilities/Ray.h"
-
-1463607477 d:\tipe\source\tipe\tipe\geometry\triangle.h
-	"../includes.h"
-	"../utilities/Ray.h"
-	"../materials/material.h"
-	"../scene.h"
-
-1463662936 d:\tipe\source\tipe\tipe\utilities\ray.h
-	"../includes.h"
-
-1463666494 d:\tipe\source\tipe\tipe\materials\material.h
-	"../utilities/color.h"
-
-1463667616 d:\tipe\source\tipe\tipe\utilities\color.h
-	"../includes.h"
-
-1430424146 source:d:\tipe\source\tipe\tipe\geometry\sphere.cpp
-	"Sphere.h"
-
-1462805562 d:\tipe\source\tipe\tipe\geometry\sphere.h
-	"../includes.h"
-	"../utilities/Ray.h"
-
-1463607477 source:d:\tipe\source\tipe\tipe\geometry\triangle.cpp
-	"Triangle.h"
-
-1436644314 source:d:\tipe\source\tipe\tipe\materials\material.cpp
-	"material.h"
-
-1463608837 source:d:\tipe\source\tipe\tipe\python\python3dloader.cpp
-	"python3dloader.h"
-
-1463665761 d:\tipe\source\tipe\tipe\python\python3dloader.h
-	"../includes.h"
-	"pythonfunction.h"
-	"../geometry/mesh.h"
-
-1463609463 d:\tipe\source\tipe\tipe\python\pythonfunction.h
-	"pythonmodule.h"
-
-1463609506 d:\tipe\source\tipe\tipe\python\pythonmodule.h
-	"PythonContext.h"
-
-1463608962 d:\tipe\source\tipe\tipe\python\pythoncontext.h
-	<string>
-	<Python.h>
-	<vector>
-	<iostream>
+	<getopt.h>
 
 1385212800 c:\program files (x86)\python\include\python.h
 	"patchlevel.h"
@@ -369,72 +419,28 @@
 	<setjmp.h>
 	<math.h>
 
-1436378037 d:\tipe\source\tipe\tipe\utilities\loadertempstructure.h
-	"../includes.h"
-
-1463609003 source:d:\tipe\source\tipe\tipe\python\pythoncontext.cpp
-	"PythonContext.h"
-
-1436378037 source:d:\tipe\source\tipe\tipe\python\pythonfunction.cpp
-	"pythonfunction.h"
-
-1436378037 source:d:\tipe\source\tipe\tipe\python\pythonmodule.cpp
+1463609463 d:\tipe\source\tipe\tipe\python\pythonfunction.h
 	"pythonmodule.h"
 
-1463664088 source:d:\tipe\source\tipe\tipe\python\pythonsceneloader.cpp
-	"pythonsceneloader.h"
+1463609506 d:\tipe\source\tipe\tipe\python\pythonmodule.h
+	"PythonContext.h"
 
-1463609380 d:\tipe\source\tipe\tipe\python\pythonsceneloader.h
+1463608962 d:\tipe\source\tipe\tipe\python\pythoncontext.h
+	<string>
+	<Python.h>
+	<vector>
+	<iostream>
+
+1463665761 d:\tipe\source\tipe\tipe\python\python3dloader.h
 	"../includes.h"
 	"pythonfunction.h"
-	"../utilities/camera.h"
-	"../utilities/meshmanagers.h"
-
-1463666054 d:\tipe\source\tipe\tipe\utilities\camera.h
-	"../includes.h"
-	"Ray.h"
+	"../geometry/mesh.h"
 
 1463664672 d:\tipe\source\tipe\tipe\utilities\meshmanagers.h
 	"manager3dloader.h"
 
 1463665550 d:\tipe\source\tipe\tipe\utilities\manager3dloader.h
 	"../python/python3dloader.h"
-
-1463666054 source:d:\tipe\source\tipe\tipe\utilities\camera.cpp
-	"camera.h"
-
-1462805680 source:d:\tipe\source\tipe\tipe\utilities\color.cpp
-	"color.h"
-
-1463662319 source:d:\tipe\source\tipe\tipe\utilities\image.cpp
-	"image.h"
-
-1463662447 d:\tipe\source\tipe\tipe\utilities\image.h
-	<iostream>
-	<string>
-	"../includes.h"
-
-1436378037 source:d:\tipe\source\tipe\tipe\utilities\loadertempstructure.cpp
-	"loadertempstructure.h"
-
-1463665003 source:d:\tipe\source\tipe\tipe\utilities\manager3dloader.cpp
-	"manager3dloader.h"
-
-1463664669 source:d:\tipe\source\tipe\tipe\utilities\meshmanagers.cpp
-	"meshmanagers.h"
-
-1462833589 source:d:\tipe\source\tipe\tipe\utilities\objloader.cpp
-	"OBJLoader.h"
-
-1462833589 d:\tipe\source\tipe\tipe\utilities\objloader.h
-	"../geometry/mesh.h"
-	"../includes.h"
-
-1463662848 source:d:\tipe\source\tipe\tipe\utilities\ray.cpp
-	"Ray.h"
-
-1463662520 source:d:\tipe\source\tipe\tipe\utilities\sfmlimage.cpp
-	"sfmlimage.h"
 
 1463662486 d:\tipe\source\tipe\tipe\utilities\sfmlimage.h
 	<SFML/Graphics.hpp>
@@ -774,108 +780,85 @@
 	<string>
 	<vector>
 
-1436378037 source:d:\tipe\source\tipe\tipe\utilities\stringutilities.cpp
-	"stringutilities.h"
+1463662447 d:\tipe\source\tipe\tipe\utilities\image.h
+	<iostream>
+	<string>
+	"../includes.h"
 
-1462805252 source:d:\tipe\source\tipe\tipe\verticesset.cpp
-	"verticesset.h"
+1463609380 d:\tipe\source\tipe\tipe\python\pythonsceneloader.h
+	"../includes.h"
+	"pythonfunction.h"
+	"../utilities/camera.h"
+	"../utilities/meshmanagers.h"
 
-1462831237 d:\tipe\source\tipe\tipe\verticesset.h
-	"includes.h"
+1463853273 d:\tipe\source\tipe\tipe\python\pythontestsloader.h
+	"../includes.h"
+	"pythonfunction.h"
+	"../utilities/camera.h"
+	"../utilities/meshmanagers.h"
+	"../intersections/intersections.h"
+	"../intersections/intersectionnaivemoller.h"
+	"../intersections/intersectiongrid.h"
+	"../intersections/intersectionkdtreespacemedian.h"
+	"../intersections/intersectionkdtreegeometrymedian.h"
+	"../intersections/intersectionkdtreesah.h"
+	"../intersections/intersectionkdtreesahnlogn.h"
+	"pythonsceneloader.h"
+	<map>
+	<string>
+	<iostream>
 
-1462833379 d:\tipe\source\tipe\tipe\scene.h
-	"includes.h"
+1436644314 source:d:\tipe\source\tipe\tipe\materials\material.cpp
+	"material.h"
+
+1463666422 source:d:\tipe\source\tipe\tipe\maths\mattransformations.cpp
+	"matTransformations.h"
+
+1463608837 source:d:\tipe\source\tipe\tipe\python\python3dloader.cpp
+	"python3dloader.h"
+
+1463609003 source:d:\tipe\source\tipe\tipe\python\pythoncontext.cpp
+	"PythonContext.h"
+
+1436378037 source:d:\tipe\source\tipe\tipe\python\pythonfunction.cpp
+	"pythonfunction.h"
+
+1463852015 source:d:\tipe\source\tipe\tipe\python\pythonmodule.cpp
+	"pythonmodule.h"
+
+1463664088 source:d:\tipe\source\tipe\tipe\python\pythonsceneloader.cpp
+	"pythonsceneloader.h"
+
+1463853331 source:d:\tipe\source\tipe\tipe\python\pythontestsloader.cpp
+	"pythontestsloader.h"
 
 1462833379 source:d:\tipe\source\tipe\tipe\scene.cpp
 	"scene.h"
 
-1463670428 source:d:\tipe\source\tipe\tipe\intersections\intersections.cpp
-	"intersections.h"
-
-1463670360 d:\tipe\source\tipe\tipe\intersections\intersections.h
-	"../includes.h"
-	"../geometry/Triangle.h"
-	<cfloat>
-	"../geometry/boundingbox.h"
-
-1462883333 source:d:\tipe\source\tipe\tipe\intersections\intersectionmethod.cpp
-	"intersectionmethod.h"
-
-1463670081 d:\tipe\source\tipe\tipe\intersections\intersectionmethod.h
-	"../utilities/Ray.h"
-	"../geometry/Triangle.h"
-	"intersections.h"
-
-1462883837 source:d:\tipe\source\tipe\tipe\intersections\intersectionnaivemoller.cpp
-	"intersectionnaivemoller.h"
-
-1463670027 d:\tipe\source\tipe\tipe\intersections\intersectionnaivemoller.h
-	"intersectionmethod.h"
-
-1462884070 source:d:\tipe\source\tipe\tipe\intersections\intersectionnaivenaive.cpp
-	"intersectionnaivenaive.h"
-
-1463670049 d:\tipe\source\tipe\tipe\intersections\intersectionnaivenaive.h
-	"intersectionmethod.h"
-
-1462998686 source:d:\tipe\source\tipe\tipe\geometry\boundingbox.cpp
-	"boundingbox.h"
-
-1462998686 d:\tipe\source\tipe\tipe\geometry\boundingbox.h
-	"../includes.h"
-	"Triangle.h"
-
-1463669748 source:d:\tipe\source\tipe\tipe\intersections\intersectiongrid.cpp
-	"intersectiongrid.h"
-
-1463669926 d:\tipe\source\tipe\tipe\intersections\intersectiongrid.h
-	"intersectionmethod.h"
-	<stack>
-	"intersections.h"
-	"../utilities/benchmark.h"
-
-1463662051 d:\tipe\source\tipe\tipe\utilities\benchmark.h
-	"windows.h"
-
 1462919366 source:d:\tipe\source\tipe\tipe\utilities\benchmark.cpp
 	"benchmark.h"
 
-1463675071 d:\tipe\source\tipe\tipe\intersections\intersectionkdtree.h
-	"intersectionmethod.h"
-	<stack>
+1463666054 source:d:\tipe\source\tipe\tipe\utilities\camera.cpp
+	"camera.h"
 
-1463675183 source:d:\tipe\source\tipe\tipe\intersections\intersectionkdtree.cpp
-	"intersectionkdtree.h"
+1462805680 source:d:\tipe\source\tipe\tipe\utilities\color.cpp
+	"color.h"
 
-1463670617 source:d:\tipe\source\tipe\tipe\intersections\intersectionkdtreespacemedian.cpp
-	"intersectionkdtreespacemedian.h"
+1463662319 source:d:\tipe\source\tipe\tipe\utilities\image.cpp
+	"image.h"
 
-1463670750 d:\tipe\source\tipe\tipe\intersections\intersectionkdtreespacemedian.h
-	"intersectionkdtree.h"
+1463852532 source:d:\tipe\source\tipe\tipe\utilities\manager3dloader.cpp
+	"manager3dloader.h"
 
-1463670927 source:d:\tipe\source\tipe\tipe\intersections\intersectionkdtreegeometrymedian.cpp
-	"intersectionkdtreegeometrymedian.h"
+1463664669 source:d:\tipe\source\tipe\tipe\utilities\meshmanagers.cpp
+	"meshmanagers.h"
 
-1463670754 d:\tipe\source\tipe\tipe\intersections\intersectionkdtreegeometrymedian.h
-	"intersectionkdtree.h"
+1463662848 source:d:\tipe\source\tipe\tipe\utilities\ray.cpp
+	"Ray.h"
 
-1463687955 source:d:\tipe\source\tipe\tipe\intersections\intersectionkdtreesah.cpp
-	"intersectionkdtreesah.h"
+1463662520 source:d:\tipe\source\tipe\tipe\utilities\sfmlimage.cpp
+	"sfmlimage.h"
 
-1463687991 d:\tipe\source\tipe\tipe\intersections\intersectionkdtreesah.h
-	"intersectionkdtree.h"
-	"../geometry/boundingbox.h"
-
-1463688056 source:d:\tipe\source\tipe\tipe\intersections\intersectionkdtreesahnlogn.cpp
-	"intersectionkdtreesahnlogn.h"
-
-1463688486 d:\tipe\source\tipe\tipe\intersections\intersectionkdtreesahnlogn.h
-	"intersectionkdtreesah.h"
-
-1463079830 source:d:\tipe\source\tipe\tipe\python\pythonorderloader.cpp
-	"pythonorderloader.h"
-
-1463079830 d:\tipe\source\tipe\tipe\python\pythonorderloader.h
-	"../includes.h"
-	"pythonfunction.h"
+1436378037 source:d:\tipe\source\tipe\tipe\utilities\stringutilities.cpp
+	"stringutilities.h"
 

@@ -12,7 +12,8 @@ void merge(std::vector<Event> &a,
 class IntersectionKdTreeSAHnlogn: public IntersectionKdTreeSAH
 {
     public:
-        IntersectionKdTreeSAHnlogn(Scene *scene, Real Kt, Real Ki);
+        IntersectionKdTreeSAHnlogn(Scene *scene, Real Kt, Real Ki,
+                                   bool use_r = true);
         virtual ~IntersectionKdTreeSAHnlogn();
         /*on modifie la fonction de construction pour passer la liste
         * d'évenements d'un noeud à ses fils

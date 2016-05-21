@@ -8,8 +8,8 @@ bool eventComparison(Event e1, Event e2) {
 
 
 IntersectionKdTreeSAH::IntersectionKdTreeSAH(Scene *scene, Real Kt, Real Ki,
-                                             Complexity c):
-    IntersectionKdTree(scene), _Kt(Kt), _Ki(Ki), _complexity(c)
+                                             bool use_r, Complexity c):
+    IntersectionKdTree(scene, use_r), _Kt(Kt), _Ki(Ki), _complexity(c)
 {
     //ctor
 }
@@ -220,7 +220,6 @@ TempSAH IntersectionKdTreeSAH::SAH(SplitPlane &plan, BoundingBox &bb,
 
 IntersectionKdTreeSAH::~IntersectionKdTreeSAH()
 {
-    //dtor
 }
 
 

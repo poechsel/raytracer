@@ -13,7 +13,6 @@ typedef double Real;
 typedef unsigned int uint;
 
 
-#include "maths/vector2.h"
 #include "maths/vector3.h"
 
 template <class T>

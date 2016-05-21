@@ -14,7 +14,7 @@ class IntersectionMethod
         *  le rayon
         */
         virtual Real intersect(Ray const &ray, uint *t_inter) = 0;
-
+        void setScene(Scene *scene){_scene = scene;}
     protected:
         Scene *_scene;
     private:
