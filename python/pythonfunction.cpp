@@ -14,7 +14,7 @@ bool PythonFunction::loadFunction(std::string name){
         if (PyErr_Occurred()){
             PyErr_Print();
         }
-        std::cout<<"error\n";
+
         return false;
     }
     return true;

@@ -12,10 +12,8 @@ PythonModule::PythonModule(std::string name):
 
 bool PythonModule::loadModule(std::string name) {
     PyObject* pname = convertToPy(name);
-    std::cout<<name<<"!!!!\n";
     _module = PyImport_Import(pname);
-    std::cout<<"pass\n";
-    Py_DECREF(pname);
+        Py_DECREF(pname);
     if (!_module) {
         PyErr_Print();
         return false;

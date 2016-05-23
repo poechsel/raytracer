@@ -45,6 +45,10 @@ KdBaseNode* IntersectionKdTreeSAHnlogn::buildTree(EventsList &events,
                                                     std::vector<uint> &T,
                                                     uint depth)
 {
+    if (_offset >= 0 && getTimeElapsed(_time) > _offset) {
+        this->finished = false;
+        return new KdLeaf(this->_scene, {0, X, LEFT, 0}, T);
+    }
     SplitPlane plane = this->getMinPlanesSorted(bb, T, depth, events);
     if (this->automaticEnding(plane, bb, T, depth) || !T.size()) {
         return new KdLeaf(this->_scene, plane, T);
@@ -66,7 +70,9 @@ KdBaseNode* IntersectionKdTreeSAHnlogn::buildTree(EventsList &events,
 
 
 
-void IntersectionKdTreeSAHnlogn::build() {
+void IntersectionKdTreeSAHnlogn::build(int offset) {
+    _offset = offset;
+    _time = getTime();
     BoundingBox bb;
     for (auto &triangle : this->_scene->triangles) {
         bb.expand(this->_scene, &triangle);

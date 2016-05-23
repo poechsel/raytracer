@@ -18,7 +18,7 @@ class IntersectionKdTreeSAHnlogn: public IntersectionKdTreeSAH
         /*on modifie la fonction de construction pour passer la liste
         * d'évenements d'un noeud à ses fils
         */
-        void                build();
+        void                build(int offset = -1);
 
     protected:
         KdBaseNode*         buildTree(EventsList &events,

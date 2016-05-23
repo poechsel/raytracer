@@ -6,7 +6,7 @@ IntersectionNaiveMoller::IntersectionNaiveMoller(Scene *scene):
 }
 
 
-void IntersectionNaiveMoller::build() {
+void IntersectionNaiveMoller::build(int offset) {
 }
 
 Real IntersectionNaiveMoller::intersect(Ray const &ray, uint *t_inter) {

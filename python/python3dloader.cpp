@@ -72,7 +72,6 @@ std::map<std::string,Mesh*> Python3DLoader::load(std::string path, Scene *scene)
     //il se peut que des sommets soient déjà présents, on doit donc décaler
     //l'index des sommets suivants
     uint offset = scene->getVerticesNumber();
-    std::cout<<"offset "<<offset<<"\n";
     if (PyDict_Check(value)) {
         PyObject *keys = PyDict_Keys(value);
         for (uint i = 0; i < PyList_Size(keys); ++i) {

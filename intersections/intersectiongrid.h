@@ -17,7 +17,7 @@ class IntersectionGrid: public IntersectionMethod
 {
     public:
         IntersectionGrid(Scene *scene, Real s, bool use_dfs = true);
-        virtual void    build();
+        virtual void    build(int offset = -1);
         virtual Real    intersect(Ray const &ray, uint *t_inter);
     protected:
         /* transforme la position d'un voxel en son index dans la grille*/

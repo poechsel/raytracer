@@ -1,6 +1,10 @@
 #include "intersections.h"
 
 
+
+unsigned long long COUNTS::NB_TESTS_TRI_RAY = 0;
+unsigned long long COUNTS::NB_TESTS_TRI_VOXEL = 0;
+
 inline Real sign(Real a){
     return (a < 0)? -1 : 1;
 }
@@ -9,6 +13,7 @@ inline Real sign(Real a){
 Real intersectionMoller(Scene *scene,
                         Triangle &triangle,
                         const Ray &ray) {
+    COUNTS::NB_TESTS_TRI_RAY ++;
     Vector3f P = cross(ray.direction, triangle.e2);
 
     Real det = dot(triangle.e1, P);
@@ -37,6 +42,7 @@ Real intersectionMoller(Scene *scene,
 Real intersectionNaive(Scene *scene,
                        Triangle &tri,
                        const Ray &ray){
+    COUNTS::NB_TESTS_TRI_RAY ++;
     Real dn = dot(tri.normal, ray.direction);
     if (-FLT_EPSILON < dn && dn < FLT_EPSILON) {
         return -1;
@@ -91,6 +97,7 @@ bool intersectionBoxRay(Vector3f center, Vector3f half_size,
 bool intersectionBoxTri(const Scene *scene,
                         Vector3f center, Vector3f half_size,
                         const Triangle &triangle) {
+    COUNTS::NB_TESTS_TRI_VOXEL++;
     Vector3f v1 = scene->vertices[triangle.v1] - center;
     Vector3f v2 = scene->vertices[triangle.v2] - center;
     Vector3f v3 = scene->vertices[triangle.v3] - center;

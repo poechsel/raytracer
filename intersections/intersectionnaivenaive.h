@@ -12,7 +12,7 @@ class IntersectionNaiveNaive: public IntersectionMethod
 {
     public:
         IntersectionNaiveNaive(Scene *scene);
-        virtual void build();
+        virtual void build(int offset = -1);
         virtual Real intersect(Ray const &ray, uint *t_inter);
     protected:
     private:

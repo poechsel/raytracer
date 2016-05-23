@@ -69,7 +69,6 @@ bool PythonSceneLoader::loadObjects(PyObject *value, Scene *scene){
         Manager3dLoader loader;
         auto meshes = loader.load(PyBytes_AS_STRING(pyStr), scene);
         scene->appendMeshes(meshes);
-        std::cout<<"loading files from: "<<PyBytes_AS_STRING(pyStr)<<"\n";
     }
     Py_XDECREF(key);
     return true;
@@ -89,7 +88,6 @@ bool PythonSceneLoader::loadScene(Camera *camera, PyObject *value){
     Py_XDECREF(keyheight);
     camera->width = width;
     camera->height = height;
-    std::cout<<"image will be of "<<width<<"x"<<height<<"\n";
     return true;
 }
 

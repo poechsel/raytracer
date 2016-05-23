@@ -5,7 +5,7 @@ IntersectionNaiveNaive::IntersectionNaiveNaive(Scene *scene):
 }
 
 
-void IntersectionNaiveNaive::build() {
+void IntersectionNaiveNaive::build(int offset) {
 }
 
 Real IntersectionNaiveNaive::intersect(Ray const &ray, uint *t_inter) {

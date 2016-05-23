@@ -9,4 +9,5 @@
 ULARGE_INTEGER getTime();
 double getTimeElapsed(ULARGE_INTEGER tb);
 
+
 #endif // BENCHMARK_H

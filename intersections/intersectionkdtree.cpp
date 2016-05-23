@@ -1,5 +1,6 @@
 #include "intersectionkdtree.h"
 
+
 IntersectionKdTree::IntersectionKdTree(Scene *scene, bool use_r):
     IntersectionMethod(scene), _tree(0), _use_rec(use_r)
 {
@@ -11,7 +12,6 @@ IntersectionKdTree::IntersectionKdTree(Scene *scene, bool use_r):
 
 IntersectionKdTree::~IntersectionKdTree()
 {
-    std::cout<<"===> "<<_tree<<"\n";
     if (_tree)
         delete _tree;
 }
@@ -61,6 +61,11 @@ KdBaseNode* IntersectionKdTree::buildTree(BoundingBox &bb,
                                             std::vector<uint> &T,
                                             uint depth)
 {
+    if (_offset >= 0 && getTimeElapsed(_time) > _offset) {
+        this->finished = false;
+        return new KdLeaf(this->_scene, {0, X, LEFT, 0}, T);
+    }
+
     // on récupére le plan séparateur
     SplitPlane plane = this->heuristic(bb, T, depth);
     //on arréte la construction si nécessaire
@@ -83,8 +88,10 @@ KdBaseNode* IntersectionKdTree::buildTree(BoundingBox &bb,
 
 
 
-void IntersectionKdTree::build()
+void IntersectionKdTree::build(int offset)
 {
+    _time = getTime();
+    _offset = offset;
     BoundingBox bb;
     for (auto &triangle : this->_scene->triangles) {
         bb.expand(this->_scene, &triangle);
@@ -119,18 +126,18 @@ Real IntersectionKdTree::intersectSeq(Ray const &ray, uint *t_inter)
         while (cnode->getType() != LEAF) {
             Axe a = cnode->plane.axis;
             Real t = (cnode->plane.pos - ray.origin[a]) / ray.direction[a];
-            KdBaseNode *near = (ray.direction[a] > 0)? ((KdTree*)(cnode))->left
+            KdBaseNode *near_child = (ray.direction[a] > 0)? ((KdTree*)(cnode))->left
                                                     : ((KdTree*)(cnode))->right;
-            KdBaseNode *far = (ray.direction[a] > 0)? ((KdTree*)(cnode))->right
+            KdBaseNode *far_child = (ray.direction[a] > 0)? ((KdTree*)(cnode))->right
                                                     : ((KdTree*)(cnode))->left;
             if (t > current.t_max) {
-                cnode = near;
+                cnode = near_child;
             } else if (t < current.t_min) {
-                cnode = far;
+                cnode = far_child;
             } else {
                 // on pousse le fils 'droit' dans le stack
-                stack.push({far, t, t_max});
-                cnode = near;
+                stack.push({far_child, t, t_max});
+                cnode = near_child;
                 current.t_max = t;
             }
         }

@@ -92,7 +92,7 @@ class IntersectionKdTree: public IntersectionMethod{
         IntersectionKdTree(Scene *scene, bool ud = true);
         virtual ~IntersectionKdTree();
 
-        virtual void            build();
+        virtual void            build(int offset = -1);
         virtual Real            intersect(Ray const &ray, uint *t_inter);
         /* Parcours itératif du KdTree*/
         Real                    intersectSeq(Ray const &ray, uint *t_inter);
@@ -112,7 +112,9 @@ class IntersectionKdTree: public IntersectionMethod{
     protected:
         KdBaseNode*      _tree;
         BoundingBox _bb_root;
+        int _offset;
         bool _use_rec;
+        ULARGE_INTEGER _time;
 
 
         virtual KdBaseNode*     buildTree(BoundingBox &bb,
@@ -125,6 +127,7 @@ class IntersectionKdTree: public IntersectionMethod{
                                                     std::vector<uint> &T,
                                                     std::vector<uint> &tg,
                                                     std::vector<uint> &td);
+
     private:
 };
 

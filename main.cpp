@@ -24,25 +24,36 @@
 #include <getopt.h>
 using namespace std;
 Real sigmoid(Real x) {
-    //return 1.0/(1+std::exp(-(x-0.5)*12.0));
-    //massal
     double invgamma = 0.45;
     return std::pow(1.0 - std::exp(-0.66 * x), invgamma);
-}/*
-Real intersect(Scene *scene, const Ray &ray, uint *t_inter) {
-    Real t = -1;
-    for (uint i = 0; i < scene->triangles.size(); ++i){
-        //Real t_temp = scene->triangles[i].intersect(ray);
-        Real t_temp = intersectionMoller(scene, scene->triangles[i], ray);
-        if (t_temp >= 0) {
-            if (t < 0 || t_temp < t) {
-                t = t_temp;
-                *t_inter = i;
+}
+
+
+int raytrace(Camera &cameratemp, Image* image, Scene &scene, IntersectionMethod *inter_method, ULARGE_INTEGER time, int offset = -1){
+    int nb = 0;
+    for (uint y = 0; y < cameratemp.height; ++y) {
+        for (uint x = 0; x < cameratemp.width; ++x) {
+            if (offset >= 0 && getTimeElapsed(time) > offset) {
+                return -1;
             }
+            Ray ray = cameratemp.shoot(x, y);
+            uint tri = 0;
+            Real t = inter_method->intersect(ray, &tri);
+            Color color(0.8, 1, 0.9);
+            if (t >= 0) {
+                nb += 1;
+                Real gradient = std::abs(dot(ray.direction, scene.triangles[tri].normal));
+                color = Color(gradient, gradient, gradient);
+            }//*/
+            image->putPixelFloat(x, y, color.r, color.g, color.b);
+
         }
+
     }
-    return t;
-}*/
+    return nb;
+}
+
+
 int main(int argc, char *argv[])
 {
     int flags, opt;
@@ -52,23 +63,28 @@ int main(int argc, char *argv[])
         {"Ki",          required_argument, 0,   'i' },
         {"Kt",          required_argument, 0,   'p' },
         {"build",       required_argument, 0,   'b' },
-        {"complexity",  required_argument, 0,   'c'},
+        {"complexity",  required_argument, 0,   'c' },
         {"heuristic",   required_argument, 0,   'h' },
         {"method",      required_argument, 0,   'm' },
         {"size",        required_argument, 0,   's' },
+        {"output",      required_argument, 0,   'o' },
+        {"time",       required_argument, 0,   'l' },
         {0,             0,                 0,   0 }
     };
     std::map<std::string, std::string> params;
-    std::string file = (argc>1)? std::string(argv[1]) : "scenes/suzanne.json";
+    std::string file = (argc>1)? std::string(argv[1]) : "scenes/boudha_05.json";
     params["traversal"] = "rec";
     params["Ki"] = "20";
     params["Kt"] = "15";
     params["build"] = "dfs";
-    params["complexity"] = "nlogn";
+    params["complexity"] = "n2";
     params["heuristic"] = "sah";
     params["method"] = "kdtree";
     params["size"] = "1";
-    while ((opt = getopt_long(argc, argv,"t:i:p:b:c:h:m:s:", long_options, &long_index )) != -1)
+    params["output"] = "sfml";
+    params["time"] = "-1";
+
+    while ((opt = getopt_long(argc, argv,"t:i:p:b:c:h:m:s:o:l:", long_options, &long_index )) != -1)
     {
         switch (opt) {
              case 't' : params["traversal"]     = lower(std::string(optarg));
@@ -87,16 +103,14 @@ int main(int argc, char *argv[])
                  break;
              case 's' : params["size"]          = lower(std::string(optarg));
                  break;
-             default: std::cout<<"erreur\n";
+             case 'o' : params["output"]        = lower(std::string(optarg));
+                 break;
+             case 'l' : params["time"]         = lower(std::string(optarg));
+                 break;
+             default: continue;
                  return -1;
         }
     }
-
-    for (auto &e : params) {
-        std::cout<<e.first<<" "<<e.second<<"\n";
-    }
-
-    std::cout<<"===> "<<file<<"\n";
 
 
     PythonContext context;
@@ -106,14 +120,17 @@ int main(int argc, char *argv[])
 
     Camera cameratemp;
     PythonSceneLoader loader_scenes(file);
-    std::cout<<"loading========================\n";
+    //std::cout<<"loading========================\n";
     loader_scenes.load(&cameratemp, &scene);
-    for (auto it = scene.meshes.begin(); it != scene.meshes.end(); ++it) {
+    /*for (auto it = scene.meshes.begin(); it != scene.meshes.end(); ++it) {
             std::cout<<"manager->Mesh: "<<it->first<<" -> "<<&(it->second)<<"\n";
             std::cout<<"    Faces: "<<it->second->triangles.size()
                      <<" Vertices: "<<it->second->vertices.size()<<"\n";
     }
     std::cout<<"end loading========================\n";
+    //*/
+
+    int time_limit = stringTo<int>(params["time"]);
 
     IntersectionMethod *inter_method = 0;
     if (params["method"] == "kdtree") {
@@ -154,43 +171,37 @@ int main(int argc, char *argv[])
         inter_method = new IntersectionNaiveMoller(&scene);
     }
 
-    //IntersectionMethod *inter_method = new IntersectionNaiveMoller(&scene);
-    //IntersectionMethod *inter_method = new IntersectionGrid(&scene, 0.5);
-    //IntersectionMethod *inter_method = new IntersectionKdTreeGeometryMedian(&scene, true);
-    //IntersectionMethod *inter_method = new IntersectionKdTreeSAH(&scene, 15, 20, NLOG2N);
-    //IntersectionMethod *inter_method = new IntersectionKdTreeSAHnlogn(&scene, 15, 20);
-    //IntersectionMethod *inter_method2 = new IntersectionKdTreeSAH(&scene, 15, 20, NLOG2N);
+
+    Image *image = 0;
+    if (params["output"] == "sfml")
+        image = new SFMLImage(cameratemp.width, cameratemp.height);
+    else
+        image = new Image(cameratemp.width, cameratemp.height);
+
+
     ULARGE_INTEGER time = getTime();
-    //inter_method2->build();
-    std::cout<<"change method\n";
-    inter_method->build();
-    std::cout<<"build done in "<<getTimeElapsed(time)<<"\n";
-    time = getTime();
-    int nb = 0;
-    SFMLImage image (cameratemp.width, cameratemp.height);
-    for (uint y = 0; y < cameratemp.height; ++y) {
-        for (uint x = 0; x < cameratemp.width; ++x) {
-            Ray ray = cameratemp.shoot(x, y);
-            uint tri = 0;
-            Real t = inter_method->intersect(ray, &tri);
-            Color color(0.65, 1, 1);
-            if (t >= 0) {
-                    nb += 1;
-                Real gradient = std::abs(dot(ray.direction, scene.triangles[tri].normal));
-                color = Color(gradient, gradient, gradient);
-            }//*/
-            image.putPixelFloat(x, y, sigmoid(color.r), sigmoid(color.g), sigmoid(color.b));
+    inter_method->build(time_limit);
+    if (inter_method->finished) {
+        std::cout<<"build: "<<getTimeElapsed(time)<<"\n";
+        time = getTime();
+        int nb = raytrace(cameratemp, image, scene, inter_method, time, time_limit);
+        Real dt = getTimeElapsed(time);
+        std::cout<<"triangles: "<<nb<<"\n";
+        if (nb >= 0) {
+            std::cout<<"task: "<<dt<<"\n";
+        } else {
+            std::cout<<"task: "<<"INFTY"<<"\n";
         }
-        if (completion_percent < (int)(((Real)y / 480.0)*100)) {
-            completion_percent = ((Real)y / 480.0)*100;
-            //std::cout<<completion_percent<<"%\n";
-        }
+        image->saveTo("test.png");
+        std::cout<<"tri/ray: "<<COUNTS::NB_TESTS_TRI_RAY<<"\n";
+        std::cout<<"box/ray: "<<COUNTS::NB_TESTS_TRI_VOXEL<<"\n";
     }
-    std::cout<<"detected "<<nb<<" triangles\n";
-    std::cout<<"task done in "<<getTimeElapsed(time)<<"\n";
-    std::cout<<"end\n";
-    image.saveTo("test.png");
+    else {
+        std::cout<<"build: "<<"INFTY"<<"\n";
+    }
+
     delete inter_method;
+    delete image;
 
     return 0;
 }

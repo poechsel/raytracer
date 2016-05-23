@@ -6,6 +6,13 @@
 #include <cfloat>
 #include "../geometry/boundingbox.h"
 
+class COUNTS {
+    public:
+        static unsigned long long NB_TESTS_TRI_RAY;
+        static unsigned long long NB_TESTS_TRI_VOXEL;
+};
+
+
 /* retourne le signe de a: -1, 0 ou 1*/
 inline Real sign(Real a);
 

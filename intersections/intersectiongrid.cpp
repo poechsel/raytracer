@@ -11,7 +11,7 @@ IntersectionGrid::IntersectionGrid(Scene *scene, Real s, bool use_dfs):
 
 
 
-void IntersectionGrid::build(){
+void IntersectionGrid::build(int offset){
     this->createGrid();
     if (this->_use_dfs) {
         for (uint i = 0; i < this->_scene->triangles.size(); ++i) {

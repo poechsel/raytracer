@@ -228,8 +228,7 @@ bool IntersectionKdTreeSAH::automaticEnding(SplitPlane &plane, BoundingBox &bb,
                                             std::vector<uint> &triangles,
                                             uint depth)
 {
-    //std::cout<< plane.cost <<" "<< _Ki * triangles.size()<<"\n";
-    return (plane.cost == -1 || 5> triangles.size() || depth > 16 );
+    return (plane.cost == -1 || plane.cost > _Ki * triangles.size() || depth > 16 || 5 > triangles.size() );
 }//*/
 
 
@@ -240,7 +239,6 @@ int sutherlandHodgman(std::vector<Vector3f> &input, int inCount,
                       double splitPos, bool isMinimum) {
 	if (inCount < 3)
 		return 0;
-    //std::cout<<"test"<<input.size()<<"\n";
 	Vector3f cur (input[0]);
 	double sign       = isMinimum ? 1.0f : -1.0f;
 	double distance   = sign * (cur[axis] - splitPos);
@@ -289,7 +287,6 @@ BoundingBox getClippedAABB(const Scene *scene, const uint tri,
     for (uint axis = 0; axis < 3; ++axis) {
         nVertices = sutherlandHodgman(vertices1, nVertices, vertices2,
                                       axis, bb.m[axis], true);
-        //std::cout<<vertices2.size()<<"\n";
         nVertices = sutherlandHodgman(vertices2, nVertices, vertices1,
                                       axis, bb.M[axis], false);
     }

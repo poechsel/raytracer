@@ -16,13 +16,13 @@ class Image
         Image(int width=0, int height=0, int type = RGBA);
         virtual ~Image();
 
-        virtual void writeHeader() = 0;
-        virtual void writeFooter() = 0;
+        virtual void writeHeader() {};
+        virtual void writeFooter() {};
 
         //sauvegarde l'image
-        virtual void saveTo(std::string target = "") = 0;
+        virtual void saveTo(std::string target = "") {};
         //charge une image
-        virtual void load(std::string path) = 0;
+        virtual void load(std::string path) {};
 
         virtual Vector3f getPixel(Real x, Real y);
         //assigne à un pixel la couleur (r, g, b) où r, g et b sont des entiers
@@ -35,8 +35,8 @@ class Image
                                    , float a = 1.f);
 
         uint8_t *data;
-        int width;
-        int height;
+        uint width;
+        uint height;
     protected:
         int _type;
     private:
