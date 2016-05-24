@@ -74,6 +74,7 @@ class IntersectionKdTreeSAH: public IntersectionKdTree
         virtual bool        automaticEnding(SplitPlane &plane, BoundingBox &bb,
                                             std::vector<uint> &triangles,
                                             uint depth);
+        std::vector<uint> _depth;
     protected:
         Real _Kt;
         Real _Ki;

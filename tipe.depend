@@ -95,7 +95,7 @@
 1464010598 source:d:\tipe\source\tipe\tipe\intersections\intersectionkdtree.cpp
 	"intersectionkdtree.h"
 
-1464010431 d:\tipe\source\tipe\tipe\intersections\intersectionkdtree.h
+1464031560 d:\tipe\source\tipe\tipe\intersections\intersectionkdtree.h
 	"intersectionmethod.h"
 	<stack>
 
@@ -105,10 +105,10 @@
 1463670754 d:\tipe\source\tipe\tipe\intersections\intersectionkdtreegeometrymedian.h
 	"intersectionkdtree.h"
 
-1464016694 source:d:\tipe\source\tipe\tipe\intersections\intersectionkdtreesah.cpp
+1464036501 source:d:\tipe\source\tipe\tipe\intersections\intersectionkdtreesah.cpp
 	"intersectionkdtreesah.h"
 
-1463871169 d:\tipe\source\tipe\tipe\intersections\intersectionkdtreesah.h
+1464028153 d:\tipe\source\tipe\tipe\intersections\intersectionkdtreesah.h
 	"intersectionkdtree.h"
 	"../geometry/boundingbox.h"
 
@@ -142,7 +142,7 @@
 1464009149 source:d:\tipe\source\tipe\tipe\intersections\intersections.cpp
 	"intersections.h"
 
-1464012490 source:d:\tipe\source\tipe\tipe\main.cpp
+1464035931 source:d:\tipe\source\tipe\tipe\main.cpp
 	<iostream>
 	<glm/glm.hpp>
 	"glm/gtc/matrix_transform.hpp"
@@ -166,6 +166,7 @@
 	"intersections/intersectionkdtreesah.h"
 	"intersections/intersectionkdtreesahnlogn.h"
 	<getopt.h>
+	<fstream>
 
 1385212800 c:\program files (x86)\python\include\python.h
 	"patchlevel.h"

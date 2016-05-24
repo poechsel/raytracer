@@ -35,6 +35,7 @@ struct SplitPlane {
     Axe axis;
     Side side;
     Real cost;
+    uint tri;
 };
 
 /* Un noeud d'un KdTree est soit une feuille, soit un noeuds non vide */

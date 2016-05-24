@@ -1,204 +1,211 @@
 {
-    "nlogn": {
-        "50": {
+    "nlog2n": {
+        "1": {
             "box/ray": "0",
-            "triangles": "113377",
-            "tri/ray": "12248741",
-            "build": "56.565",
-            "task": "5.912"
-        },
-        "05": {
-            "box/ray": "0",
-            "triangles": "113513",
-            "tri/ray": "6398626",
-            "build": "1.778",
-            "task": "3.556"
-        },
-        "90": {
-            "box/ray": "0",
-            "triangles": "113373",
-            "tri/ray": "37697991",
-            "build": "97.141",
-            "task": "14.976"
-        },
-        "15": {
-            "box/ray": "0",
-            "triangles": "113384",
-            "tri/ray": "7190428",
-            "build": "23.821",
-            "task": "4.29"
-        },
-        "80": {
-            "box/ray": "0",
-            "triangles": "113375",
-            "tri/ray": "26876006",
-            "build": "86.923",
-            "task": "11.029"
+            "build": "1.326",
+            "task": "0.733",
+            "triangles": "113419",
+            "tri/ray": "2013256"
         },
         "100": {
             "box/ray": "0",
+            "build": "106.41",
+            "task": "3.864",
             "triangles": "113370",
-            "tri/ray": "66736978",
-            "build": "112.429",
-            "task": "25.272"
-        },
-        "3": {
-            "box/ray": "0",
-            "triangles": "113412",
-            "tri/ray": "4981977",
-            "build": "7.098",
-            "task": "3.338"
-        },
-        "1": {
-            "box/ray": "0",
-            "triangles": "113419",
-            "tri/ray": "4689074",
-            "build": "3.088",
-            "task": "3.135"
-        },
-        "2": {
-            "box/ray": "0",
-            "triangles": "113389",
-            "tri/ray": "4540023",
-            "build": "5.257",
-            "task": "3.151"
-        },
-        "65": {
-            "box/ray": "0",
-            "triangles": "113373",
-            "tri/ray": "17551129",
-            "build": "71.806",
-            "task": "7.69"
-        },
-        "10": {
-            "box/ray": "0",
-            "triangles": "113376",
-            "tri/ray": "6171372",
-            "build": "17.222",
-            "task": "3.868"
-        },
-        "30": {
-            "box/ray": "0",
-            "triangles": "113371",
-            "tri/ray": "9938064",
-            "build": "41.199",
-            "task": "5.241"
+            "tri/ray": "19328268"
         },
         "5": {
             "box/ray": "0",
+            "build": "5.116",
+            "task": "0.889",
             "triangles": "113396",
-            "tri/ray": "5336802",
-            "build": "10.342",
-            "task": "3.51"
+            "tri/ray": "3152256"
+        },
+        "2": {
+            "box/ray": "0",
+            "build": "2.386",
+            "task": "0.811",
+            "triangles": "113389",
+            "tri/ray": "2513893"
+        },
+        "15": {
+            "box/ray": "0",
+            "build": "13.868",
+            "task": "1.669",
+            "triangles": "113384",
+            "tri/ray": "5723706"
+        },
+        "05": {
+            "box/ray": "0",
+            "build": "0.717",
+            "task": "0.717",
+            "triangles": "113513",
+            "tri/ray": "2021914"
+        },
+        "65": {
+            "box/ray": "0",
+            "build": "66.519",
+            "task": "2.386",
+            "triangles": "113373",
+            "tri/ray": "14277935"
+        },
+        "10": {
+            "box/ray": "0",
+            "build": "9.422",
+            "task": "1.06",
+            "triangles": "113376",
+            "tri/ray": "4571435"
+        },
+        "30": {
+            "box/ray": "0",
+            "build": "32.214",
+            "task": "2.199",
+            "triangles": "113371",
+            "tri/ray": "8877758"
+        },
+        "3": {
+            "box/ray": "0",
+            "build": "3.354",
+            "task": "0.795",
+            "triangles": "113412",
+            "tri/ray": "2502875"
+        },
+        "80": {
+            "box/ray": "0",
+            "build": "82.009",
+            "task": "3.354",
+            "triangles": "113375",
+            "tri/ray": "16015119"
+        },
+        "90": {
+            "box/ray": "0",
+            "build": "99.178",
+            "task": "3.534",
+            "triangles": "113373",
+            "tri/ray": "17267805"
+        },
+        "50": {
+            "box/ray": "0",
+            "build": "50.372",
+            "task": "2.199",
+            "triangles": "113377",
+            "tri/ray": "11658284"
         }
     },
-    "nlog2n": {
-        "50": {
+    "nlogn": {
+        "1": {
             "box/ray": "0",
-            "triangles": "113377",
-            "tri/ray": "12248741",
-            "build": "110.728",
-            "task": "5.912"
-        },
-        "05": {
-            "box/ray": "0",
-            "triangles": "113513",
-            "tri/ray": "6398626",
-            "build": "2.48",
-            "task": "3.556"
-        },
-        "90": {
-            "box/ray": "0",
-            "triangles": "113373",
-            "tri/ray": "37697991",
-            "build": "203.689",
-            "task": "14.991"
-        },
-        "15": {
-            "box/ray": "0",
-            "triangles": "113384",
-            "tri/ray": "7190428",
-            "build": "41.168",
-            "task": "4.29"
-        },
-        "80": {
-            "box/ray": "0",
-            "triangles": "113375",
-            "tri/ray": "26876006",
-            "build": "181.381",
-            "task": "11.029"
+            "build": "1.014",
+            "task": "0.748",
+            "triangles": "113419",
+            "tri/ray": "2013256"
         },
         "100": {
             "box/ray": "0",
+            "build": "50.795",
+            "task": "3.453",
             "triangles": "113370",
-            "tri/ray": "66736978",
-            "build": "237.385",
-            "task": "25.318"
-        },
-        "3": {
-            "box/ray": "0",
-            "triangles": "113412",
-            "tri/ray": "4981977",
-            "build": "10.467",
-            "task": "3.338"
-        },
-        "1": {
-            "box/ray": "0",
-            "triangles": "113419",
-            "tri/ray": "4689074",
-            "build": "4.321",
-            "task": "3.135"
-        },
-        "2": {
-            "box/ray": "0",
-            "triangles": "113389",
-            "tri/ray": "4540023",
-            "build": "7.519",
-            "task": "3.151"
-        },
-        "65": {
-            "box/ray": "0",
-            "triangles": "113373",
-            "tri/ray": "17551129",
-            "build": "146.156",
-            "task": "7.706"
-        },
-        "10": {
-            "box/ray": "0",
-            "triangles": "113376",
-            "tri/ray": "6171372",
-            "build": "28.672",
-            "task": "3.884"
-        },
-        "30": {
-            "box/ray": "0",
-            "triangles": "113371",
-            "tri/ray": "9938064",
-            "build": "77.142",
-            "task": "5.226"
+            "tri/ray": "19328268"
         },
         "5": {
             "box/ray": "0",
+            "build": "3.307",
+            "task": "0.873",
             "triangles": "113396",
-            "tri/ray": "5336802",
-            "build": "15.974",
-            "task": "3.494"
+            "tri/ray": "3152256"
+        },
+        "2": {
+            "box/ray": "0",
+            "build": "1.7",
+            "task": "0.795",
+            "triangles": "113389",
+            "tri/ray": "2513893"
+        },
+        "15": {
+            "box/ray": "0",
+            "build": "7.815",
+            "task": "1.185",
+            "triangles": "113384",
+            "tri/ray": "5723706"
+        },
+        "05": {
+            "box/ray": "0",
+            "build": "0.577",
+            "task": "0.717",
+            "triangles": "113513",
+            "tri/ray": "2021914"
+        },
+        "65": {
+            "box/ray": "0",
+            "build": "30.544",
+            "task": "3.057",
+            "triangles": "113373",
+            "tri/ray": "14277935"
+        },
+        "10": {
+            "box/ray": "0",
+            "build": "5.694",
+            "task": "1.045",
+            "triangles": "113376",
+            "tri/ray": "4571435"
+        },
+        "30": {
+            "box/ray": "0",
+            "build": "14.149",
+            "task": "1.56",
+            "triangles": "113371",
+            "tri/ray": "8877758"
+        },
+        "3": {
+            "box/ray": "0",
+            "build": "2.293",
+            "task": "0.811",
+            "triangles": "113412",
+            "tri/ray": "2502875"
+        },
+        "80": {
+            "box/ray": "0",
+            "build": "39.015",
+            "task": "3.338",
+            "triangles": "113375",
+            "tri/ray": "16015119"
+        },
+        "90": {
+            "box/ray": "0",
+            "build": "43.461",
+            "task": "3.556",
+            "triangles": "113373",
+            "tri/ray": "17267805"
+        },
+        "50": {
+            "box/ray": "0",
+            "build": "22.542",
+            "task": "2.074",
+            "triangles": "113377",
+            "tri/ray": "11658284"
         }
     },
     "n2": {
         "1": {
             "box/ray": "0",
-            "triangles": "0",
-            "tri/ray": "0",
-            "build": "INFTY",
-            "task": "INFTY"
+            "build": "464.459",
+            "task": "1.029",
+            "triangles": "113419",
+            "tri/ray": "2006799"
         },
         "05": {
             "box/ray": "0",
+            "build": "106.407",
+            "task": "0.717",
             "triangles": "113513",
-            "tri/ray": "1989867",
-            "build": "161.288",
-            "task": "1.965"
+            "tri/ray": "1989867"
+        },
+        "2": {
+            "task": "INFTY",
+            "build": "INFTY",
+            "box/ray": "0",
+            "triangles": "0",
+            "tri/ray": "0"
         }
     }
 }

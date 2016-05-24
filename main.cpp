@@ -53,9 +53,10 @@ int raytrace(Camera &cameratemp, Image* image, Scene &scene, IntersectionMethod 
     return nb;
 }
 
-
+#include <fstream>
 int main(int argc, char *argv[])
 {
+    //freopen("out2.txt","w",stdout);
     int flags, opt;
     int long_index = 1;
     static struct option long_options[] = {
@@ -72,7 +73,7 @@ int main(int argc, char *argv[])
         {0,             0,                 0,   0 }
     };
     std::map<std::string, std::string> params;
-    std::string file = (argc>1)? std::string(argv[1]) : "scenes/boudha_05.json";
+    std::string file = (argc>1)? std::string(argv[1]) : "scenes/suzanne.json";
     params["traversal"] = "rec";
     params["Ki"] = "20";
     params["Kt"] = "15";
@@ -81,7 +82,7 @@ int main(int argc, char *argv[])
     params["heuristic"] = "sah";
     params["method"] = "kdtree";
     params["size"] = "1";
-    params["output"] = "sfml";
+    params["output"] = "none";
     params["time"] = "-1";
 
     while ((opt = getopt_long(argc, argv,"t:i:p:b:c:h:m:s:o:l:", long_options, &long_index )) != -1)
@@ -105,7 +106,7 @@ int main(int argc, char *argv[])
                  break;
              case 'o' : params["output"]        = lower(std::string(optarg));
                  break;
-             case 'l' : params["time"]         = lower(std::string(optarg));
+             case 'l' : params["time"]          = lower(std::string(optarg));
                  break;
              default: continue;
                  return -1;
@@ -181,6 +182,10 @@ int main(int argc, char *argv[])
 
     ULARGE_INTEGER time = getTime();
     inter_method->build(time_limit);
+    /*IntersectionMethod* im = new IntersectionKdTreeSAH(&scene, 15, 20, true, N2);
+    im->build(time_limit);
+    std::cout<<((IntersectionKdTreeSAH*)(im))->_depth.size()<<" vs "<<((IntersectionKdTreeSAH*)(inter_method))->_depth.size()<<"\n";
+    delete im;*/
     if (inter_method->finished) {
         std::cout<<"build: "<<getTimeElapsed(time)<<"\n";
         time = getTime();

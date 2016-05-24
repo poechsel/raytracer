@@ -21,6 +21,7 @@ SplitPlane IntersectionKdTreeSAH::heuristic(BoundingBox &bb,
     if (_complexity == N2){
         return this->heuristicN2(bb, triangles, depth);
     } else if (_complexity == NLOG2N) {
+
         return this->heuristicNlog2n(bb, triangles, depth);
     }
 }
@@ -46,7 +47,6 @@ void IntersectionKdTreeSAH::initEvents(EventsList &events,
             events[Y].push_back({clip.m[Y], BEGIN, triangles[i]});
             events[Y].push_back({clip.M[Y], END, triangles[i]});
         }
-
         if (clip.m[Z] == clip.M[Z]) {
             events[Z].push_back({clip.m[Z], PLANAR, triangles[i]});
         } else {
@@ -66,13 +66,14 @@ SplitPlane IntersectionKdTreeSAH::getMinPlanesSorted(BoundingBox &bb,
 {
     SplitPlane minimal = {0.0, X, BOTH};
     Real         min_cost = -1;
+    int Ngt, Npt, Ndt;
     for (uint axis = 0; axis < 3; axis++) {
         int Ng = 0, Nd = triangles.size(), Np = 0;
         uint i = 0;
         Axe axe = X;
         if (axis == 1) axe = Y;
         if (axis == 2) axe = Z;
-        for (uint i = 0; i < events[axis].size(); ++i) {
+        while (i < events[axis].size()) {
             int plying = 0, pending = 0, pstarting = 0;
             Real p = events[axis][i].pos;
             while (i < events[axis].size()
@@ -105,6 +106,9 @@ SplitPlane IntersectionKdTreeSAH::getMinPlanesSorted(BoundingBox &bb,
             {
                 min_cost = tsah.cost;
                 minimal = {p, axe, tsah.side, tsah.cost};
+            Ngt = Ng+Np;
+            Ndt = Nd;
+            Npt = Np;
             }
             Ng += pstarting + plying;
         }
@@ -150,12 +154,12 @@ SplitPlane  IntersectionKdTreeSAH::heuristicN2(BoundingBox &bb,
         //BoundingBox temp = getClippedAABB(_scene, triangles[i], bb);
         BoundingBox temp (_scene, &(_scene->triangles[triangles[i]]));
         temp.clip(bb);
-        planes.push_back({temp.m.x, X, BOTH});
-        planes.push_back({temp.m.y, Y, BOTH});
-        planes.push_back({temp.m.z, Z, BOTH});
-        planes.push_back({temp.M.x, X, BOTH});
-        planes.push_back({temp.M.y, Y, BOTH});
-        planes.push_back({temp.M.z, Z, BOTH});
+        planes.push_back({temp.m.x, X, BOTH, 0, triangles[i]});
+        planes.push_back({temp.m.y, Y, BOTH, 0, triangles[i]});
+        planes.push_back({temp.m.z, Z, BOTH, 0, triangles[i]});
+        planes.push_back({temp.M.x, X, BOTH, 0, triangles[i]});
+        planes.push_back({temp.M.y, Y, BOTH, 0, triangles[i]});
+        planes.push_back({temp.M.z, Z, BOTH, 0, triangles[i]});
     }
     SplitPlane minimal = {0.0, X, BOTH};
     Real min_cost = -1;
@@ -228,6 +232,8 @@ bool IntersectionKdTreeSAH::automaticEnding(SplitPlane &plane, BoundingBox &bb,
                                             std::vector<uint> &triangles,
                                             uint depth)
 {
+    /*if (plane.cost == -1 || plane.cost > _Ki * triangles.size() || depth > 16 || 5 > triangles.size() )
+        _depth.push_back(depth);*/
     return (plane.cost == -1 || plane.cost > _Ki * triangles.size() || depth > 16 || 5 > triangles.size() );
 }//*/
 
