@@ -49,7 +49,7 @@ enum KdTreeNodeType {
 class KdBaseNode {
     public:
         KdBaseNode(Scene *scene, SplitPlane p);
-        ~KdBaseNode(){};
+        virtual ~KdBaseNode(){};
         virtual KdTreeNodeType  getType() = 0;
         virtual Real            intersection(const Ray &ray, uint *t_inter,
                                              Real t_min, Real t_max) = 0;

@@ -22,7 +22,7 @@ bool PythonFunction::loadFunction(std::string name){
 
 PyObject* PythonFunction::call(PyObject* arguments) {
     if (!_function)
-        return false;
+        return NULL;
     PyObject* value = PyObject_CallObject(_function, arguments);
     if (value) {
         return value;

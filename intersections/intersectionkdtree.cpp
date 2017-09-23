@@ -24,7 +24,8 @@ void IntersectionKdTree::splitTrianglesPlane(SplitPlane &plane,
                                               std::vector<uint> &tg,
                                               std::vector<uint> &td)
 {
-    int nd = 0, ng = 0, np = 0;
+    int nd = 0;
+    int ng = 0;
     for (uint i = 0; i < T.size(); ++i) {
         BoundingBox bb (_scene, &_scene->triangles[T[i]]);
         // si le triangle repose sur le plan séparateur on l'ajoute du côté
@@ -98,7 +99,7 @@ void IntersectionKdTree::build(int offset)
     }
     _bb_root = bb;
     std::vector<uint> T;
-    for (int i = 0; i < this->_scene->triangles.size(); ++i) {
+    for (uint i = 0; i < this->_scene->triangles.size(); ++i) {
         T.push_back(i);
     }
     _tree = this->buildTree(bb, T, 0);
@@ -198,7 +199,7 @@ bool IntersectionKdTree::isFlat(SplitPlane plane, uint tri)
 bool IntersectionKdTree::automaticEnding(SplitPlane &plan, BoundingBox &bb,
                                          std::vector<uint> &T, uint depth)
 {
-    return depth > 16 || T.size() <=  5 || bb.getVolume() == 0;
+    return depth > 20 || T.size() <=  5 || bb.getSurfaceArea() == 0;
 }
 
 
@@ -210,7 +211,7 @@ bool IntersectionKdTree::automaticEnding(SplitPlane &plan, BoundingBox &bb,
 
 
 KdBaseNode::KdBaseNode(Scene *scene, SplitPlane p):
-    _scene(scene), plane(p)
+     plane(p), _scene(scene)
 {
 
 }

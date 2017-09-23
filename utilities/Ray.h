@@ -18,8 +18,6 @@ class Ray
         origin.w = 1;
         direction.w = 0;
         direction.normalizeMe();
-        inverse = (Real)1 / direction;
-        inverse.normalizeMe();
     }
     //transforme un rayon selon une matrice
     void transform(Matrix4f mat) {
@@ -29,12 +27,9 @@ class Ray
         origin.w = 1.0;
         direction.w = 0.0;
         direction.normalize();
-        inverse = (Real)1 / direction;
-        inverse.normalizeMe();
     }
     Vector3f origin;
     Vector3f direction;
-    Vector3f inverse;
 };
 
 #endif // RAY_H

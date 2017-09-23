@@ -63,10 +63,3 @@ uint Scene::getVerticesNumber() {
 
 
 
-Scene::~Scene()
-{
-    for (auto it = meshes.begin(); it != meshes.end(); ++it)
-        delete it->second;
-}
-
-

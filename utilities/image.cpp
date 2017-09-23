@@ -12,11 +12,11 @@ Image::~Image()
 }
 
 
-void Image::putPixelFloat(int x, int y, float r, float g, float b, float a){
+void Image::putPixelFloat(unsigned int x, unsigned int y, float r, float g, float b, float a){
     this->putPixel(x, y, r * 255, g * 255, b * 255, a * 255);
 }
 
-void Image::putPixel(int x, int y, uint8_t r, uint8_t g, uint8_t b, uint8_t a){
+void Image::putPixel(unsigned int x, unsigned int y, uint8_t r, uint8_t g, uint8_t b, uint8_t a){
     if (x >= this->width || x < 0 || y < 0 || y >= this->height)
         return;
     data[(y * width + x) * _type] = r;

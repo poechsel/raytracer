@@ -45,8 +45,14 @@ Vector3f BoundingBox::getCenter() const {
 Vector3f BoundingBox::getHalfSize() const {
     return (Real)0.5 * (this->M - this->m);
 }
-Real BoundingBox::getVolume() {
-    return (M.x - m.x) * (M.y - m.y) * (M.z - m.z);
+Real BoundingBox::getSurfaceArea() {
+    Real l = M.x - m.x;
+    Real w = M.y - m.y;
+    Real h = M.z - m.z;
+    return 2*l*w+2*l*h+2*w*h;
+
+
+    //return (M.x - m.x) * (M.y - m.y) * (M.z - m.z);
 }
 
 void BoundingBox::clip(const BoundingBox &other) {

@@ -18,8 +18,8 @@ class Material
 
         virtual ~Material();
     protected:
-        Real _opacity;
         Real _ior;
+        Real _opacity;
         Real _refl;
         Color _diffuse;
     private:

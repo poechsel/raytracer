@@ -13,12 +13,21 @@ IntersectionGrid::IntersectionGrid(Scene *scene, Real s, bool use_dfs):
 
 void IntersectionGrid::build(int offset){
     this->createGrid();
+    ULARGE_INTEGER time = getTime();
     if (this->_use_dfs) {
         for (uint i = 0; i < this->_scene->triangles.size(); ++i) {
+            if (offset >= 0 && getTimeElapsed(time) > offset) {
+                this->finished = false;
+                return ;
+            }
             this->voxelizeTriDfs(i);
         }
     } else {
         for (uint i = 0; i < this->_scene->triangles.size(); ++i) {
+            if (offset >= 0 && getTimeElapsed(time) > offset) {
+                this->finished = false;
+                return ;
+            }
             this->voxelizeTriSeq(i);
         }
     }
@@ -134,7 +143,7 @@ Real IntersectionGrid::traversal(const Ray &ray, uint *tri,
 
 Real IntersectionGrid::intersectCase(Ray const &ray, Vector3<int> V, uint *t_inter) {
     Real t = -1;
-    int index = this->getCaseIndex(V - this->_offset);
+    uint index = this->getCaseIndex(V - this->_offset);
     if (index < 0 || index >= this->_grid.size()){
         return t;
     }
@@ -159,7 +168,6 @@ void IntersectionGrid::voxelizeTriSeq(uint tri) {
     BoundingBox bb (this->_scene, &triangle);
     Vector3<int> m = this->convertToGridCoord(bb.m);
     Vector3<int> M = this->convertToGridCoord(bb.M) + Vector3<int>(1);
-
     for (int x = m.x; x < M.x; ++x) {
         for (int y = m.y; y < M.y; ++y) {
             for (int z = m.z; z < M.z; ++z) {

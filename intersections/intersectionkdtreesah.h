@@ -5,13 +5,6 @@
 #include "../geometry/boundingbox.h"
 
 
-int sutherlandHodgman(std::vector<Vector3f> &input, int inCount,
-                      std::vector<Vector3f> &output, int axis,
-                      double splitPos, bool isMinimum);
-BoundingBox getClippedAABB(const Scene *scene, const uint tri,
-                           const BoundingBox &bb);
-
-
 struct TempSAH {
     Real cost;
     Side side;
@@ -38,6 +31,7 @@ struct Event {
 enum Complexity {
     N2,
     NLOG2N,
+    NLOG2NC,
     NLOGN
 };
 
@@ -59,17 +53,14 @@ class IntersectionKdTreeSAH: public IntersectionKdTree
         SplitPlane          heuristic(BoundingBox &bb,
                                             std::vector<uint> &triangles,
                                             uint depth);
-        /*L'heuristic implementé avec une complexité en N²*/
+        /*L'heuristic implementé avec une complexité en N*N*/
         SplitPlane          heuristicN2(BoundingBox &bb,
                                             std::vector<uint> &triangles,
                                             uint depth);
-        /* Cette fois en nlog²n */
+        /* Cette fois en nlog^2n */
         SplitPlane          heuristicNlog2n(BoundingBox &bb,
                                             std::vector<uint> &triangles,
                                             uint depth);
-        /* renvoit la liste des plans "parfaits" pour les triangles actuels */
-        SplitPlanesList     getPerfectSplits(BoundingBox &bb,
-                                            std::vector<uint> &triangles);
         /* critére d'arrêt */
         virtual bool        automaticEnding(SplitPlane &plane, BoundingBox &bb,
                                             std::vector<uint> &triangles,
@@ -91,6 +82,7 @@ class IntersectionKdTreeSAH: public IntersectionKdTree
                                             std::vector<uint> &triangles,
                                             uint depth,
                                             EventsList events);
+        void            bucketSort(std::vector<Event> &event);
     private:
 };
 

@@ -22,9 +22,9 @@ class PythonSceneLoader
         /* charge la camèra*/
         bool loadCamera(Camera *camera, PyObject *value);
     protected:
-        std::string     _path;
         PythonModule    _module;
         PythonFunction  _function;
+        std::string     _path;
     private:
 };
 

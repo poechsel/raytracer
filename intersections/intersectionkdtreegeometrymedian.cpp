@@ -13,6 +13,7 @@ SplitPlane IntersectionKdTreeGeometryMedian::heuristic(BoundingBox &bb,
                                                        std::vector<uint> &T,
                                                        uint depth)
 {
+    //std::cout<<T.size()<<"\n";
     SplitPlane plane;
     if (depth%3 == 0) {
         plane.axis = X;
@@ -24,15 +25,17 @@ SplitPlane IntersectionKdTreeGeometryMedian::heuristic(BoundingBox &bb,
         plane.axis = Z;
         plane.pos = (bb.M.z - bb.m.z) * 0.5 + bb.m.z;
     }
-    Vector3f temp;
+
+    std::vector<Real> temp;
     for (uint t: T) {
         Triangle &tri = _scene->triangles[t];
-        Vector3f center =   _scene->vertices[tri.v1]
-                            + _scene->vertices[tri.v2]
-                            + _scene->vertices[tri.v3];
-        temp = temp + (Real)1/3 * center;
+        BoundingBox tri_bb (_scene, &tri);
+        tri_bb.clip(bb);
+        temp.push_back(tri_bb.getCenter()[plane.axis]);
     }
-    plane.pos = temp[plane.axis] / T.size();
+    std::nth_element(temp.begin(), temp.begin()+temp.size() / 2, temp.end());
+    if (temp.size())
+        plane.pos = temp[temp.size()/2];
     plane.side = BOTH;
     return plane;
 }

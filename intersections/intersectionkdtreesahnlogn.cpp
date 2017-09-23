@@ -79,7 +79,7 @@ void IntersectionKdTreeSAHnlogn::build(int offset) {
     }
     _bb_root = bb;
     std::vector<uint> T;
-    for (int i = 0; i < this->_scene->triangles.size(); ++i) {
+    for (uint i = 0; i < this->_scene->triangles.size(); ++i) {
         T.push_back(i);
         H.push_back(BOTH);
     }

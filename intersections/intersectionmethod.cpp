@@ -1,7 +1,7 @@
 #include "intersectionmethod.h"
 
 IntersectionMethod::IntersectionMethod(Scene *scene):
-    _scene(scene), finished(true)
+    finished(true), _scene(scene)
 {
     //ctor
 }

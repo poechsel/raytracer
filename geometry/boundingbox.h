@@ -21,7 +21,7 @@ class BoundingBox
 
         Vector3f getCenter() const;
         Vector3f getHalfSize() const;
-        Real getVolume();
+        Real getSurfaceArea();
 
         Vector3f m;
         Vector3f M;

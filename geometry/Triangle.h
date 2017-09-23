@@ -4,7 +4,6 @@
 #include "../includes.h"
 #include "../utilities/Ray.h"
 #include "../materials/material.h"
-#include "../scene.h"
 #include "../utilities/camera.h"
 
 class Mesh;

@@ -50,6 +50,13 @@ void SFMLImage::saveTo(std::string target){
     _window.display();
 
     if (target != ""){
-        _window.capture().saveToFile(target);
+
+
+        sf::Vector2u windowSize = _window.getSize();
+        sf::Texture texture;
+        texture.create(windowSize.x, windowSize.y);
+        texture.update(_window);
+        sf::Image screenshot = texture.copyToImage();
+        screenshot.saveToFile(target);
     }
 }

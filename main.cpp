@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include <glm/glm.hpp>
+#include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/ext.hpp"
 #include "includes.h"
@@ -44,20 +44,21 @@ int raytrace(Camera &cameratemp, Image* image, Scene &scene, IntersectionMethod 
                 nb += 1;
                 Real gradient = std::abs(dot(ray.direction, scene.triangles[tri].normal));
                 color = Color(gradient, gradient, gradient);
-            }//*/
+            }
             image->putPixelFloat(x, y, color.r, color.g, color.b);
-
         }
-
     }
     return nb;
 }
 
-#include <fstream>
+
 int main(int argc, char *argv[])
 {
-    //freopen("out2.txt","w",stdout);
-    int flags, opt;
+    if (argc <= 1) {
+        std::cout<<"Il faut spécifier au moins une scéne à rendre\n";
+        return -1;
+    }
+    int opt;
     int long_index = 1;
     static struct option long_options[] = {
         {"traversal",   required_argument, 0,   't' },
@@ -73,17 +74,17 @@ int main(int argc, char *argv[])
         {0,             0,                 0,   0 }
     };
     std::map<std::string, std::string> params;
-    std::string file = (argc>1)? std::string(argv[1]) : "scenes/suzanne.json";
+    std::string file = std::string(argv[1]);
     params["traversal"] = "rec";
     params["Ki"] = "20";
     params["Kt"] = "15";
-    params["build"] = "dfs";
-    params["complexity"] = "n2";
+    params["build"] = "seq";
+    params["complexity"] = "nlogn";
     params["heuristic"] = "sah";
     params["method"] = "kdtree";
     params["size"] = "1";
-    params["output"] = "none";
-    params["time"] = "-1";
+    params["output"] = "sfml";
+    params["time"] = "120";
 
     while ((opt = getopt_long(argc, argv,"t:i:p:b:c:h:m:s:o:l:", long_options, &long_index )) != -1)
     {
@@ -113,11 +114,9 @@ int main(int argc, char *argv[])
         }
     }
 
-
     PythonContext context;
     Scene scene;
     context.setCWD("python");
-    int completion_percent = 0;
 
     Camera cameratemp;
     PythonSceneLoader loader_scenes(file);
@@ -147,6 +146,12 @@ int main(int argc, char *argv[])
                                                          stringTo<Real>(params["Kt"]),
                                                          params["traversal"] == "rec",
                                                          NLOG2N);
+            } else if (params["complexity"] == "nlog2nc") {
+                inter_method = new IntersectionKdTreeSAH(&scene,
+                                                         stringTo<Real>(params["Ki"]),
+                                                         stringTo<Real>(params["Kt"]),
+                                                         params["traversal"] == "rec",
+                                                         NLOG2NC);
             } else {
                 inter_method = new IntersectionKdTreeSAH(&scene,
                                                          stringTo<Real>(params["Ki"]),
