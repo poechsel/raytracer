@@ -16,10 +16,16 @@ double getTimeElapsed(ULARGE_INTEGER tb){
 }
 #else
 ULARGE_INTEGER getTime(){
-    return 0;
+    struct timespec request;
+    clock_gettime(CLOCK_REALTIME, &request);
+    return request;
 }
 double getTimeElapsed(ULARGE_INTEGER tb){
-    return 0;
+    ULARGE_INTEGER te = getTime();
+    double accum = ( te.tv_sec - tb.tv_sec )
+        + ( te.tv_nsec - tb.tv_nsec )
+        / 1000000000.;
+    return accum; 
 }
 
 #endif

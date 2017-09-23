@@ -6,7 +6,7 @@
 #else
 #include <cstdint>
 #include <time.h>
-typedef uint64_t ULARGE_INTEGER;
+typedef struct timespec ULARGE_INTEGER;
 #endif
 
 /* fonctions permettant d'avoir accés au temps de façon précise grâce à l'api
