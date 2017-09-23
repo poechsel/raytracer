@@ -48,16 +48,16 @@ A scene is a json file under the form :
 ```json
 {
     "SCENE_PRESETS": {
-        "height": //height of the image,
-        "width": //width of the image
+        "height": "height of the image",
+        "width": "width of the image"
     },
     "OBJECTS": {
-        "path": path to the file containing the geometry (by default in obj)
+        "path": "path to the file containing the geometry (by default in obj)"
     },
     "CAMERA": {
-        "fov": fov of the camera,
-        "ratio": ratio of the camera,
-        "matrix": 4x4 matrix representing the position/rotation/scale of the camera
+        "fov": "fov of the camera",
+        "ratio": "ratio of the camera",
+        "matrix": "4x4 matrix representing the position/rotation/scale of the camera"
     }
 }
 ```
