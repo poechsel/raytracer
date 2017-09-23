@@ -82,8 +82,8 @@ int main(int argc, char *argv[])
     params["complexity"] = "nlogn";
     params["heuristic"] = "sah";
     params["method"] = "kdtree";
-    params["size"] = "1";
-    params["output"] = "sfml";
+    params["size"] = "10";
+    params["output"] = "out.png";
     params["time"] = "120";
 
     while ((opt = getopt_long(argc, argv,"t:i:p:b:c:h:m:s:o:l:", long_options, &long_index )) != -1)
@@ -179,10 +179,10 @@ int main(int argc, char *argv[])
 
 
     Image *image = 0;
-    if (params["output"] == "sfml")
+    //if (params["output"] == "sfml")
         image = new SFMLImage(cameratemp.width, cameratemp.height);
-    else
-        image = new Image(cameratemp.width, cameratemp.height);
+    //else
+    //    image = new Image(cameratemp.width, cameratemp.height);
 
 
     ULARGE_INTEGER time = getTime();
@@ -202,7 +202,7 @@ int main(int argc, char *argv[])
         } else {
             std::cout<<"task: "<<"INFTY"<<"\n";
         }
-        image->saveTo("test.png");
+        //        image->saveTo(params["output"]);
         std::cout<<"tri/ray: "<<COUNTS::NB_TESTS_TRI_RAY<<"\n";
         std::cout<<"box/ray: "<<COUNTS::NB_TESTS_TRI_VOXEL<<"\n";
     }
